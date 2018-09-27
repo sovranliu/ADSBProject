@@ -9,9 +9,25 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ADSB.MainUI</RootNamespace>
     <AssemblyName>ADSB.MainUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,12 +54,35 @@
     <ApplicationIcon>
     </ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSkin">
       <HintPath>CSkin 4.0\CSkin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\System.Data.SQLite\2012\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -107,6 +146,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GMapMarkerEx.cs" />
+    <Compile Include="Logic\DataHelper.cs" />
+    <Compile Include="Logic\ConfigHelper.cs" />
     <Compile Include="LogRecord.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -119,24 +160,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubForm\Form_airSegment.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_airSegment.Designer.cs">
-      <DependentUpon>Form_airSegment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_airRoute.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_airRoute.Designer.cs">
-      <DependentUpon>Form_airRoute.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_wayPoint.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_wayPoint.Designer.cs">
-      <DependentUpon>Form_wayPoint.cs</DependentUpon>
-    </Compile>
     <Compile Include="SubForm\Form_dimianzhan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,12 +177,6 @@
     </Compile>
     <Compile Include="SubForm\Form_aTemplate.Designer.cs">
       <DependentUpon>Form_aTemplate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_airPort.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_airPort.Designer.cs">
-      <DependentUpon>Form_airPort.cs</DependentUpon>
     </Compile>
     <Compile Include="SubForm\Form_setup1.cs">
       <SubType>Form</SubType>
@@ -258,15 +275,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SubForm\Form_airSegment.resx">
-      <DependentUpon>Form_airSegment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_airRoute.resx">
-      <DependentUpon>Form_airRoute.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
-      <DependentUpon>Form_wayPoint.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_dimianzhan.resx">
       <DependentUpon>Form_dimianzhan.cs</DependentUpon>
     </EmbeddedResource>
@@ -275,9 +283,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_aTemplate.resx">
       <DependentUpon>Form_aTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_airPort.resx">
-      <DependentUpon>Form_airPort.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_setup1.resx">
       <DependentUpon>Form_setup1.cs</DependentUpon>
@@ -316,6 +321,9 @@
       <DependentUpon>Form_liangcheng.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Library\data.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -327,10 +335,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ADSB.CommLib\ADSB.CommLib.csproj">
-      <Project>{83df76e4-b2cf-45b9-a649-17154e91e5a8}</Project>
-      <Name>ADSB.CommLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GMap.NET.Core\GMap.NET.Core.csproj">
       <Project>{d0c39d9d-bed0-418b-9a5e-713176caf40c}</Project>
       <Name>GMap.NET.Core</Name>
@@ -339,6 +343,19 @@
       <Project>{e06def77-f933-42fb-afd7-db2d0d8d6a98}</Project>
       <Name>GMap.NET.WindowsForms</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Library\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

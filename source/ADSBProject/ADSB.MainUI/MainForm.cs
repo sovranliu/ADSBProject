@@ -67,7 +67,9 @@ namespace ADSB.MainUI
         private Timer flyTimer = new Timer();
         private Timer displayTimer = new Timer();
 
-        bool IsPlayback = false;  //回放标志
+        private DataSource dataSource;
+
+        bool IsPlayback=false;  //回放标志
         LogRecord log;
 
         //绘制窗口阴影 控制参数
@@ -101,13 +103,13 @@ namespace ADSB.MainUI
 
         private void flyTimer_Tick(object sender, EventArgs e)
         {
-            if (CommSocketManager.GetNum() == 0)
+            if (dataSource.Count == 0)
                 return;
-            Cat021Data tmpData = CommSocketManager.GetData();
-
-            bool isCheckedPlane = false;
-            // 看飞机是否在选中列表中
-            foreach (GMapAirPlane eachlistAirplane in listAirplaneCheck.Values)
+            Cat021Data tmpData = dataSource.GetData();
+            GMapAirPlane tmpAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData);
+            GMapAirPlane removeAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData);
+            bool remove=false;
+            foreach (GMapAirPlane eachlistAirplane in listAirplane)
             {
                 if (eachlistAirplane.AirPlaneMarkerInfo.fid.Trim() == tmpData.flightNo.Trim())
                 {
@@ -240,7 +242,7 @@ namespace ADSB.MainUI
             SetClassLong(this.Handle, GCL_STYLE, GetClassLong(this.Handle, GCL_STYLE) | CS_DropSHADOW);
             InitializeGMap();
 
-            CommSocketManager.Start();
+            dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_UDP);
             flyTimer.Interval = 1;
             flyTimer.Start();
             displayTimer.Interval = 100;
