@@ -13,12 +13,12 @@ using GMap.NET.MapProviders;
 
 namespace ADSB.MainUI.SubForm
 {
-    public partial class Form_earthStation : Form_aTemplate
+    public partial class Form_airPort : Form_aTemplate
     {
-        public delegate void earthStation(Boolean selected, int flag);
-        public event earthStation earthStation_event;
+        public delegate void airPort(Boolean selected, int flag);
+        public event airPort airPort_event;
 
-        public Form_earthStation()
+        public Form_airPort()
         {
             InitializeComponent();
             InitializeGMap();
@@ -34,7 +34,7 @@ namespace ADSB.MainUI.SubForm
             String name = skinTextBox2.Text;
             if (null == name || name.Length == 0)
             {
-                MessageBox.Show("请输入地面站名称！");
+                MessageBox.Show("请输入机场名称！");
                 return;
             }
             if (null == skinTextBox3.Text || skinTextBox3.Text.Length == 0)
@@ -88,7 +88,7 @@ namespace ADSB.MainUI.SubForm
 
             // todo 保存到数据库
 
-            earthStation_event(true, 2);
+            airPort_event(true, 2);
 
             // MessageBox.Show("新增成功！");
         }
@@ -107,7 +107,7 @@ namespace ADSB.MainUI.SubForm
             this.gMapControl1.MouseDown += new MouseEventHandler(mapControl_MouseDown);
 
             // TODO 获取地面目标信息，并初始化tableLayoutPanel1
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50));
+           // tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50));
             
         }
 
@@ -116,12 +116,6 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
-           // throw new NotImplementedException();
-        }
-
-        private void Form_earthStation_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void skinButton2_Click(object sender, EventArgs e)
@@ -162,7 +156,7 @@ namespace ADSB.MainUI.SubForm
                         tableLayoutPanel1.RowStyles.RemoveAt(tableLayoutPanel1.RowCount - 1);
                         tableLayoutPanel1.RowCount = tableLayoutPanel1.RowCount - 1;
 
-                        earthStation_event(true, 2);
+                        airPort_event(true, 2);
 
                         break;
                     }

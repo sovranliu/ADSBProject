@@ -182,6 +182,7 @@
             this.myCheckBox7.TabIndex = 40;
             this.myCheckBox7.Text = "地面站";
             this.myCheckBox7.UseVisualStyleBackColor = false;
+            this.myCheckBox7.CheckedChanged += new System.EventHandler(this.myCheckBox7_CheckedChanged);
             // 
             // myCheckBox6
             // 
@@ -212,6 +213,7 @@
             this.myCheckBox5.TabIndex = 38;
             this.myCheckBox5.Text = "航路点";
             this.myCheckBox5.UseVisualStyleBackColor = false;
+            this.myCheckBox5.CheckedChanged += new System.EventHandler(this.myCheckBox5_CheckedChanged);
             // 
             // myCheckBox4
             // 
@@ -223,10 +225,11 @@
             this.myCheckBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
             this.myCheckBox4.Location = new System.Drawing.Point(42, 137);
             this.myCheckBox4.Name = "myCheckBox4";
-            this.myCheckBox4.Size = new System.Drawing.Size(67, 23);
+            this.myCheckBox4.Size = new System.Drawing.Size(54, 23);
             this.myCheckBox4.TabIndex = 37;
-            this.myCheckBox4.Text = "飞行器";
+            this.myCheckBox4.Text = "机场";
             this.myCheckBox4.UseVisualStyleBackColor = false;
+            this.myCheckBox4.CheckedChanged += new System.EventHandler(this.myCheckBox4_CheckedChanged);
             // 
             // myCheckBox3
             // 
@@ -242,6 +245,7 @@
             this.myCheckBox3.TabIndex = 36;
             this.myCheckBox3.Text = "航段";
             this.myCheckBox3.UseVisualStyleBackColor = false;
+            this.myCheckBox3.CheckedChanged += new System.EventHandler(this.myCheckBox3_CheckedChanged);
             // 
             // myCheckBox2
             // 

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
 using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
@@ -23,7 +19,7 @@ namespace ADSB.MainUI
         public bool IsFilled = true;
         public GMapMarkerCircle(PointLatLng p) : base(p)
         {
-            Radius = 0; // 0m
+            Radius = 100000; // 0m
             P2 = p;
             IsHitTestVisible = false;
         }
@@ -213,13 +209,22 @@ namespace ADSB.MainUI
             ToolTipText = string.Format("{0}\r\n{1}\r\n{2}\r\n{3}", "CQH8992", "GV:95°", "H:4686m", "S:748km/h");
             ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
         }
-        public GMapAirPlane(PointLatLng p, Cat021Data data) : base(p)
+
+        public GMapAirPlane(PointLatLng p, Cat021Data data, bool selected) : base(p)
         {
             string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式\\assets\\飞机 copy 4.png") as Bitmap;
+            if (selected)
+            {
+                Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
+            }
+            else
+            {
+                Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
+            }
+            
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
-
+            
             airplaneInfo = new AirplaneInfo(data.flightNo.ToString(), data.aircraftAngle.ToString("F0"), data.geometricAltitude.ToString("F0"), data.airSpeed.ToString("F0"));
 
             ToolTipMode = MarkerTooltipMode.OnMouseOver;
@@ -231,7 +236,7 @@ namespace ADSB.MainUI
             //string.Format("{0}\r\n 
             //                         {1}\r\n{2}\r\n{3}", "CQH8992", "GV:95°", "H:4686m", "S:748km/h");
             ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
-
+            
 
         }
         public override void OnRender(Graphics g)
@@ -293,7 +298,7 @@ namespace ADSB.MainUI
         public GMapAirPort(PointLatLng p) : base(p)
         {
             string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(basePath + "\\ADSBProject\\ADSB.MonitorModeUI\\ImageRes\\plane.png") as Bitmap;
+            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\直升机@3x.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
         }
@@ -306,6 +311,7 @@ namespace ADSB.MainUI
             Rectangle rect = new Rectangle(LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
             g.DrawImage(image, rect);
 
+            /*
             if (Pen != null)
             {
                 g.DrawEllipse(Pen, rect);
@@ -319,7 +325,7 @@ namespace ADSB.MainUI
                     Rectangle rect1 = new Rectangle(tmpX, tmpY, Size.Width * i, Size.Height * i);
                     g.DrawEllipse(Pen, rect1);
                 }
-            }
+            }*/
         }
     }
 
@@ -339,9 +345,43 @@ namespace ADSB.MainUI
     /// </summary>
     public class GMapLandStation : GMapMarker
     {
+        private Image image;
+        public Image Image
+        {
+            get
+            {
+                return image;
+            }
+            set
+            {
+                image = value;
+                if (image != null)
+                {
+                    this.Size = new Size(image.Width, image.Height);
+                }
+            }
+        }
+
+        public Pen Pen
+        {
+            get;
+            set;
+        }
+
         public GMapLandStation(PointLatLng p) : base(p)
         {
-            //TODO
+            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
+            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
+            Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
+            Pen = new Pen(Brushes.Red, 2);
+        }
+        public override void OnRender(Graphics g)
+        {
+            if (image == null)
+                return;
+
+            Rectangle rect = new Rectangle(LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
+            g.DrawImage(image, rect);
         }
     }
 
@@ -357,13 +397,53 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航段图标
+    /// 航线 由1个以上航段组成
     /// </summary>
-    public class GMapAirSegment : GMapMarker
+    public class GMapAirSegment
     {
-        public GMapAirSegment(PointLatLng p) : base(p)
+        public String name
         {
-            //TODO
+            get;
+            set;
+        }
+        public List<GMapAirRoute> airRouteList
+        {
+            get;
+            set;
+        }
+
+        public GMapAirSegment(String name, List<GMapAirRoute> airRouteList)
+        {
+            this.name = name;
+            this.airRouteList = airRouteList;
+        }
+    }
+
+    /// <summary>
+    /// 航段 由两个航站点组成
+    /// </summary>
+    public class GMapAirRoute 
+    {
+        public String name
+        {
+            get;
+            set;
+        }
+        public GMapWayPoint pStart
+        {
+            get;
+            set;
+        }
+        public GMapWayPoint pEnd
+        {
+            get;
+            set;
+        }
+        public GMapAirRoute(String name, GMapWayPoint pStart, GMapWayPoint pEnd) 
+        {
+            this.name = name;
+            this.pStart = pStart;
+            this.pEnd = pEnd;
         }
 
     }
@@ -373,9 +453,43 @@ namespace ADSB.MainUI
     /// </summary>
     public class GMapWayPoint : GMapMarker
     {
+        private Image image;
+        public Image Image
+        {
+            get
+            {
+                return image;
+            }
+            set
+            {
+                image = value;
+                if (image != null)
+                {
+                    this.Size = new Size(image.Width, image.Height);
+                }
+            }
+        }
+
+        public Pen Pen
+        {
+            get;
+            set;
+        }
+
         public GMapWayPoint(PointLatLng p) : base(p)
         {
-            //TODO
+            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
+            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\红色按钮@2x.png") as Bitmap;
+            Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
+            Pen = new Pen(Brushes.Red, 2);
+        }
+        public override void OnRender(Graphics g)
+        {
+            if (image == null)
+                return;
+
+            Rectangle rect = new Rectangle(LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
+            g.DrawImage(image, rect);
         }
     }
 

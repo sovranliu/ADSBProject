@@ -1,6 +1,6 @@
 ﻿namespace ADSB.MainUI.SubForm
 {
-    partial class Form_earthStation
+    partial class Form_airRoute
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_earthStation));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_airRoute));
             this.skinLabel1 = new CCWin.SkinControl.SkinLabel();
             this.sPnl_close = new CCWin.SkinControl.SkinPanel();
             this.skinButton1 = new CCWin.SkinControl.SkinButton();
@@ -37,12 +37,17 @@
             this.skinLabel9 = new CCWin.SkinControl.SkinLabel();
             this.skinLabel3 = new CCWin.SkinControl.SkinLabel();
             this.skinTextBox2 = new CCWin.SkinControl.SkinTextBox();
-            this.skinTextBox3 = new CCWin.SkinControl.SkinTextBox();
-            this.skinTextBox4 = new CCWin.SkinControl.SkinTextBox();
             this.horizonLine1 = new ADSB.MainUI.Controls.HorizonLine();
-            this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.skinButton2 = new CCWin.SkinControl.SkinButton();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.skinLabel2 = new CCWin.SkinControl.SkinLabel();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.skinLabel4 = new CCWin.SkinControl.SkinLabel();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.skinLabel5 = new CCWin.SkinControl.SkinLabel();
             this.SuspendLayout();
             // 
             // skinLabel1
@@ -54,9 +59,9 @@
             this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
             this.skinLabel1.Location = new System.Drawing.Point(166, 9);
             this.skinLabel1.Name = "skinLabel1";
-            this.skinLabel1.Size = new System.Drawing.Size(117, 28);
+            this.skinLabel1.Size = new System.Drawing.Size(96, 28);
             this.skinLabel1.TabIndex = 2;
-            this.skinLabel1.Text = "地面站管理";
+            this.skinLabel1.Text = "航线管理";
             // 
             // sPnl_close
             // 
@@ -90,7 +95,7 @@
             this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton1.IsDrawBorder = false;
             this.skinButton1.IsDrawGlass = false;
-            this.skinButton1.Location = new System.Drawing.Point(66, 310);
+            this.skinButton1.Location = new System.Drawing.Point(70, 580);
             this.skinButton1.MouseBack = null;
             this.skinButton1.Name = "skinButton1";
             this.skinButton1.NormlBack = null;
@@ -128,11 +133,11 @@
             this.skinLabel9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel9.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel9.Location = new System.Drawing.Point(86, 174);
+            this.skinLabel9.Location = new System.Drawing.Point(86, 194);
             this.skinLabel9.Name = "skinLabel9";
-            this.skinLabel9.Size = new System.Drawing.Size(48, 19);
+            this.skinLabel9.Size = new System.Drawing.Size(61, 19);
             this.skinLabel9.TabIndex = 16;
-            this.skinLabel9.Text = "经度：";
+            this.skinLabel9.Text = "航段一：";
             this.skinLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // skinLabel3
@@ -144,11 +149,11 @@
             this.skinLabel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel3.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel3.Location = new System.Drawing.Point(86, 252);
+            this.skinLabel3.Location = new System.Drawing.Point(86, 277);
             this.skinLabel3.Name = "skinLabel3";
-            this.skinLabel3.Size = new System.Drawing.Size(48, 19);
+            this.skinLabel3.Size = new System.Drawing.Size(61, 19);
             this.skinLabel3.TabIndex = 17;
-            this.skinLabel3.Text = "纬度：";
+            this.skinLabel3.Text = "航段二：";
             this.skinLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // skinTextBox2
@@ -193,90 +198,6 @@
             this.skinTextBox2.WaterText = "";
             this.skinTextBox2.WordWrap = true;
             // 
-            // skinTextBox3
-            // 
-            this.skinTextBox3.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox3.DownBack = null;
-            this.skinTextBox3.Icon = null;
-            this.skinTextBox3.IconIsButton = false;
-            this.skinTextBox3.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox3.IsPasswordChat = '\0';
-            this.skinTextBox3.IsSystemPasswordChar = false;
-            this.skinTextBox3.Lines = new string[0];
-            this.skinTextBox3.Location = new System.Drawing.Point(171, 162);
-            this.skinTextBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox3.MaxLength = 32767;
-            this.skinTextBox3.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox3.MouseBack = null;
-            this.skinTextBox3.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox3.Multiline = true;
-            this.skinTextBox3.Name = "skinTextBox3";
-            this.skinTextBox3.NormlBack = null;
-            this.skinTextBox3.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox3.ReadOnly = false;
-            this.skinTextBox3.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox3.Size = new System.Drawing.Size(165, 40);
-            // 
-            // 
-            // 
-            this.skinTextBox3.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox3.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox3.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinTextBox3.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox3.SkinTxt.Multiline = true;
-            this.skinTextBox3.SkinTxt.Name = "BaseText";
-            this.skinTextBox3.SkinTxt.Size = new System.Drawing.Size(155, 30);
-            this.skinTextBox3.SkinTxt.TabIndex = 0;
-            this.skinTextBox3.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox3.SkinTxt.WaterText = "";
-            this.skinTextBox3.TabIndex = 19;
-            this.skinTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.skinTextBox3.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox3.WaterText = "";
-            this.skinTextBox3.WordWrap = true;
-            // 
-            // skinTextBox4
-            // 
-            this.skinTextBox4.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox4.DownBack = null;
-            this.skinTextBox4.Icon = null;
-            this.skinTextBox4.IconIsButton = false;
-            this.skinTextBox4.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox4.IsPasswordChat = '\0';
-            this.skinTextBox4.IsSystemPasswordChar = false;
-            this.skinTextBox4.Lines = new string[0];
-            this.skinTextBox4.Location = new System.Drawing.Point(171, 242);
-            this.skinTextBox4.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox4.MaxLength = 32767;
-            this.skinTextBox4.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox4.MouseBack = null;
-            this.skinTextBox4.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox4.Multiline = true;
-            this.skinTextBox4.Name = "skinTextBox4";
-            this.skinTextBox4.NormlBack = null;
-            this.skinTextBox4.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox4.ReadOnly = false;
-            this.skinTextBox4.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox4.Size = new System.Drawing.Size(165, 40);
-            // 
-            // 
-            // 
-            this.skinTextBox4.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox4.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox4.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinTextBox4.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox4.SkinTxt.Multiline = true;
-            this.skinTextBox4.SkinTxt.Name = "BaseText";
-            this.skinTextBox4.SkinTxt.Size = new System.Drawing.Size(155, 30);
-            this.skinTextBox4.SkinTxt.TabIndex = 0;
-            this.skinTextBox4.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox4.SkinTxt.WaterText = "";
-            this.skinTextBox4.TabIndex = 19;
-            this.skinTextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.skinTextBox4.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox4.WaterText = "";
-            this.skinTextBox4.WordWrap = true;
-            // 
             // horizonLine1
             // 
             this.horizonLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
@@ -290,45 +211,17 @@
             this.horizonLine1.Size = new System.Drawing.Size(219, 3);
             this.horizonLine1.TabIndex = 20;
             // 
-            // gMapControl1
-            // 
-            this.gMapControl1.Bearing = 0F;
-            this.gMapControl1.CanDragMap = true;
-            this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
-            this.gMapControl1.GrayScaleMode = false;
-            this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.gMapControl1.LevelsKeepInMemmory = 5;
-            this.gMapControl1.Location = new System.Drawing.Point(20, 383);
-            this.gMapControl1.MarkersEnabled = true;
-            this.gMapControl1.MaximumSize = new System.Drawing.Size(1131, 333);
-            this.gMapControl1.MaxZoom = 2;
-            this.gMapControl1.MinimumSize = new System.Drawing.Size(1131, 333);
-            this.gMapControl1.MinZoom = 2;
-            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            this.gMapControl1.Name = "gMapControl1";
-            this.gMapControl1.NegativeMode = false;
-            this.gMapControl1.PolygonsEnabled = true;
-            this.gMapControl1.RetryLoadTile = 0;
-            this.gMapControl1.RoutesEnabled = true;
-            this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Size = new System.Drawing.Size(1131, 333);
-            this.gMapControl1.TabIndex = 21;
-            this.gMapControl1.Zoom = 0D;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoScroll = true;
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(429, 62);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(439, 62);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(722, 306);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(704, 598);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // skinButton2
@@ -348,7 +241,7 @@
             this.skinButton2.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton2.IsDrawBorder = false;
             this.skinButton2.IsDrawGlass = false;
-            this.skinButton2.Location = new System.Drawing.Point(219, 310);
+            this.skinButton2.Location = new System.Drawing.Point(252, 580);
             this.skinButton2.MouseBack = null;
             this.skinButton2.Name = "skinButton2";
             this.skinButton2.NormlBack = null;
@@ -361,19 +254,117 @@
             this.skinButton2.UseVisualStyleBackColor = false;
             this.skinButton2.Click += new System.EventHandler(this.skinButton2_Click);
             // 
-            // Form_earthStation
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(171, 196);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(165, 20);
+            this.comboBox1.TabIndex = 23;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(171, 277);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(165, 20);
+            this.comboBox2.TabIndex = 24;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(171, 347);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(165, 20);
+            this.comboBox3.TabIndex = 26;
+            // 
+            // skinLabel2
+            // 
+            this.skinLabel2.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel2.AutoSize = true;
+            this.skinLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel2.BorderColor = System.Drawing.Color.White;
+            this.skinLabel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel2.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel2.Location = new System.Drawing.Point(86, 347);
+            this.skinLabel2.Name = "skinLabel2";
+            this.skinLabel2.Size = new System.Drawing.Size(61, 19);
+            this.skinLabel2.TabIndex = 25;
+            this.skinLabel2.Text = "航段三：";
+            this.skinLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(171, 416);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(165, 20);
+            this.comboBox4.TabIndex = 28;
+            // 
+            // skinLabel4
+            // 
+            this.skinLabel4.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel4.AutoSize = true;
+            this.skinLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel4.BorderColor = System.Drawing.Color.White;
+            this.skinLabel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel4.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel4.Location = new System.Drawing.Point(86, 416);
+            this.skinLabel4.Name = "skinLabel4";
+            this.skinLabel4.Size = new System.Drawing.Size(61, 19);
+            this.skinLabel4.TabIndex = 27;
+            this.skinLabel4.Text = "航段四：";
+            this.skinLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Location = new System.Drawing.Point(171, 484);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(165, 20);
+            this.comboBox5.TabIndex = 30;
+            // 
+            // skinLabel5
+            // 
+            this.skinLabel5.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel5.AutoSize = true;
+            this.skinLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel5.BorderColor = System.Drawing.Color.White;
+            this.skinLabel5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel5.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel5.Location = new System.Drawing.Point(86, 484);
+            this.skinLabel5.Name = "skinLabel5";
+            this.skinLabel5.Size = new System.Drawing.Size(61, 19);
+            this.skinLabel5.TabIndex = 29;
+            this.skinLabel5.Text = "航段五：";
+            this.skinLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // Form_airRoute
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(1176, 778);
+            this.Controls.Add(this.comboBox5);
+            this.Controls.Add(this.skinLabel5);
+            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.skinLabel4);
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.skinLabel2);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.skinButton2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.gMapControl1);
             this.Controls.Add(this.horizonLine1);
             this.Controls.Add(this.skinTextBox2);
-            this.Controls.Add(this.skinTextBox3);
-            this.Controls.Add(this.skinTextBox4);
             this.Controls.Add(this.skinLabel3);
             this.Controls.Add(this.skinLabel9);
             this.Controls.Add(this.skinLabel8);
@@ -381,9 +372,8 @@
             this.Controls.Add(this.sPnl_close);
             this.Controls.Add(this.skinLabel1);
             this.Location = new System.Drawing.Point(0, 0);
-            this.Name = "Form_earthStation";
+            this.Name = "Form_airRoute";
             this.Text = "Form_earthStation";
-            this.Load += new System.EventHandler(this.Form_earthStation_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,11 +388,16 @@
         private CCWin.SkinControl.SkinLabel skinLabel9;
         private CCWin.SkinControl.SkinLabel skinLabel3;
         private CCWin.SkinControl.SkinTextBox skinTextBox2;
-        private CCWin.SkinControl.SkinTextBox skinTextBox3;
-        private CCWin.SkinControl.SkinTextBox skinTextBox4;
         private Controls.HorizonLine horizonLine1;
-        private GMap.NET.WindowsForms.GMapControl gMapControl1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private CCWin.SkinControl.SkinButton skinButton2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private CCWin.SkinControl.SkinLabel skinLabel2;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private CCWin.SkinControl.SkinLabel skinLabel4;
+        private System.Windows.Forms.ComboBox comboBox5;
+        private CCWin.SkinControl.SkinLabel skinLabel5;
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace ADSB.MainUI
+﻿using System.Windows.Forms;
+using GMap.NET.WindowsForms;
+
+namespace ADSB.MainUI
 {
     partial class MainForm
     {
@@ -73,20 +76,32 @@
             this.sLabel2 = new CCWin.SkinControl.SkinLabel();
             this.slabel1 = new CCWin.SkinControl.SkinLabel();
             this.sTpMonitor = new CCWin.SkinControl.SkinTabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.skinProgressBar1 = new CCWin.SkinControl.SkinProgressBar();
             this.maskPlaybackRun = new ADSB.MainUI.Controls.MaskCircleLayer();
             this.maskPlaybackSetup = new ADSB.MainUI.Controls.MaskLayer();
             this.panelEx1 = new ADSB.MainUI.Controls.PanelEx(this.components);
             this.mapmask = new ADSB.MainUI.Controls.MaskLayer();
             this.skinPanel15 = new CCWin.SkinControl.SkinPanel();
+            this.skinLabel32 = new CCWin.SkinControl.SkinLabel();
+            this.skinLabel31 = new CCWin.SkinControl.SkinLabel();
+            this.skinPanel23 = new CCWin.SkinControl.SkinPanel();
+            this.skinLabel30 = new CCWin.SkinControl.SkinLabel();
+            this.skinPanel22 = new CCWin.SkinControl.SkinPanel();
+            this.skinLine18 = new CCWin.SkinControl.SkinLine();
+            this.skinLabel29 = new CCWin.SkinControl.SkinLabel();
+            this.skinPanel21 = new CCWin.SkinControl.SkinPanel();
+            this.skinLine17 = new CCWin.SkinControl.SkinLine();
+            this.skinPanel20 = new CCWin.SkinControl.SkinPanel();
+            this.skinLine16 = new CCWin.SkinControl.SkinLine();
+            this.skinLabel28 = new CCWin.SkinControl.SkinLabel();
+            this.skinPanel19 = new CCWin.SkinControl.SkinPanel();
+            this.skinLine15 = new CCWin.SkinControl.SkinLine();
             this.skinLabel27 = new CCWin.SkinControl.SkinLabel();
             this.sPnl_dimianzhan = new CCWin.SkinControl.SkinPanel();
             this.skinLabel26 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel18 = new CCWin.SkinControl.SkinPanel();
-            this.skinLabel17 = new CCWin.SkinControl.SkinLabel();
-            this.skinPanel17 = new CCWin.SkinControl.SkinPanel();
-            this.skinLabel14 = new CCWin.SkinControl.SkinLabel();
-            this.skinPanel16 = new CCWin.SkinControl.SkinPanel();
             this.skinLine14 = new CCWin.SkinControl.SkinLine();
             this.skinLine9 = new CCWin.SkinControl.SkinLine();
             this.skinLine8 = new CCWin.SkinControl.SkinLine();
@@ -104,6 +119,10 @@
             this.skinLabel23 = new CCWin.SkinControl.SkinLabel();
             this.skinLabel24 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel10 = new CCWin.SkinControl.SkinPanel();
+            this.skinPanel17 = new CCWin.SkinControl.SkinPanel();
+            this.skinLabel17 = new CCWin.SkinControl.SkinLabel();
+            this.skinPanel16 = new CCWin.SkinControl.SkinPanel();
+            this.skinLabel14 = new CCWin.SkinControl.SkinLabel();
             this.sPnl_funcmore = new CCWin.SkinControl.SkinPanel();
             this.skinPanel11 = new CCWin.SkinControl.SkinPanel();
             this.skinPanel8 = new CCWin.SkinControl.SkinPanel();
@@ -150,7 +169,7 @@
             this.sTabControl.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.sTabControl.PageNorml = null;
             this.sTabControl.SelectedIndex = 1;
-            this.sTabControl.Size = new System.Drawing.Size(1280, 788);
+            this.sTabControl.Size = new System.Drawing.Size(1280, 733);
             this.sTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.sTabControl.TabIndex = 0;
             // 
@@ -181,7 +200,7 @@
             this.sTpFly.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sTpFly.Location = new System.Drawing.Point(0, 36);
             this.sTpFly.Name = "sTpFly";
-            this.sTpFly.Size = new System.Drawing.Size(1280, 752);
+            this.sTpFly.Size = new System.Drawing.Size(1280, 697);
             this.sTpFly.TabIndex = 0;
             this.sTpFly.TabItemImage = null;
             this.sTpFly.Text = "skinTabPage1";
@@ -813,6 +832,8 @@
             // sTpMonitor
             // 
             this.sTpMonitor.BackColor = System.Drawing.Color.Transparent;
+            this.sTpMonitor.Controls.Add(this.button2);
+            this.sTpMonitor.Controls.Add(this.button1);
             this.sTpMonitor.Controls.Add(this.skinProgressBar1);
             this.sTpMonitor.Controls.Add(this.maskPlaybackRun);
             this.sTpMonitor.Controls.Add(this.maskPlaybackSetup);
@@ -826,10 +847,32 @@
             this.sTpMonitor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sTpMonitor.Location = new System.Drawing.Point(0, 36);
             this.sTpMonitor.Name = "sTpMonitor";
-            this.sTpMonitor.Size = new System.Drawing.Size(1280, 752);
+            this.sTpMonitor.Size = new System.Drawing.Size(1280, 697);
             this.sTpMonitor.TabIndex = 1;
             this.sTpMonitor.TabItemImage = null;
             this.sTpMonitor.Text = "skinTabPage2";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1103, 431);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(77, 32);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "取消测距";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1103, 367);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(77, 32);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "测距";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // skinProgressBar1
             // 
@@ -872,7 +915,7 @@
             this.panelEx1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelEx1.BackgroundImage")));
             this.panelEx1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelEx1.Location = new System.Drawing.Point(0, 642);
+            this.panelEx1.Location = new System.Drawing.Point(0, 587);
             this.panelEx1.Name = "panelEx1";
             this.panelEx1.Size = new System.Drawing.Size(1280, 110);
             this.panelEx1.TabIndex = 21;
@@ -894,20 +937,30 @@
             this.skinPanel15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.skinPanel15.BackRectangle = new System.Drawing.Rectangle(0, 0, 0, 0);
             this.skinPanel15.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.skinPanel15.Controls.Add(this.skinLabel32);
+            this.skinPanel15.Controls.Add(this.skinLabel31);
+            this.skinPanel15.Controls.Add(this.skinPanel23);
+            this.skinPanel15.Controls.Add(this.skinLabel30);
+            this.skinPanel15.Controls.Add(this.skinPanel22);
+            this.skinPanel15.Controls.Add(this.skinLine18);
+            this.skinPanel15.Controls.Add(this.skinLabel29);
+            this.skinPanel15.Controls.Add(this.skinPanel21);
+            this.skinPanel15.Controls.Add(this.skinLine17);
+            this.skinPanel15.Controls.Add(this.skinPanel20);
+            this.skinPanel15.Controls.Add(this.skinLine16);
+            this.skinPanel15.Controls.Add(this.skinLabel28);
+            this.skinPanel15.Controls.Add(this.skinPanel19);
+            this.skinPanel15.Controls.Add(this.skinLine15);
             this.skinPanel15.Controls.Add(this.skinLabel27);
             this.skinPanel15.Controls.Add(this.sPnl_dimianzhan);
             this.skinPanel15.Controls.Add(this.skinLabel26);
             this.skinPanel15.Controls.Add(this.skinPanel18);
-            this.skinPanel15.Controls.Add(this.skinLabel17);
-            this.skinPanel15.Controls.Add(this.skinPanel17);
-            this.skinPanel15.Controls.Add(this.skinLabel14);
-            this.skinPanel15.Controls.Add(this.skinPanel16);
             this.skinPanel15.Controls.Add(this.skinLine14);
             this.skinPanel15.Controls.Add(this.skinLine9);
             this.skinPanel15.Controls.Add(this.skinLine8);
             this.skinPanel15.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel15.DownBack = null;
-            this.skinPanel15.Location = new System.Drawing.Point(1191, 100);
+            this.skinPanel15.Location = new System.Drawing.Point(1191, 30);
             this.skinPanel15.Margin = new System.Windows.Forms.Padding(0);
             this.skinPanel15.MouseBack = null;
             this.skinPanel15.Name = "skinPanel15";
@@ -915,8 +968,192 @@
             this.skinPanel15.Palace = true;
             this.skinPanel15.Radius = 48;
             this.skinPanel15.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinPanel15.Size = new System.Drawing.Size(59, 322);
+            this.skinPanel15.Size = new System.Drawing.Size(59, 499);
             this.skinPanel15.TabIndex = 19;
+            // 
+            // skinLabel32
+            // 
+            this.skinLabel32.AutoSize = true;
+            this.skinLabel32.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel32.BorderColor = System.Drawing.Color.White;
+            this.skinLabel32.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel32.Location = new System.Drawing.Point(16, 230);
+            this.skinLabel32.Name = "skinLabel32";
+            this.skinLabel32.Size = new System.Drawing.Size(30, 16);
+            this.skinLabel32.TabIndex = 33;
+            this.skinLabel32.Text = "航段";
+            this.skinLabel32.Click += new System.EventHandler(this.skinLabel32_Click);
+            // 
+            // skinLabel31
+            // 
+            this.skinLabel31.AutoSize = true;
+            this.skinLabel31.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel31.BorderColor = System.Drawing.Color.White;
+            this.skinLabel31.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel31.Location = new System.Drawing.Point(16, 341);
+            this.skinLabel31.Name = "skinLabel31";
+            this.skinLabel31.Size = new System.Drawing.Size(30, 16);
+            this.skinLabel31.TabIndex = 34;
+            this.skinLabel31.Text = "空域";
+            this.skinLabel31.Click += new System.EventHandler(this.skinLabel31_Click);
+            // 
+            // skinPanel23
+            // 
+            this.skinPanel23.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel23.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel23.BackgroundImage")));
+            this.skinPanel23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel23.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel23.DownBack = null;
+            this.skinPanel23.Location = new System.Drawing.Point(19, 207);
+            this.skinPanel23.MouseBack = null;
+            this.skinPanel23.Name = "skinPanel23";
+            this.skinPanel23.NormlBack = null;
+            this.skinPanel23.Size = new System.Drawing.Size(20, 20);
+            this.skinPanel23.TabIndex = 32;
+            // 
+            // skinLabel30
+            // 
+            this.skinLabel30.AutoSize = true;
+            this.skinLabel30.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel30.BorderColor = System.Drawing.Color.White;
+            this.skinLabel30.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel30.Location = new System.Drawing.Point(16, 280);
+            this.skinLabel30.Name = "skinLabel30";
+            this.skinLabel30.Size = new System.Drawing.Size(30, 16);
+            this.skinLabel30.TabIndex = 31;
+            this.skinLabel30.Text = "航线";
+            this.skinLabel30.Click += new System.EventHandler(this.skinLabel30_Click);
+            // 
+            // skinPanel22
+            // 
+            this.skinPanel22.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel22.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel22.BackgroundImage")));
+            this.skinPanel22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel22.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel22.DownBack = null;
+            this.skinPanel22.Location = new System.Drawing.Point(19, 318);
+            this.skinPanel22.MouseBack = null;
+            this.skinPanel22.Name = "skinPanel22";
+            this.skinPanel22.NormlBack = null;
+            this.skinPanel22.Size = new System.Drawing.Size(20, 20);
+            this.skinPanel22.TabIndex = 33;
+            // 
+            // skinLine18
+            // 
+            this.skinLine18.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine18.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine18.LineHeight = 1;
+            this.skinLine18.Location = new System.Drawing.Point(7, 299);
+            this.skinLine18.Name = "skinLine18";
+            this.skinLine18.Size = new System.Drawing.Size(46, 2);
+            this.skinLine18.TabIndex = 32;
+            this.skinLine18.Text = "skinLine18";
+            // 
+            // skinLabel29
+            // 
+            this.skinLabel29.AutoSize = true;
+            this.skinLabel29.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel29.BorderColor = System.Drawing.Color.White;
+            this.skinLabel29.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel29.Location = new System.Drawing.Point(15, 180);
+            this.skinLabel29.Name = "skinLabel29";
+            this.skinLabel29.Size = new System.Drawing.Size(41, 16);
+            this.skinLabel29.TabIndex = 31;
+            this.skinLabel29.Text = "航路点";
+            this.skinLabel29.Click += new System.EventHandler(this.skinLabel29_Click);
+            // 
+            // skinPanel21
+            // 
+            this.skinPanel21.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel21.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel21.BackgroundImage")));
+            this.skinPanel21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel21.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel21.DownBack = null;
+            this.skinPanel21.Location = new System.Drawing.Point(19, 257);
+            this.skinPanel21.MouseBack = null;
+            this.skinPanel21.Name = "skinPanel21";
+            this.skinPanel21.NormlBack = null;
+            this.skinPanel21.Size = new System.Drawing.Size(20, 20);
+            this.skinPanel21.TabIndex = 30;
+            // 
+            // skinLine17
+            // 
+            this.skinLine17.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine17.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine17.LineHeight = 1;
+            this.skinLine17.Location = new System.Drawing.Point(7, 249);
+            this.skinLine17.Name = "skinLine17";
+            this.skinLine17.Size = new System.Drawing.Size(46, 2);
+            this.skinLine17.TabIndex = 29;
+            this.skinLine17.Text = "skinLine17";
+            // 
+            // skinPanel20
+            // 
+            this.skinPanel20.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel20.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel20.BackgroundImage")));
+            this.skinPanel20.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel20.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel20.DownBack = null;
+            this.skinPanel20.Location = new System.Drawing.Point(19, 157);
+            this.skinPanel20.MouseBack = null;
+            this.skinPanel20.Name = "skinPanel20";
+            this.skinPanel20.NormlBack = null;
+            this.skinPanel20.Size = new System.Drawing.Size(20, 20);
+            this.skinPanel20.TabIndex = 30;
+            // 
+            // skinLine16
+            // 
+            this.skinLine16.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine16.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine16.LineHeight = 1;
+            this.skinLine16.Location = new System.Drawing.Point(7, 199);
+            this.skinLine16.Name = "skinLine16";
+            this.skinLine16.Size = new System.Drawing.Size(46, 2);
+            this.skinLine16.TabIndex = 29;
+            this.skinLine16.Text = "skinLine16";
+            // 
+            // skinLabel28
+            // 
+            this.skinLabel28.AutoSize = true;
+            this.skinLabel28.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel28.BorderColor = System.Drawing.Color.White;
+            this.skinLabel28.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel28.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel28.Location = new System.Drawing.Point(16, 121);
+            this.skinLabel28.Name = "skinLabel28";
+            this.skinLabel28.Size = new System.Drawing.Size(30, 16);
+            this.skinLabel28.TabIndex = 28;
+            this.skinLabel28.Text = "机场";
+            this.skinLabel28.Click += new System.EventHandler(this.skinLabel28_Click);
+            // 
+            // skinPanel19
+            // 
+            this.skinPanel19.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel19.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel19.BackgroundImage")));
+            this.skinPanel19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel19.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel19.DownBack = null;
+            this.skinPanel19.Location = new System.Drawing.Point(19, 98);
+            this.skinPanel19.MouseBack = null;
+            this.skinPanel19.Name = "skinPanel19";
+            this.skinPanel19.NormlBack = null;
+            this.skinPanel19.Size = new System.Drawing.Size(20, 20);
+            this.skinPanel19.TabIndex = 26;
+            // 
+            // skinLine15
+            // 
+            this.skinLine15.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine15.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine15.LineHeight = 1;
+            this.skinLine15.Location = new System.Drawing.Point(7, 431);
+            this.skinLine15.Name = "skinLine15";
+            this.skinLine15.Size = new System.Drawing.Size(46, 2);
+            this.skinLine15.TabIndex = 27;
+            this.skinLine15.Text = "skinLine15";
             // 
             // skinLabel27
             // 
@@ -930,6 +1167,7 @@
             this.skinLabel27.Size = new System.Drawing.Size(41, 16);
             this.skinLabel27.TabIndex = 26;
             this.skinLabel27.Text = "地面站";
+            this.skinLabel27.Click += new System.EventHandler(this.skinLabel27_Click);
             // 
             // sPnl_dimianzhan
             // 
@@ -945,6 +1183,7 @@
             this.sPnl_dimianzhan.Size = new System.Drawing.Size(20, 20);
             this.sPnl_dimianzhan.TabIndex = 25;
             this.sPnl_dimianzhan.Click += new System.EventHandler(this.sPnl_dimianzhan_Click);
+            this.sPnl_dimianzhan.Paint += new System.Windows.Forms.PaintEventHandler(this.sPnl_dimianzhan_Paint);
             // 
             // skinLabel26
             // 
@@ -953,7 +1192,7 @@
             this.skinLabel26.BorderColor = System.Drawing.Color.White;
             this.skinLabel26.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel26.Location = new System.Drawing.Point(19, 296);
+            this.skinLabel26.Location = new System.Drawing.Point(15, 466);
             this.skinLabel26.Name = "skinLabel26";
             this.skinLabel26.Size = new System.Drawing.Size(30, 16);
             this.skinLabel26.TabIndex = 24;
@@ -967,74 +1206,19 @@
             this.skinPanel18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel18.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel18.DownBack = null;
-            this.skinPanel18.Location = new System.Drawing.Point(23, 267);
+            this.skinPanel18.Location = new System.Drawing.Point(19, 447);
             this.skinPanel18.MouseBack = null;
             this.skinPanel18.Name = "skinPanel18";
             this.skinPanel18.NormlBack = null;
             this.skinPanel18.Size = new System.Drawing.Size(14, 16);
             this.skinPanel18.TabIndex = 23;
             // 
-            // skinLabel17
-            // 
-            this.skinLabel17.AutoSize = true;
-            this.skinLabel17.BackColor = System.Drawing.Color.Transparent;
-            this.skinLabel17.BorderColor = System.Drawing.Color.White;
-            this.skinLabel17.Font = new System.Drawing.Font("微软雅黑", 8F);
-            this.skinLabel17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel17.Location = new System.Drawing.Point(6, 216);
-            this.skinLabel17.Name = "skinLabel17";
-            this.skinLabel17.Size = new System.Drawing.Size(52, 16);
-            this.skinLabel17.TabIndex = 22;
-            this.skinLabel17.Text = "飞行计划";
-            this.skinLabel17.Click += new System.EventHandler(this.sPnl_flyPlan_click);
-            // 
-            // skinPanel17
-            // 
-            this.skinPanel17.BackColor = System.Drawing.Color.Transparent;
-            this.skinPanel17.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel17.BackgroundImage")));
-            this.skinPanel17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.skinPanel17.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.skinPanel17.DownBack = null;
-            this.skinPanel17.Location = new System.Drawing.Point(18, 183);
-            this.skinPanel17.MouseBack = null;
-            this.skinPanel17.Name = "skinPanel17";
-            this.skinPanel17.NormlBack = null;
-            this.skinPanel17.Size = new System.Drawing.Size(24, 24);
-            this.skinPanel17.TabIndex = 21;
-            // 
-            // skinLabel14
-            // 
-            this.skinLabel14.AutoSize = true;
-            this.skinLabel14.BackColor = System.Drawing.Color.Transparent;
-            this.skinLabel14.BorderColor = System.Drawing.Color.White;
-            this.skinLabel14.Font = new System.Drawing.Font("微软雅黑", 8F);
-            this.skinLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel14.Location = new System.Drawing.Point(6, 136);
-            this.skinLabel14.Name = "skinLabel14";
-            this.skinLabel14.Size = new System.Drawing.Size(52, 16);
-            this.skinLabel14.TabIndex = 20;
-            this.skinLabel14.Text = "导航管理";
-            this.skinLabel14.Click += new System.EventHandler(this.sLabel_guideManagement_Click);
-            // 
-            // skinPanel16
-            // 
-            this.skinPanel16.BackColor = System.Drawing.Color.Transparent;
-            this.skinPanel16.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel16.BackgroundImage")));
-            this.skinPanel16.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.skinPanel16.DownBack = null;
-            this.skinPanel16.Location = new System.Drawing.Point(17, 102);
-            this.skinPanel16.MouseBack = null;
-            this.skinPanel16.Name = "skinPanel16";
-            this.skinPanel16.NormlBack = null;
-            this.skinPanel16.Size = new System.Drawing.Size(24, 25);
-            this.skinPanel16.TabIndex = 19;
-            // 
             // skinLine14
             // 
             this.skinLine14.BackColor = System.Drawing.Color.Transparent;
             this.skinLine14.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine14.LineHeight = 1;
-            this.skinLine14.Location = new System.Drawing.Point(7, 240);
+            this.skinLine14.Location = new System.Drawing.Point(9, 367);
             this.skinLine14.Name = "skinLine14";
             this.skinLine14.Size = new System.Drawing.Size(46, 2);
             this.skinLine14.TabIndex = 18;
@@ -1045,7 +1229,7 @@
             this.skinLine9.BackColor = System.Drawing.Color.Transparent;
             this.skinLine9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine9.LineHeight = 1;
-            this.skinLine9.Location = new System.Drawing.Point(7, 160);
+            this.skinLine9.Location = new System.Drawing.Point(7, 140);
             this.skinLine9.Name = "skinLine9";
             this.skinLine9.Size = new System.Drawing.Size(46, 2);
             this.skinLine9.TabIndex = 17;
@@ -1079,15 +1263,19 @@
             this.skinPanel3.Controls.Add(this.skinLabel23);
             this.skinPanel3.Controls.Add(this.skinLabel24);
             this.skinPanel3.Controls.Add(this.skinPanel10);
+            this.skinPanel3.Controls.Add(this.skinPanel17);
+            this.skinPanel3.Controls.Add(this.skinLabel17);
+            this.skinPanel3.Controls.Add(this.skinPanel16);
+            this.skinPanel3.Controls.Add(this.skinLabel14);
             this.skinPanel3.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel3.DownBack = null;
-            this.skinPanel3.Location = new System.Drawing.Point(730, 30);
+            this.skinPanel3.Location = new System.Drawing.Point(590, 30);
             this.skinPanel3.MouseBack = null;
             this.skinPanel3.Name = "skinPanel3";
             this.skinPanel3.NormlBack = null;
             this.skinPanel3.Radius = 5;
             this.skinPanel3.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinPanel3.Size = new System.Drawing.Size(450, 63);
+            this.skinPanel3.Size = new System.Drawing.Size(590, 63);
             this.skinPanel3.TabIndex = 14;
             // 
             // skinPanel14
@@ -1276,6 +1464,61 @@
             this.skinPanel10.Size = new System.Drawing.Size(22, 22);
             this.skinPanel10.TabIndex = 18;
             // 
+            // skinPanel17
+            // 
+            this.skinPanel17.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel17.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel17.BackgroundImage")));
+            this.skinPanel17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel17.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel17.DownBack = null;
+            this.skinPanel17.Location = new System.Drawing.Point(540, 8);
+            this.skinPanel17.MouseBack = null;
+            this.skinPanel17.Name = "skinPanel17";
+            this.skinPanel17.NormlBack = null;
+            this.skinPanel17.Size = new System.Drawing.Size(24, 24);
+            this.skinPanel17.TabIndex = 21;
+            // 
+            // skinLabel17
+            // 
+            this.skinLabel17.AutoSize = true;
+            this.skinLabel17.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel17.BorderColor = System.Drawing.Color.White;
+            this.skinLabel17.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel17.Location = new System.Drawing.Point(528, 35);
+            this.skinLabel17.Name = "skinLabel17";
+            this.skinLabel17.Size = new System.Drawing.Size(52, 16);
+            this.skinLabel17.TabIndex = 22;
+            this.skinLabel17.Text = "飞行计划";
+            this.skinLabel17.Click += new System.EventHandler(this.sPnl_flyPlan_click);
+            // 
+            // skinPanel16
+            // 
+            this.skinPanel16.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel16.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel16.BackgroundImage")));
+            this.skinPanel16.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel16.DownBack = null;
+            this.skinPanel16.Location = new System.Drawing.Point(485, 5);
+            this.skinPanel16.MouseBack = null;
+            this.skinPanel16.Name = "skinPanel16";
+            this.skinPanel16.NormlBack = null;
+            this.skinPanel16.Size = new System.Drawing.Size(24, 25);
+            this.skinPanel16.TabIndex = 19;
+            // 
+            // skinLabel14
+            // 
+            this.skinLabel14.AutoSize = true;
+            this.skinLabel14.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel14.BorderColor = System.Drawing.Color.White;
+            this.skinLabel14.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel14.Location = new System.Drawing.Point(472, 33);
+            this.skinLabel14.Name = "skinLabel14";
+            this.skinLabel14.Size = new System.Drawing.Size(52, 16);
+            this.skinLabel14.TabIndex = 20;
+            this.skinLabel14.Text = "导航管理";
+            this.skinLabel14.Click += new System.EventHandler(this.sLabel_guideManagement_Click);
+            // 
             // sPnl_funcmore
             // 
             this.sPnl_funcmore.BackColor = System.Drawing.Color.Transparent;
@@ -1284,7 +1527,7 @@
             this.sPnl_funcmore.Controls.Add(this.skinPanel11);
             this.sPnl_funcmore.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.sPnl_funcmore.DownBack = null;
-            this.sPnl_funcmore.Location = new System.Drawing.Point(1191, 30);
+            this.sPnl_funcmore.Location = new System.Drawing.Point(282, 30);
             this.sPnl_funcmore.Margin = new System.Windows.Forms.Padding(0);
             this.sPnl_funcmore.MouseBack = null;
             this.sPnl_funcmore.Name = "sPnl_funcmore";
@@ -1318,7 +1561,7 @@
             this.skinPanel8.Controls.Add(this.sPnl_Fly);
             this.skinPanel8.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel8.DownBack = null;
-            this.skinPanel8.Location = new System.Drawing.Point(536, 30);
+            this.skinPanel8.Location = new System.Drawing.Point(376, 30);
             this.skinPanel8.MouseBack = null;
             this.skinPanel8.Name = "skinPanel8";
             this.skinPanel8.NormlBack = null;
@@ -1413,9 +1656,11 @@
             this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Size = new System.Drawing.Size(1280, 752);
+            this.gMapControl1.Size = new System.Drawing.Size(1280, 697);
             this.gMapControl1.TabIndex = 0;
             this.gMapControl1.Zoom = 0D;
+            this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
+            this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
             // 
             // timerSPBarPlayback
             // 
@@ -1427,7 +1672,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1280, 788);
+            this.ClientSize = new System.Drawing.Size(1280, 733);
             this.Controls.Add(this.sTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1547,6 +1792,22 @@
         private Controls.MaskCircleLayer maskPlaybackRun;
         private CCWin.SkinControl.SkinProgressBar skinProgressBar1;
         private System.Windows.Forms.Timer timerSPBarPlayback;
+        private System.Windows.Forms.Button button1;
+        private Button button2;
+        private CCWin.SkinControl.SkinLabel skinLabel28;
+        private CCWin.SkinControl.SkinPanel skinPanel19;
+        private CCWin.SkinControl.SkinLine skinLine15;
+        private CCWin.SkinControl.SkinLabel skinLabel30;
+        private CCWin.SkinControl.SkinLabel skinLabel29;
+        private CCWin.SkinControl.SkinPanel skinPanel21;
+        private CCWin.SkinControl.SkinLine skinLine17;
+        private CCWin.SkinControl.SkinPanel skinPanel20;
+        private CCWin.SkinControl.SkinLine skinLine16;
+        private CCWin.SkinControl.SkinLabel skinLabel31;
+        private CCWin.SkinControl.SkinPanel skinPanel22;
+        private CCWin.SkinControl.SkinLine skinLine18;
+        private CCWin.SkinControl.SkinLabel skinLabel32;
+        private CCWin.SkinControl.SkinPanel skinPanel23;
     }
 }
 

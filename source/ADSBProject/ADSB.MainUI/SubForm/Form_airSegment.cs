@@ -13,12 +13,12 @@ using GMap.NET.MapProviders;
 
 namespace ADSB.MainUI.SubForm
 {
-    public partial class Form_earthStation : Form_aTemplate
+    public partial class Form_airSegment : Form_aTemplate
     {
-        public delegate void earthStation(Boolean selected, int flag);
-        public event earthStation earthStation_event;
+        public delegate void airSegment(Boolean selected, int flag);
+        public event airSegment airSegment_event;
 
-        public Form_earthStation()
+        public Form_airSegment()
         {
             InitializeComponent();
             InitializeGMap();
@@ -34,21 +34,22 @@ namespace ADSB.MainUI.SubForm
             String name = skinTextBox2.Text;
             if (null == name || name.Length == 0)
             {
-                MessageBox.Show("请输入地面站名称！");
+                MessageBox.Show("请输入航段名称！");
                 return;
             }
-            if (null == skinTextBox3.Text || skinTextBox3.Text.Length == 0)
+            if (null == comboBox1.Text || comboBox1.Text.Length == 0)
             {
-                MessageBox.Show("请输入经纬度！");
+                MessageBox.Show("请选择起点！");
                 return;
             }
-            if (null == skinTextBox4.Text || skinTextBox4.Text.Length == 0)
+            if (null == comboBox2.Text || comboBox2.Text.Length == 0)
             {
-                MessageBox.Show("请输入经纬度！");
+                MessageBox.Show("请选择终点！");
                 return;
             }
-            double lat = System.Convert.ToDouble(skinTextBox3.Text);
-            double lang = System.Convert.ToDouble(skinTextBox4.Text);
+
+            double lat = 20;
+            double lang = 40;
 
 
             // 动态添加一行
@@ -80,49 +81,52 @@ namespace ADSB.MainUI.SubForm
             inc.Text = lat.ToString();
             tableLayoutPanel1.Controls.Add(inc, 2, i);
 
-            TextBox outc = new TextBox();
-            outc.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            outc.TextAlign = HorizontalAlignment.Center;
-            outc.Text = lang.ToString();
-            tableLayoutPanel1.Controls.Add(outc, 3, i);
+            TextBox outcBegin = new TextBox();
+            outcBegin.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            outcBegin.TextAlign = HorizontalAlignment.Center;
+            outcBegin.Text = lang.ToString();
+            tableLayoutPanel1.Controls.Add(outcBegin, 3, i);
+
+            TextBox nameBoxEnd = new TextBox();
+            nameBoxEnd.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            nameBoxEnd.TextAlign = HorizontalAlignment.Center;
+            nameBoxEnd.Text = name;
+            tableLayoutPanel1.Controls.Add(nameBoxEnd, 4, i);
+
+            TextBox incEnd = new TextBox();
+            incEnd.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            incEnd.TextAlign = HorizontalAlignment.Center;
+            incEnd.Text = lat.ToString();
+            tableLayoutPanel1.Controls.Add(incEnd, 5, i);
+
+            TextBox outcEnd = new TextBox();
+            outcEnd.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            outcEnd.TextAlign = HorizontalAlignment.Center;
+            outcEnd.Text = lang.ToString();
+            tableLayoutPanel1.Controls.Add(outcEnd, 6, i);
 
             // todo 保存到数据库
 
-            earthStation_event(true, 2);
+            airSegment_event(true, 2);
 
             // MessageBox.Show("新增成功！");
         }
 
         private void InitializeGMap()
         {
-            this.gMapControl1.CacheLocation = System.Windows.Forms.Application.StartupPath;    //缓冲区路径
-            this.gMapControl1.MapProvider = GMapProviders.GoogleChinaMap;                      //谷歌中国区地图加载
-            this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //地图模式
-            this.gMapControl1.MinZoom = 1;                                                     //最小比例
-            this.gMapControl1.MaxZoom = 23;                                                    //最大比例
-            this.gMapControl1.Zoom = 10;                                                       //当前比例
-            this.gMapControl1.ShowCenter = false;                                              //不显示中心十字点
-            this.gMapControl1.DragButton = System.Windows.Forms.MouseButtons.Left;             //左键拖拽地图
-            this.gMapControl1.Position = new PointLatLng(23.16, 113.27);                     //初始化地址 广州(23.16, 113.27) 北京(39.3, 116.5)
-            this.gMapControl1.MouseDown += new MouseEventHandler(mapControl_MouseDown);
+            // 下拉框初始化
+            comboBox1.Items.Add("上海");
+            comboBox1.Items.Add("北京");
+            comboBox1.Items.Add("南京");
 
+            comboBox2.Items.Add("深圳");
+            comboBox2.Items.Add("西安");
+            comboBox2.Items.Add("广州");
             // TODO 获取地面目标信息，并初始化tableLayoutPanel1
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50));
-            
-        }
-
-        private void mapControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
-            skinTextBox3.Text = point.Lat.ToString();
-            skinTextBox4.Text = point.Lng.ToString();
-           // throw new NotImplementedException();
-        }
-
-        private void Form_earthStation_Load(object sender, EventArgs e)
-        {
+            // tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50));
 
         }
+
 
         private void skinButton2_Click(object sender, EventArgs e)
         {
@@ -156,13 +160,19 @@ namespace ADSB.MainUI.SubForm
                             tableLayoutPanel1.SetCellPosition(ctlNext2, new TableLayoutPanelCellPosition(2, k));
                             Control ctlNext3 = tableLayoutPanel1.GetControlFromPosition(3, k + 1);
                             tableLayoutPanel1.SetCellPosition(ctlNext3, new TableLayoutPanelCellPosition(3, k));
+                            Control ctlNext4 = tableLayoutPanel1.GetControlFromPosition(4, k + 1);
+                            tableLayoutPanel1.SetCellPosition(ctlNext1, new TableLayoutPanelCellPosition(4, k));
+                            Control ctlNext5 = tableLayoutPanel1.GetControlFromPosition(5, k + 1);
+                            tableLayoutPanel1.SetCellPosition(ctlNext2, new TableLayoutPanelCellPosition(5, k));
+                            Control ctlNext6 = tableLayoutPanel1.GetControlFromPosition(6, k + 1);
+                            tableLayoutPanel1.SetCellPosition(ctlNext3, new TableLayoutPanelCellPosition(6, k));
                         }
 
                         //移除最后一行，最后为空白行
                         tableLayoutPanel1.RowStyles.RemoveAt(tableLayoutPanel1.RowCount - 1);
                         tableLayoutPanel1.RowCount = tableLayoutPanel1.RowCount - 1;
 
-                        earthStation_event(true, 2);
+                        airSegment_event(true, 2);
 
                         break;
                     }

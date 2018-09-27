@@ -1,6 +1,6 @@
 ﻿namespace ADSB.MainUI.SubForm
 {
-    partial class Form_earthStation
+    partial class Form_wayPoint
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_earthStation));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_wayPoint));
             this.skinLabel1 = new CCWin.SkinControl.SkinLabel();
             this.sPnl_close = new CCWin.SkinControl.SkinPanel();
             this.skinButton1 = new CCWin.SkinControl.SkinButton();
@@ -56,7 +56,7 @@
             this.skinLabel1.Name = "skinLabel1";
             this.skinLabel1.Size = new System.Drawing.Size(117, 28);
             this.skinLabel1.TabIndex = 2;
-            this.skinLabel1.Text = "地面站管理";
+            this.skinLabel1.Text = "航站点管理";
             // 
             // sPnl_close
             // 
@@ -361,7 +361,7 @@
             this.skinButton2.UseVisualStyleBackColor = false;
             this.skinButton2.Click += new System.EventHandler(this.skinButton2_Click);
             // 
-            // Form_earthStation
+            // Form_wayPoint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -381,9 +381,8 @@
             this.Controls.Add(this.sPnl_close);
             this.Controls.Add(this.skinLabel1);
             this.Location = new System.Drawing.Point(0, 0);
-            this.Name = "Form_earthStation";
+            this.Name = "Form_wayPoint";
             this.Text = "Form_earthStation";
-            this.Load += new System.EventHandler(this.Form_earthStation_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
