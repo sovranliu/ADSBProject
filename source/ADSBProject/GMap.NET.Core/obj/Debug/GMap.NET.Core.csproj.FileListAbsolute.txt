@@ -1,0 +1,6 @@
+D:\workspace\document\外包\空域监视\ADSBProject\bin\Debug\GMap.NET.Core.dll
+D:\workspace\document\外包\空域监视\ADSBProject\bin\Debug\GMap.NET.Core.pdb
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.Core\obj\Debug\GMap.NET.Properties.Resources.resources
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.Core\obj\Debug\GMap.NET.Core.csproj.GenerateResource.Cache
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.Core\obj\Debug\GMap.NET.Core.dll
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.Core\obj\Debug\GMap.NET.Core.pdb

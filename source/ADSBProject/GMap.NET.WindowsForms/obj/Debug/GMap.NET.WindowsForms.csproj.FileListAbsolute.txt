@@ -1,0 +1,8 @@
+D:\workspace\document\外包\空域监视\ADSBProject\bin\Debug\GMap.NET.WindowsForms.dll
+D:\workspace\document\外包\空域监视\ADSBProject\bin\Debug\GMap.NET.WindowsForms.pdb
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.WindowsForms\obj\Debug\GMap.NET.WindowsForms.csprojResolveAssemblyReference.cache
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.WindowsForms\obj\Debug\GMap.NET.TilePrefetcher.resources
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.WindowsForms\obj\Debug\System.Windows.Forms.Properties.Resources.resources
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.WindowsForms\obj\Debug\GMap.NET.WindowsForms.csproj.GenerateResource.Cache
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.WindowsForms\obj\Debug\GMap.NET.WindowsForms.dll
+D:\workspace\document\外包\空域监视\ADSBProject\ADSBProject\GMap.NET.WindowsForms\obj\Debug\GMap.NET.WindowsForms.pdb

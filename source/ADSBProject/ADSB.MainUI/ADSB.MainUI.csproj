@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{351D824D-FDC4-4B97-B9DD-D54C1F77324B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ADSB.MainUI</RootNamespace>
+    <AssemblyName>ADSB.MainUI</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CSkin">
+      <HintPath>CSkin 4.0\CSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\System.Data.SQLite\2012\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\AlarmDataGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AlarmDataGrid.Designer.cs">
+      <DependentUpon>AlarmDataGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FlyFilterDataGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FlyFilterDataGrid.Designer.cs">
+      <DependentUpon>FlyFilterDataGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HorizonLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\HorizonLine.Designer.cs">
+      <DependentUpon>HorizonLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MaskCircleLayer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MaskCircleLayer.Designer.cs">
+      <DependentUpon>MaskCircleLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MaskLayer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MaskLayer.Designer.cs">
+      <DependentUpon>MaskLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\myCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\myCheckBox.Designer.cs">
+      <DependentUpon>myCheckBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PanelEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PanelEx.Designer.cs">
+      <DependentUpon>PanelEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VerticalBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VerticalBar.Designer.cs">
+      <DependentUpon>VerticalBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataType.cs" />
+    <Compile Include="FlyModeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GMapMarkerEx.cs" />
+    <Compile Include="Logic\DataHelper.cs" />
+    <Compile Include="Logic\ConfigHelper.cs" />
+    <Compile Include="LogRecord.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MonitorModeUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubForm\Form_dimianzhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_dimianzhan.Designer.cs">
+      <DependentUpon>Form_dimianzhan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_distanceFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_distanceFilter.Designer.cs">
+      <DependentUpon>Form_distanceFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_aTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_aTemplate.Designer.cs">
+      <DependentUpon>Form_aTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_setup1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_setup1.Designer.cs">
+      <DependentUpon>Form_setup1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_setup2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_setup2.Designer.cs">
+      <DependentUpon>Form_setup2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_flyFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_flyFilter.Designer.cs">
+      <DependentUpon>Form_flyFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_alarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_alarm.Designer.cs">
+      <DependentUpon>Form_alarm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_earthStation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_earthStation.Designer.cs">
+      <DependentUpon>Form_earthStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_playback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_playback.Designer.cs">
+      <DependentUpon>Form_playback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_mapTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_mapTool.Designer.cs">
+      <DependentUpon>Form_mapTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_guideResourceAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_guideResourceAdd.Designer.cs">
+      <DependentUpon>Form_guideResourceAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_info.Designer.cs">
+      <DependentUpon>Form_info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_status.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_status.Designer.cs">
+      <DependentUpon>Form_status.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_gaodu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_gaodu.Designer.cs">
+      <DependentUpon>Form_gaodu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_liangcheng.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_liangcheng.Designer.cs">
+      <DependentUpon>Form_liangcheng.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\AlarmDataGrid.resx">
+      <DependentUpon>AlarmDataGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FlyFilterDataGrid.resx">
+      <DependentUpon>FlyFilterDataGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\HorizonLine.resx">
+      <DependentUpon>HorizonLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VerticalBar.resx">
+      <DependentUpon>VerticalBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SubForm\Form_dimianzhan.resx">
+      <DependentUpon>Form_dimianzhan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_distanceFilter.resx">
+      <DependentUpon>Form_distanceFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_aTemplate.resx">
+      <DependentUpon>Form_aTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_setup1.resx">
+      <DependentUpon>Form_setup1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_setup2.resx">
+      <DependentUpon>Form_setup2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_flyFilter.resx">
+      <DependentUpon>Form_flyFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_alarm.resx">
+      <DependentUpon>Form_alarm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_earthStation.resx">
+      <DependentUpon>Form_earthStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_playback.resx">
+      <DependentUpon>Form_playback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_mapTool.resx">
+      <DependentUpon>Form_mapTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_guideResourceAdd.resx">
+      <DependentUpon>Form_guideResourceAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_info.resx">
+      <DependentUpon>Form_info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_status.resx">
+      <DependentUpon>Form_status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_gaodu.resx">
+      <DependentUpon>Form_gaodu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_liangcheng.resx">
+      <DependentUpon>Form_liangcheng.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Library\data.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GMap.NET.Core\GMap.NET.Core.csproj">
+      <Project>{d0c39d9d-bed0-418b-9a5e-713176caf40c}</Project>
+      <Name>GMap.NET.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GMap.NET.WindowsForms\GMap.NET.WindowsForms.csproj">
+      <Project>{e06def77-f933-42fb-afd7-db2d0d8d6a98}</Project>
+      <Name>GMap.NET.WindowsForms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Library\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
