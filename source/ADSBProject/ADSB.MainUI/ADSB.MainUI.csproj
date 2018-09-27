@@ -160,6 +160,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubForm\Form_airPort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_airPort.Designer.cs">
+      <DependentUpon>Form_airPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_airRoute.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_airRoute.Designer.cs">
+      <DependentUpon>Form_airRoute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_airSegment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_airSegment.Designer.cs">
+      <DependentUpon>Form_airSegment.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\Form_dimianzhan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +268,12 @@
     <Compile Include="SubForm\Form_liangcheng.Designer.cs">
       <DependentUpon>Form_liangcheng.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubForm\Form_wayPoint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_wayPoint.Designer.cs">
+      <DependentUpon>Form_wayPoint.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Controls\AlarmDataGrid.resx">
       <DependentUpon>AlarmDataGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -275,6 +299,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubForm\Form_airPort.resx">
+      <DependentUpon>Form_airPort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_airRoute.resx">
+      <DependentUpon>Form_airRoute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_airSegment.resx">
+      <DependentUpon>Form_airSegment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_dimianzhan.resx">
       <DependentUpon>Form_dimianzhan.cs</DependentUpon>
     </EmbeddedResource>
@@ -319,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_liangcheng.resx">
       <DependentUpon>Form_liangcheng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
+      <DependentUpon>Form_wayPoint.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Library\data.db">

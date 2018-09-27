@@ -106,10 +106,9 @@ namespace ADSB.MainUI
             if (dataSource.Count == 0)
                 return;
             Cat021Data tmpData = dataSource.GetData();
-            GMapAirPlane tmpAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData);
-            GMapAirPlane removeAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData);
-            bool remove=false;
-            foreach (GMapAirPlane eachlistAirplane in listAirplane)
+            bool isCheckedPlane = false;
+            // 看飞机是否在选中列表中
+            foreach (GMapAirPlane eachlistAirplane in listAirplaneCheck.Values)
             {
                 if (eachlistAirplane.AirPlaneMarkerInfo.fid.Trim() == tmpData.flightNo.Trim())
                 {
@@ -119,7 +118,6 @@ namespace ADSB.MainUI
 
             GMapAirPlane tmpAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, isCheckedPlane);
             GMapAirPlane removeAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, false);
-
             bool remove = false;
             // 同一家飞机来了新的先从list里面移除掉
             foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
