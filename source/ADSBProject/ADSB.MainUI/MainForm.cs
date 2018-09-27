@@ -30,9 +30,9 @@ namespace ADSB.MainUI
         // 是否是画布模式
         private bool isCanvas = false;
 
-        private GMapMarkerImage currentMarker;
+        // private GMapMarkerImage currentMarker;
 
-        private GMapAirPlane airPlane;
+        // private GMapAirPlane airPlane;
         // 所有飞机
         private Dictionary<String, GMapAirPlane> listAirplane;
         // 凸显分飞机列表
@@ -63,7 +63,7 @@ namespace ADSB.MainUI
         List<PointLatLng> distincePairs = new List<PointLatLng>();
        // private GMapAirPort airPort;
        // private GMapAirSegment airSegment;
-        private GMapAirSpace airSpace;
+       // private GMapAirSpace airSpace;
         private Timer flyTimer = new Timer();
         private Timer displayTimer = new Timer();
 
