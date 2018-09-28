@@ -195,12 +195,6 @@
     <Compile Include="SubForm\Form_aTemplate.Designer.cs">
       <DependentUpon>Form_aTemplate.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_dimianzhan.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_dimianzhan.Designer.cs">
-      <DependentUpon>Form_dimianzhan.cs</DependentUpon>
-    </Compile>
     <Compile Include="SubForm\Form_distanceFilter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -318,9 +312,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_aTemplate.resx">
       <DependentUpon>Form_aTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_dimianzhan.resx">
-      <DependentUpon>Form_dimianzhan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_distanceFilter.resx">
       <DependentUpon>Form_distanceFilter.cs</DependentUpon>

@@ -41,7 +41,6 @@
             this.skinTextBox4 = new CCWin.SkinControl.SkinTextBox();
             this.horizonLine1 = new ADSB.MainUI.Controls.HorizonLine();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.skinButton2 = new CCWin.SkinControl.SkinButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +56,7 @@
             this.skinLabel1.BorderColor = System.Drawing.Color.White;
             this.skinLabel1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
-            this.skinLabel1.Location = new System.Drawing.Point(166, 9);
+            this.skinLabel1.Location = new System.Drawing.Point(175, 22);
             this.skinLabel1.Name = "skinLabel1";
             this.skinLabel1.Size = new System.Drawing.Size(96, 28);
             this.skinLabel1.TabIndex = 2;
@@ -303,11 +302,9 @@
             this.gMapControl1.GrayScaleMode = false;
             this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.gMapControl1.LevelsKeepInMemmory = 5;
-            this.gMapControl1.Location = new System.Drawing.Point(20, 383);
+            this.gMapControl1.Location = new System.Drawing.Point(450, 62);
             this.gMapControl1.MarkersEnabled = true;
-            this.gMapControl1.MaximumSize = new System.Drawing.Size(1131, 333);
             this.gMapControl1.MaxZoom = 2;
-            this.gMapControl1.MinimumSize = new System.Drawing.Size(1131, 333);
             this.gMapControl1.MinZoom = 2;
             this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             this.gMapControl1.Name = "gMapControl1";
@@ -318,23 +315,9 @@
             this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Size = new System.Drawing.Size(1131, 333);
+            this.gMapControl1.Size = new System.Drawing.Size(674, 688);
             this.gMapControl1.TabIndex = 21;
             this.gMapControl1.Zoom = 0D;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(992, 252);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(159, 116);
-            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // skinButton2
             // 
@@ -368,15 +351,16 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3});
-            this.dataGridView1.Location = new System.Drawing.Point(518, 62);
+            this.dataGridView1.Location = new System.Drawing.Point(66, 404);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(431, 292);
+            this.dataGridView1.Size = new System.Drawing.Size(345, 292);
             this.dataGridView1.TabIndex = 23;
             // 
             // Column1
@@ -405,7 +389,6 @@
             this.ClientSize = new System.Drawing.Size(1176, 778);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.skinButton2);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.gMapControl1);
             this.Controls.Add(this.horizonLine1);
             this.Controls.Add(this.skinTextBox2);
@@ -439,7 +422,6 @@
         private CCWin.SkinControl.SkinTextBox skinTextBox4;
         private Controls.HorizonLine horizonLine1;
         private GMap.NET.WindowsForms.GMapControl gMapControl1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private CCWin.SkinControl.SkinButton skinButton2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
