@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ADSB.MainUI</RootNamespace>
     <AssemblyName>ADSB.MainUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -28,6 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -80,11 +81,15 @@
     <Reference Include="CSkin">
       <HintPath>CSkin 4.0\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\System.Data.SQLite\2012\bin\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\..\..\..\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -155,7 +160,7 @@
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="MainForm.designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MonitorModeUI.cs">
@@ -181,17 +186,11 @@
     <Compile Include="SubForm\Form_airSegment.Designer.cs">
       <DependentUpon>Form_airSegment.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_dimianzhan.cs">
+    <Compile Include="SubForm\Form_alarm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubForm\Form_dimianzhan.Designer.cs">
-      <DependentUpon>Form_dimianzhan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_distanceFilter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_distanceFilter.Designer.cs">
-      <DependentUpon>Form_distanceFilter.cs</DependentUpon>
+    <Compile Include="SubForm\Form_alarm.Designer.cs">
+      <DependentUpon>Form_alarm.cs</DependentUpon>
     </Compile>
     <Compile Include="SubForm\Form_aTemplate.cs">
       <SubType>Form</SubType>
@@ -199,29 +198,11 @@
     <Compile Include="SubForm\Form_aTemplate.Designer.cs">
       <DependentUpon>Form_aTemplate.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_setup1.cs">
+    <Compile Include="SubForm\Form_distanceFilter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubForm\Form_setup1.Designer.cs">
-      <DependentUpon>Form_setup1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_setup2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_setup2.Designer.cs">
-      <DependentUpon>Form_setup2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_flyFilter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_flyFilter.Designer.cs">
-      <DependentUpon>Form_flyFilter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_alarm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_alarm.Designer.cs">
-      <DependentUpon>Form_alarm.cs</DependentUpon>
+    <Compile Include="SubForm\Form_distanceFilter.Designer.cs">
+      <DependentUpon>Form_distanceFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="SubForm\Form_earthStation.cs">
       <SubType>Form</SubType>
@@ -229,17 +210,17 @@
     <Compile Include="SubForm\Form_earthStation.Designer.cs">
       <DependentUpon>Form_earthStation.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_playback.cs">
+    <Compile Include="SubForm\Form_flyFilter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubForm\Form_playback.Designer.cs">
-      <DependentUpon>Form_playback.cs</DependentUpon>
+    <Compile Include="SubForm\Form_flyFilter.Designer.cs">
+      <DependentUpon>Form_flyFilter.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_mapTool.cs">
+    <Compile Include="SubForm\Form_gaodu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubForm\Form_mapTool.Designer.cs">
-      <DependentUpon>Form_mapTool.cs</DependentUpon>
+    <Compile Include="SubForm\Form_gaodu.Designer.cs">
+      <DependentUpon>Form_gaodu.cs</DependentUpon>
     </Compile>
     <Compile Include="SubForm\Form_guideResourceAdd.cs">
       <SubType>Form</SubType>
@@ -253,23 +234,41 @@
     <Compile Include="SubForm\Form_info.Designer.cs">
       <DependentUpon>Form_info.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_status.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_status.Designer.cs">
-      <DependentUpon>Form_status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_gaodu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_gaodu.Designer.cs">
-      <DependentUpon>Form_gaodu.cs</DependentUpon>
-    </Compile>
     <Compile Include="SubForm\Form_liangcheng.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubForm\Form_liangcheng.Designer.cs">
       <DependentUpon>Form_liangcheng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_mapTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_mapTool.Designer.cs">
+      <DependentUpon>Form_mapTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_playback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_playback.Designer.cs">
+      <DependentUpon>Form_playback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_setup1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_setup1.Designer.cs">
+      <DependentUpon>Form_setup1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_setup2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_setup2.Designer.cs">
+      <DependentUpon>Form_setup2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_status.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_status.Designer.cs">
+      <DependentUpon>Form_status.cs</DependentUpon>
     </Compile>
     <Compile Include="SubForm\Form_wayPoint.cs">
       <SubType>Form</SubType>
@@ -311,35 +310,23 @@
     <EmbeddedResource Include="SubForm\Form_airSegment.resx">
       <DependentUpon>Form_airSegment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_dimianzhan.resx">
-      <DependentUpon>Form_dimianzhan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_distanceFilter.resx">
-      <DependentUpon>Form_distanceFilter.cs</DependentUpon>
+    <EmbeddedResource Include="SubForm\Form_alarm.resx">
+      <DependentUpon>Form_alarm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_aTemplate.resx">
       <DependentUpon>Form_aTemplate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_setup1.resx">
-      <DependentUpon>Form_setup1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_setup2.resx">
-      <DependentUpon>Form_setup2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_flyFilter.resx">
-      <DependentUpon>Form_flyFilter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_alarm.resx">
-      <DependentUpon>Form_alarm.cs</DependentUpon>
+    <EmbeddedResource Include="SubForm\Form_distanceFilter.resx">
+      <DependentUpon>Form_distanceFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_earthStation.resx">
       <DependentUpon>Form_earthStation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_playback.resx">
-      <DependentUpon>Form_playback.cs</DependentUpon>
+    <EmbeddedResource Include="SubForm\Form_flyFilter.resx">
+      <DependentUpon>Form_flyFilter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_mapTool.resx">
-      <DependentUpon>Form_mapTool.cs</DependentUpon>
+    <EmbeddedResource Include="SubForm\Form_gaodu.resx">
+      <DependentUpon>Form_gaodu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_guideResourceAdd.resx">
       <DependentUpon>Form_guideResourceAdd.cs</DependentUpon>
@@ -347,19 +334,29 @@
     <EmbeddedResource Include="SubForm\Form_info.resx">
       <DependentUpon>Form_info.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_status.resx">
-      <DependentUpon>Form_status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_gaodu.resx">
-      <DependentUpon>Form_gaodu.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_liangcheng.resx">
       <DependentUpon>Form_liangcheng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_mapTool.resx">
+      <DependentUpon>Form_mapTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_playback.resx">
+      <DependentUpon>Form_playback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_setup1.resx">
+      <DependentUpon>Form_setup1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_setup2.resx">
+      <DependentUpon>Form_setup2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_status.resx">
+      <DependentUpon>Form_status.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
       <DependentUpon>Form_wayPoint.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <Fakes Include="Fakes\System.Data.SQLite.fakes" />
     <None Include="Library\data.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

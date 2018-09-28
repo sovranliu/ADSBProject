@@ -341,14 +341,7 @@ namespace ADSB.MainUI
         private void sPnl_dimianzhan_Click(object sender, EventArgs e)
         {
             log.Writelogs("点击了\"地面站\"按钮");
-            if (!IsPlayback)
-            {
-                ShowMaskLayerWindow();
-
-                Form test = new Form_dimianzhan();
-                test.ShowDialog();
-                mapmask.Visible = false;
-            }
+            
 
         }
 
