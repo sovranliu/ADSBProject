@@ -298,7 +298,7 @@ namespace ADSB.MainUI
         public GMapAirPort(PointLatLng p) : base(p)
         {
             string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\直升机@3x.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式\\assets\\直升机@3x.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
         }

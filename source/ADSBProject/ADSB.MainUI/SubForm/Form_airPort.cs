@@ -60,6 +60,7 @@ namespace ADSB.MainUI.SubForm
             this.dataGridView1.DataSource = this.airPortList;
 
             // todo 保存到数据库
+            ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng  + ")");
 
             airPort_event(true, 2);
         }

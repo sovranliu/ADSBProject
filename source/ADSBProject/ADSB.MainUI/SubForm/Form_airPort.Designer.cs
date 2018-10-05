@@ -406,6 +406,7 @@
             this.Text = "Form_earthStation";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.TopMost = false;
             this.PerformLayout();
 
         }
