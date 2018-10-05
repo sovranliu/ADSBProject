@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
 
 namespace ADSB.MainUI.SubForm
 {
@@ -18,6 +19,8 @@ namespace ADSB.MainUI.SubForm
     {
         public delegate void airPort(Boolean selected, int flag);
         public event airPort airPort_event;
+
+        private GMapOverlay planeOverlay = new GMapOverlay("planeLayer"); //飞机图层
 
         public Form_airPort()
         {
@@ -120,7 +123,24 @@ namespace ADSB.MainUI.SubForm
             }
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
+            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
+
+            planeOverlay.Markers.Clear();
+
+            PointLatLng point1 = new PointLatLng(lat, lang);
+            GMapAirPlane airPlane = new GMapAirPlane(point1);
+            planeOverlay.Markers.Add(airPlane);
+            this.gMapControl1.Overlays.Add(planeOverlay);
+            gMapControl1.Refresh();
+        }
     }
+
+
 
     public class Air_Port
     {
