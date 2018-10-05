@@ -81,15 +81,10 @@
     <Reference Include="CSkin">
       <HintPath>CSkin 4.0\CSkin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\System.Data.SQLite.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>C:\Program Files\System.Data.SQLite\2012\bin\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -156,6 +151,7 @@
     <Compile Include="GMapMarkerEx.cs" />
     <Compile Include="Logic\DataHelper.cs" />
     <Compile Include="Logic\ConfigHelper.cs" />
+    <Compile Include="Logic\ProfileHelper.cs" />
     <Compile Include="LogRecord.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
