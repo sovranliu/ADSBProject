@@ -141,7 +141,7 @@ namespace ADSB.MainUI
         }
 
         /*
-         * 机场box
+         * 航段box
          * */
         void frm_changebox3_event(Boolean selected, int flag)
         {
@@ -149,22 +149,21 @@ namespace ADSB.MainUI
             {
                 airSegment = true;
                 airSegmentOverlay.Clear();
-                // TODO 获取最新的机场
-                listAirRoute = new List<GMapAirRoute>();
+                //获取最新的航段、航站点
+                listAirSegment = new List<GMapAirSegment>();
+                List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirSegment");
+                foreach (Dictionary<string, object> dictionary in result)
+                {
+                    String name = Convert.ToString(dictionary["Name"]);
+                    String beginWayPoint = Convert.ToString(dictionary["BeginWayPoint"]);
+                    GMapWayPoint begin = getGMapWayPointByName(beginWayPoint);
+                    String endWayPoint = Convert.ToString(dictionary["EndWayPoint"]);
+                    GMapWayPoint end = getGMapWayPointByName(endWayPoint);
+                    GMapAirSegment airSegment = new GMapAirSegment(name, begin, end);
+                    listAirSegment.Add(airSegment);
+                }
 
-                GMapAirRoute gMapAirSegment = new GMapAirRoute(
-                    "上海-南京",
-                    new GMapWayPoint(new PointLatLng(23.3012073897149, 113.436584472656), "上海"),
-                    new GMapWayPoint(new PointLatLng(25.3012073897149, 115.436584472656), "南京"));
-                listAirRoute.Add(gMapAirSegment);
-
-                gMapAirSegment = new GMapAirRoute(
-                    "深圳-南京",
-                    new GMapWayPoint(new PointLatLng(23.2912073897149, 113.446584472656), "上海"),
-                    new GMapWayPoint(new PointLatLng(25.3112073897149, 115.426584472656), "南京"));
-                listAirRoute.Add(gMapAirSegment);
-
-                foreach (GMapAirRoute airSegmentl in listAirRoute)
+                foreach (GMapAirSegment airSegmentl in listAirSegment)
                 {
                     List<PointLatLng> points = new List<PointLatLng>();
                     points.Add(airSegmentl.pStart.Position);
@@ -186,6 +185,18 @@ namespace ADSB.MainUI
                     gMapControl1.Refresh();
                 }
             }
+        }
+
+        /**
+         * 根据航站点名称获得航站点信息
+         * */
+        private GMapWayPoint getGMapWayPointByName(String name)
+        {
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM WayPoint WHERE Name = '" + name + "'");
+            double lat = Convert.ToDouble(result[0]["Lat"]);
+            double lang = Convert.ToDouble(result[0]["Lng"]);
+            GMapWayPoint way_Point = new GMapWayPoint(new PointLatLng(lat, lang), name);
+            return way_Point;
         }
 
         /*

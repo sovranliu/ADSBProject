@@ -55,9 +55,9 @@ namespace ADSB.MainUI
         // 当前是否要展示航站点
         private Boolean wayPoint;
 
-        // 要展示的航线
-        private List<GMapAirRoute> listAirRoute;
-        // 当前是否要展示航线
+        // 要展示的航段
+        private List<GMapAirSegment> listAirSegment;
+        // 当前是否要展示航段
         private Boolean airSegment;
         
         List<PointLatLng> distincePairs = new List<PointLatLng>();

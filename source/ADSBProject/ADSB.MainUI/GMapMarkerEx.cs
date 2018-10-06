@@ -416,9 +416,9 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航段 由1个以上航段组成
+    /// 航线 由1个以上航段组成
     /// </summary>
-    public class GMapAirSegment
+    public class GMapAirRoute
     {
         public String name
         {
@@ -431,7 +431,7 @@ namespace ADSB.MainUI
             set;
         }
 
-        public GMapAirSegment(String name, List<GMapAirRoute> airRouteList)
+        public GMapAirRoute(String name, List<GMapAirRoute> airRouteList)
         {
             this.name = name;
             this.airRouteList = airRouteList;
@@ -439,9 +439,9 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航线 由两个航站点组成
+    /// 航段 由两个航站点组成
     /// </summary>
-    public class GMapAirRoute 
+    public class GMapAirSegment
     {
         public String name
         {
@@ -459,7 +459,7 @@ namespace ADSB.MainUI
             set;
         }
 
-        public GMapAirRoute(String name, GMapWayPoint pStart, GMapWayPoint pEnd) 
+        public GMapAirSegment(String name, GMapWayPoint pStart, GMapWayPoint pEnd) 
         {
             this.name = name;
             this.pStart = pStart;
@@ -498,7 +498,7 @@ namespace ADSB.MainUI
 
         public GMapWayPoint(PointLatLng p, String name) : base(p)
         {
-            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\红色按钮@2x.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\导航管理.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
 
