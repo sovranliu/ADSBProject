@@ -20,7 +20,8 @@ namespace ADSB.MainUI.SubForm
         public delegate void airPort(Boolean selected, int flag);
         public event airPort airPort_event;
 
-        private GMapOverlay planeOverlay = new GMapOverlay("planeLayer"); //飞机图层
+        private GMapOverlay portSelOverlay = new GMapOverlay("portSelLayer"); //鼠标点击图层
+        private GMapOverlay portOverlay = new GMapOverlay("porteLayer"); //机场已有的展示图层
 
         public Form_airPort()
         {
@@ -59,7 +60,6 @@ namespace ADSB.MainUI.SubForm
             this.dataGridView1.DataSource = null;
             this.dataGridView1.DataSource = this.airPortList;
 
-            // todo 保存到数据库
             ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng  + ")");
 
             airPort_event(true, 2);
@@ -77,10 +77,11 @@ namespace ADSB.MainUI.SubForm
             this.gMapControl1.DragButton = System.Windows.Forms.MouseButtons.Left;             //左键拖拽地图
             this.gMapControl1.Position = new PointLatLng(23.16, 113.27);                     //初始化地址 广州(23.16, 113.27) 北京(39.3, 116.5)
             this.gMapControl1.MouseDown += new MouseEventHandler(mapControl_MouseDown);
+            this.gMapControl1.Overlays.Add(portOverlay);
+            this.gMapControl1.Overlays.Add(portSelOverlay);
 
-            // TODO 获取地面目标信息，并初始化tableLayoutPanel1
-            // tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50));
-
+            showAllAirPort();
+            
         }
 
         private void mapControl_MouseDown(object sender, MouseEventArgs e)
@@ -88,41 +89,16 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
+            showAirPort(portSelOverlay, point.Lat, point.Lng);
         }
 
+        /*
+         * 删除选中的行
+         * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            try
-            {
-                //选中的行数
-                int iCount = dataGridView1.SelectedRows.Count;
-                if (iCount < 1)
-                {
-                    MessageBox.Show("未选中任何数据!", "Error", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-                    return;
-                }
-                if (DialogResult.Yes == MessageBox.Show("是否删除选中的数据？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
-                {
-                    for (int i = 0; i < this.dataGridView1.Rows.Count - 1; i++)  //循环遍历所有行
-                    {
-                        if (true == this.dataGridView1.Rows[i].Selected)//当前行处于选中状态，则将其删除   
-                            this.dataGridView1.Rows.RemoveAt(i);
-                    }
 
-                    //删除任意行数据后，应该刷新dataGridView表格，使索引值从上至下按大小顺序排序                    
-                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                    {
-                        dataGridView1.Rows[i].Cells[0].Value = i + 1;
-                    }
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
+            showAllAirPort();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -130,14 +106,40 @@ namespace ADSB.MainUI.SubForm
             int rowIndex = e.RowIndex;
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
+            showAirPort(portOverlay, lat, lang);
+        }
 
-            planeOverlay.Markers.Clear();
-
+        private void showAirPort(GMapOverlay overlay, double lat, double lang)
+        {
+            if (overlay.Equals(portSelOverlay))
+            {
+                overlay.Markers.Clear();
+            }
             PointLatLng point1 = new PointLatLng(lat, lang);
-            GMapAirPlane airPlane = new GMapAirPlane(point1);
-            planeOverlay.Markers.Add(airPlane);
-            this.gMapControl1.Overlays.Add(planeOverlay);
+            GMapAirPort airPort = new GMapAirPort(point1, "--");
+            overlay.Markers.Add(airPort);
             gMapControl1.Refresh();
+        }
+
+        /**
+         * 从数据库里面查出所有的数据，展示。
+         * */
+        private void showAllAirPort()
+        {
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
+            airPortList.Clear();
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                String name = Convert.ToString(dictionary["Name"]);
+                double lat = Convert.ToDouble(dictionary["Lat"]);
+                double lang = Convert.ToDouble(dictionary["Lng"]);
+                Air_Port air_Port = new Air_Port(name, lat, lang);
+                airPortList.Add(air_Port);
+            }
+
+            this.dataGridView1.DataSource = null;
+            this.dataGridView1.DataSource = this.airPortList;
+
         }
     }
 

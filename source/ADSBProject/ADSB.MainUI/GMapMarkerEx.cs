@@ -200,8 +200,7 @@ namespace ADSB.MainUI
         //TODO:
         public GMapAirPlane(PointLatLng p) : base(p)
         {
-            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
 
@@ -212,14 +211,13 @@ namespace ADSB.MainUI
 
         public GMapAirPlane(PointLatLng p, Cat021Data data, bool selected) : base(p)
         {
-            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
             if (selected)
             {
-                Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
             }
             else
             {
-                Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
             }
             
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
@@ -295,13 +293,34 @@ namespace ADSB.MainUI
             get;
             set;
         }
+
+        public AirPortInfo AirPortMarkerInfo
+        {
+            get { return airPortInfo; }
+            set { airPortInfo = value; }
+        }
+
+        private AirPortInfo airPortInfo;
+        //TODO:
+        public GMapAirPort(PointLatLng p, String name) : base(p)
+        {
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
+            Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
+            Pen = new Pen(Brushes.Red, 2);
+
+            ToolTipMode = MarkerTooltipMode.OnMouseOver;
+            ToolTipText = string.Format("{0}\r\n{1}", name, p.Lat + "-" + p.Lng);
+            ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
+        }
+
+        /*
         public GMapAirPort(PointLatLng p) : base(p)
         {
-            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式\\assets\\直升机@3x.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\直升机@3x.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
         }
+        */
 
         public override void OnRender(Graphics g)
         {
@@ -372,8 +391,7 @@ namespace ADSB.MainUI
 
         public GMapLandStation(PointLatLng p) : base(p)
         {
-            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
         }
@@ -480,8 +498,7 @@ namespace ADSB.MainUI
 
         public GMapWayPoint(PointLatLng p) : base(p)
         {
-            string basePath = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString();
-            Image = Bitmap.FromFile(basePath + "\\UIDesign\\监控模式pc\\assets\\红色按钮@2x.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\红色按钮@2x.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
         }

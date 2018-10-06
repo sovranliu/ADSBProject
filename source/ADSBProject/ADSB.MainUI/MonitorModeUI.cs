@@ -197,20 +197,18 @@ namespace ADSB.MainUI
             {
                 airPort = true;
                 airPortOverlay.Clear();
-                // TODO 获取最新的机场
+
                 listAirPort = new List<GMapAirPort>();
-                PointLatLng point1 = new PointLatLng(23.3012073897149, 113.436584472656);
-                GMapAirPort gMapAirSegment = new GMapAirPort(point1);
-                listAirPort.Add(gMapAirSegment);
-                point1 = new PointLatLng(23.3012073897149, 113.536584472656);
-                gMapAirSegment = new GMapAirPort(point1);
-                listAirPort.Add(gMapAirSegment);
-                point1 = new PointLatLng(23.3112073897149, 113.536584472656);
-                gMapAirSegment = new GMapAirPort(point1);
-                listAirPort.Add(gMapAirSegment);
-                point1 = new PointLatLng(23.4412073897149, 113.436584472656);
-                gMapAirSegment = new GMapAirPort(point1);
-                listAirPort.Add(gMapAirSegment);
+                List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
+                foreach (Dictionary<string, object> dictionary in result)
+                {
+                    String name = Convert.ToString(dictionary["Name"]);
+                    double lat = Convert.ToDouble(dictionary["Lat"]);
+                    double lang = Convert.ToDouble(dictionary["Lng"]);
+                    PointLatLng point = new PointLatLng(lat, lang);
+                    GMapAirPort gMapAirSegment = new GMapAirPort(point, name);
+                    listAirPort.Add(gMapAirSegment);
+                }
 
                 foreach (GMapAirPort airSegment in listAirPort)
                 {
