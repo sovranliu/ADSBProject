@@ -294,11 +294,6 @@ namespace ADSB.MainUI
             set;
         }
 
-        public AirPortInfo AirPortMarkerInfo
-        {
-            get { return airPortInfo; }
-            set { airPortInfo = value; }
-        }
 
         private AirPortInfo airPortInfo;
         //TODO:
@@ -389,11 +384,15 @@ namespace ADSB.MainUI
             set;
         }
 
-        public GMapLandStation(PointLatLng p) : base(p)
+        public GMapLandStation(PointLatLng p, String name) : base(p)
         {
             Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
+
+            ToolTipMode = MarkerTooltipMode.OnMouseOver;
+            ToolTipText = string.Format("{0}\r\n{1}", name, p.Lat + "-" + p.Lng);
+            ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
         }
         public override void OnRender(Graphics g)
         {
@@ -417,7 +416,7 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航线 由1个以上航段组成
+    /// 航段 由1个以上航段组成
     /// </summary>
     public class GMapAirSegment
     {
@@ -440,7 +439,7 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航段 由两个航站点组成
+    /// 航线 由两个航站点组成
     /// </summary>
     public class GMapAirRoute 
     {
@@ -459,6 +458,7 @@ namespace ADSB.MainUI
             get;
             set;
         }
+
         public GMapAirRoute(String name, GMapWayPoint pStart, GMapWayPoint pEnd) 
         {
             this.name = name;
@@ -496,11 +496,15 @@ namespace ADSB.MainUI
             set;
         }
 
-        public GMapWayPoint(PointLatLng p) : base(p)
+        public GMapWayPoint(PointLatLng p, String name) : base(p)
         {
             Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\红色按钮@2x.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
+
+            ToolTipMode = MarkerTooltipMode.OnMouseOver;
+            ToolTipText = string.Format("{0}\r\n{1}", name, p.Lat + "-" + p.Lng);
+            ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
         }
         public override void OnRender(Graphics g)
         {

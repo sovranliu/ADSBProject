@@ -425,10 +425,10 @@ namespace ADSB.MainUI
                 ShowMaskLayerWindow();
 
                 // 如果地面站列表有修改
-                Form_earthStation earthStation = new Form_earthStation();
-                earthStation.earthStation_event += new Form_earthStation.earthStation(frm_changebox7_event);
+                Form_landStation landStation = new Form_landStation();
+                landStation.landStation_event += new Form_landStation.landStation(frm_changebox7_event);
 
-                earthStation.ShowDialog();
+                landStation.ShowDialog();
                 mapmask.Visible = false;
             }
         }

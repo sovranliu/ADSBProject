@@ -38,10 +38,14 @@
             this.skinLabel3 = new CCWin.SkinControl.SkinLabel();
             this.skinTextBox2 = new CCWin.SkinControl.SkinTextBox();
             this.horizonLine1 = new ADSB.MainUI.Controls.HorizonLine();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.skinButton2 = new CCWin.SkinControl.SkinButton();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BeginWayPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EndWayPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // skinLabel1
@@ -64,7 +68,7 @@
             this.sPnl_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.sPnl_close.DownBack = null;
-            this.sPnl_close.Location = new System.Drawing.Point(1152, 2);
+            this.sPnl_close.Location = new System.Drawing.Point(809, 9);
             this.sPnl_close.MouseBack = null;
             this.sPnl_close.Name = "sPnl_close";
             this.sPnl_close.NormlBack = null;
@@ -89,7 +93,7 @@
             this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton1.IsDrawBorder = false;
             this.skinButton1.IsDrawGlass = false;
-            this.skinButton1.Location = new System.Drawing.Point(481, 2);
+            this.skinButton1.Location = new System.Drawing.Point(90, 365);
             this.skinButton1.MouseBack = null;
             this.skinButton1.Name = "skinButton1";
             this.skinButton1.NormlBack = null;
@@ -127,7 +131,7 @@
             this.skinLabel9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel9.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel9.Location = new System.Drawing.Point(445, 90);
+            this.skinLabel9.Location = new System.Drawing.Point(86, 178);
             this.skinLabel9.Name = "skinLabel9";
             this.skinLabel9.Size = new System.Drawing.Size(48, 19);
             this.skinLabel9.TabIndex = 16;
@@ -143,7 +147,7 @@
             this.skinLabel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel3.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel3.Location = new System.Drawing.Point(847, 90);
+            this.skinLabel3.Location = new System.Drawing.Point(86, 273);
             this.skinLabel3.Name = "skinLabel3";
             this.skinLabel3.Size = new System.Drawing.Size(48, 19);
             this.skinLabel3.TabIndex = 17;
@@ -205,23 +209,6 @@
             this.horizonLine1.Size = new System.Drawing.Size(219, 3);
             this.horizonLine1.TabIndex = 20;
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tableLayoutPanel1.ColumnCount = 7;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(48, 142);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1094, 543);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
             // skinButton2
             // 
             this.skinButton2.BackColor = System.Drawing.Color.Transparent;
@@ -239,7 +226,7 @@
             this.skinButton2.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton2.IsDrawBorder = false;
             this.skinButton2.IsDrawGlass = false;
-            this.skinButton2.Location = new System.Drawing.Point(817, 2);
+            this.skinButton2.Location = new System.Drawing.Point(219, 365);
             this.skinButton2.MouseBack = null;
             this.skinButton2.Name = "skinButton2";
             this.skinButton2.NormlBack = null;
@@ -255,29 +242,61 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(510, 92);
+            this.comboBox1.Location = new System.Drawing.Point(171, 177);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.Size = new System.Drawing.Size(165, 20);
             this.comboBox1.TabIndex = 23;
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(889, 92);
+            this.comboBox2.Location = new System.Drawing.Point(171, 275);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 20);
+            this.comboBox2.Size = new System.Drawing.Size(165, 20);
             this.comboBox2.TabIndex = 24;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.name,
+            this.BeginWayPoint,
+            this.EndWayPoint});
+            this.dataGridView1.Location = new System.Drawing.Point(411, 62);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(351, 346);
+            this.dataGridView1.TabIndex = 25;
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "航段名";
+            this.name.Name = "name";
+            // 
+            // BeginWayPoint
+            // 
+            this.BeginWayPoint.DataPropertyName = "beginWayPoint";
+            this.BeginWayPoint.HeaderText = "起点";
+            this.BeginWayPoint.Name = "BeginWayPoint";
+            // 
+            // EndWayPoint
+            // 
+            this.EndWayPoint.DataPropertyName = "endWayPoint";
+            this.EndWayPoint.HeaderText = "终点";
+            this.EndWayPoint.Name = "EndWayPoint";
             // 
             // Form_airSegment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(1176, 778);
+            this.ClientSize = new System.Drawing.Size(832, 450);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.skinButton2);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.horizonLine1);
             this.Controls.Add(this.skinTextBox2);
             this.Controls.Add(this.skinLabel3);
@@ -289,6 +308,7 @@
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "Form_airSegment";
             this.Text = "Form_earthStation";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,9 +324,12 @@
         private CCWin.SkinControl.SkinLabel skinLabel3;
         private CCWin.SkinControl.SkinTextBox skinTextBox2;
         private Controls.HorizonLine horizonLine1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private CCWin.SkinControl.SkinButton skinButton2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BeginWayPoint;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EndWayPoint;
     }
 }

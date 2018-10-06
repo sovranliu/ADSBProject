@@ -15,15 +15,15 @@ using GMap.NET.WindowsForms;
 namespace ADSB.MainUI.SubForm
 {
 
-    public partial class Form_airPort : Form_aTemplate
+    public partial class Form_landStation : Form_aTemplate
     {
-        public delegate void airPort(Boolean selected, int flag);
-        public event airPort airPort_event;
+        public delegate void landStation(Boolean selected, int flag);
+        public event landStation landStation_event;
 
         private GMapOverlay portSelOverlay = new GMapOverlay("portSelLayer"); //鼠标点击图层
         private GMapOverlay portOverlay = new GMapOverlay("porteLayer"); //机场已有的展示图层
 
-        public Form_airPort()
+        public Form_landStation()
         {
             InitializeComponent();
             InitializeGMap();
@@ -34,7 +34,7 @@ namespace ADSB.MainUI.SubForm
             this.Close();
         }
 
-        private List<Air_Port> airPortList = new List<Air_Port>();
+        private List<Land_Station> landStationList = new List<Land_Station>();
 
         private void InitializeGMap()
         {
@@ -51,7 +51,7 @@ namespace ADSB.MainUI.SubForm
             this.gMapControl1.Overlays.Add(portOverlay);
             this.gMapControl1.Overlays.Add(portSelOverlay);
 
-            showAllAirPort();
+            showAllLandStation();
             
         }
 
@@ -60,7 +60,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
-            showAirPort(portSelOverlay, point.Lat, point.Lng, "选中的点");
+            showLandStation(portSelOverlay, point.Lat, point.Lng, "选中的点");
         }
 
         private void skinButton1_Click(object sender, EventArgs e)
@@ -82,12 +82,12 @@ namespace ADSB.MainUI.SubForm
                 return;
             }
 
-            Air_Port air_Port = new Air_Port(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
+            Land_Station land_Station = new Land_Station(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
             // 插入数据库
-            ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng + ")");
-            showAllAirPort();
+            ProfileHelper.Instance.Update("INSERT INTO LandStation (Name, Lat, Lng) VALUES ('" + land_Station.Name + "', " + land_Station.Lat + ", " + land_Station.Lng + ")");
+            showAllLandStation();
 
-            airPort_event(true, 2);
+            landStation_event(true, 2);
         }
 
         /*
@@ -96,8 +96,8 @@ namespace ADSB.MainUI.SubForm
         private void skinButton2_Click(object sender, EventArgs e)
         {
             String name = this.dataGridView1.CurrentRow.Cells["name"].Value.ToString();
-            ProfileHelper.Instance.Update("Delete FROM AirPort WHERE Name = \"" + name + "\"");
-            showAllAirPort();
+            ProfileHelper.Instance.Update("Delete FROM LandStation WHERE Name = \"" + name + "\"");
+            showAllLandStation();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -106,38 +106,38 @@ namespace ADSB.MainUI.SubForm
             String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
-            showAirPort(portOverlay, lat, lang, name);
+            showLandStation(portOverlay, lat, lang, name);
         }
 
-        private void showAirPort(GMapOverlay overlay, double lat, double lang, String name)
+        private void showLandStation(GMapOverlay overlay, double lat, double lang, String name)
         {
             overlay.Markers.Clear();
             PointLatLng point1 = new PointLatLng(lat, lang);
-            GMapAirPort airPort = new GMapAirPort(point1, name);
-            overlay.Markers.Add(airPort);
+            GMapLandStation landSatsion = new GMapLandStation(point1, name);
+            overlay.Markers.Add(landSatsion);
             gMapControl1.Refresh();
         }
 
         /**
          * 从数据库里面查出所有的数据，展示。
          * */
-        private void showAllAirPort()
+        private void showAllLandStation()
         {
-            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
-            airPortList.Clear();
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
+            landStationList.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
                 String name = Convert.ToString(dictionary["Name"]);
                 double lat = Convert.ToDouble(dictionary["Lat"]);
                 double lang = Convert.ToDouble(dictionary["Lng"]);
-                Air_Port air_Port = new Air_Port(name, lat, lang);
-                airPortList.Add(air_Port);
+                Land_Station land_Station = new Land_Station(name, lat, lang);
+                landStationList.Add(land_Station);
             }
 
             this.dataGridView1.DataSource = null;
-            if (null != airPortList && airPortList.Count() > 0)
+            if (null != landStationList && landStationList.Count() > 0)
             {
-                this.dataGridView1.DataSource = this.airPortList;
+                this.dataGridView1.DataSource = this.landStationList;
             }
 
         }
@@ -145,7 +145,7 @@ namespace ADSB.MainUI.SubForm
 
 
 
-    public class Air_Port
+    public class Land_Station
     {
         private String name;
         public String Name
@@ -168,7 +168,7 @@ namespace ADSB.MainUI.SubForm
             set { lng = value; }
         }
 
-        public Air_Port(String name, double lat, double lng)
+        public Land_Station(String name, double lat, double lng)
         {
             this.name = name;
             this.lat = lat;

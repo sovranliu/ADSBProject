@@ -154,14 +154,14 @@ namespace ADSB.MainUI
 
                 GMapAirRoute gMapAirSegment = new GMapAirRoute(
                     "上海-南京",
-                    new GMapWayPoint(new PointLatLng(23.3012073897149, 113.436584472656)),
-                    new GMapWayPoint(new PointLatLng(25.3012073897149, 115.436584472656)));
+                    new GMapWayPoint(new PointLatLng(23.3012073897149, 113.436584472656), "上海"),
+                    new GMapWayPoint(new PointLatLng(25.3012073897149, 115.436584472656), "南京"));
                 listAirRoute.Add(gMapAirSegment);
 
                 gMapAirSegment = new GMapAirRoute(
                     "深圳-南京",
-                    new GMapWayPoint(new PointLatLng(23.2912073897149, 113.446584472656)),
-                    new GMapWayPoint(new PointLatLng(25.3112073897149, 115.426584472656)));
+                    new GMapWayPoint(new PointLatLng(23.2912073897149, 113.446584472656), "上海"),
+                    new GMapWayPoint(new PointLatLng(25.3112073897149, 115.426584472656), "南京"));
                 listAirRoute.Add(gMapAirSegment);
 
                 foreach (GMapAirRoute airSegmentl in listAirRoute)
@@ -237,20 +237,18 @@ namespace ADSB.MainUI
             {
                 wayPoint = true;
                 wayPointOverlay.Clear();
-                // TODO 获取最新的机场
+
                 listWayPoint = new List<GMapWayPoint>();
-                PointLatLng point1 = new PointLatLng(23.3012073897149, 113.436584472656);
-                GMapWayPoint gMapWayPoint = new GMapWayPoint(point1);
-                listWayPoint.Add(gMapWayPoint);
-                point1 = new PointLatLng(23.3012073897149, 113.536584472656);
-                gMapWayPoint = new GMapWayPoint(point1);
-                listWayPoint.Add(gMapWayPoint);
-                point1 = new PointLatLng(23.3112073897149, 113.536584472656);
-                gMapWayPoint = new GMapWayPoint(point1);
-                listWayPoint.Add(gMapWayPoint);
-                point1 = new PointLatLng(23.4412073897149, 113.436584472656);
-                gMapWayPoint = new GMapWayPoint(point1);
-                listWayPoint.Add(gMapWayPoint);
+                List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM WayPoint");
+                foreach (Dictionary<string, object> dictionary in result)
+                {
+                    String name = Convert.ToString(dictionary["Name"]);
+                    double lat = Convert.ToDouble(dictionary["Lat"]);
+                    double lang = Convert.ToDouble(dictionary["Lng"]);
+                    PointLatLng point = new PointLatLng(lat, lang);
+                    GMapWayPoint gMapWayPoint = new GMapWayPoint(point, name);
+                    listWayPoint.Add(gMapWayPoint);
+                }
 
                 foreach (GMapWayPoint wayPoint in listWayPoint)
                 {
@@ -281,20 +279,18 @@ namespace ADSB.MainUI
                 {
                     landStation = true;
                     landStationOverlay.Clear();
-                    // TODO 获取最新的地面站
+
                     listLandStations = new List<GMapLandStation>();
-                    PointLatLng point1 = new PointLatLng(23.1012073897149, 113.436584472656);
-                    GMapLandStation gMapLandStation1 = new GMapLandStation(point1);
-                    listLandStations.Add(gMapLandStation1);
-                    point1 = new PointLatLng(23.1212073897149, 113.436584472656);
-                    gMapLandStation1 = new GMapLandStation(point1);
-                    listLandStations.Add(gMapLandStation1);
-                    point1 = new PointLatLng(23.1312073897149, 113.436584472656);
-                    gMapLandStation1 = new GMapLandStation(point1);
-                    listLandStations.Add(gMapLandStation1);
-                    point1 = new PointLatLng(23.1412073897149, 113.436584472656);
-                    gMapLandStation1 = new GMapLandStation(point1);
-                    listLandStations.Add(gMapLandStation1);
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
+                    foreach (Dictionary<string, object> dictionary in result)
+                    {
+                        String name = Convert.ToString(dictionary["Name"]);
+                        double lat = Convert.ToDouble(dictionary["Lat"]);
+                        double lang = Convert.ToDouble(dictionary["Lng"]);
+                        PointLatLng point = new PointLatLng(lat, lang);
+                        GMapLandStation gMapLandStation = new GMapLandStation(point, name);
+                        listLandStations.Add(gMapLandStation);
+                    }
 
                     foreach (GMapLandStation landStation in listLandStations)
                     {
