@@ -56,12 +56,13 @@ namespace ADSB.MainUI.SubForm
             }
 
             Air_Port air_Port = new Air_Port(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
-            airPortList.Add(air_Port);
-            this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = this.airPortList;
+            //airPortList.Add(air_Port);
+            //this.dataGridView1.DataSource = null;
+            //this.dataGridView1.DataSource = this.airPortList;
 
             ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng  + ")");
 
+            showAllAirPort();
             airPort_event(true, 2);
         }
 
@@ -89,7 +90,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
-            showAirPort(portSelOverlay, point.Lat, point.Lng);
+            showAirPort(portSelOverlay, point.Lat, point.Lng, "选中的点");
         }
 
         /*
@@ -97,26 +98,25 @@ namespace ADSB.MainUI.SubForm
          * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-
+            String name = this.dataGridView1.CurrentRow.Cells["name"].Value.ToString();
+            ProfileHelper.Instance.Update("Delete FROM AirPort WHERE Name = \"" + name + "\"");
             showAllAirPort();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
+            String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
-            showAirPort(portOverlay, lat, lang);
+            showAirPort(portOverlay, lat, lang, name);
         }
 
-        private void showAirPort(GMapOverlay overlay, double lat, double lang)
+        private void showAirPort(GMapOverlay overlay, double lat, double lang, String name)
         {
-            if (overlay.Equals(portSelOverlay))
-            {
-                overlay.Markers.Clear();
-            }
+            overlay.Markers.Clear();
             PointLatLng point1 = new PointLatLng(lat, lang);
-            GMapAirPort airPort = new GMapAirPort(point1, "--");
+            GMapAirPort airPort = new GMapAirPort(point1, name);
             overlay.Markers.Add(airPort);
             gMapControl1.Refresh();
         }
@@ -138,7 +138,10 @@ namespace ADSB.MainUI.SubForm
             }
 
             this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = this.airPortList;
+            if (null != airPortList && airPortList.Count() > 0)
+            {
+                this.dataGridView1.DataSource = this.airPortList;
+            }
 
         }
     }
