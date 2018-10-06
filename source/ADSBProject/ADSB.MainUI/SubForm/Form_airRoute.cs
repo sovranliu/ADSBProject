@@ -17,6 +17,7 @@ namespace ADSB.MainUI.SubForm
     {
         public delegate void airRoute(Boolean selected, int flag);
         public event airRoute airRoute_event;
+        private List<Air_Route> airRouteList = new List<Air_Route>();
 
         public Form_airRoute()
         {
@@ -42,40 +43,36 @@ namespace ADSB.MainUI.SubForm
                 MessageBox.Show("请至少选择一个航段！");
                 return;
             }
-            // todo 判断余下的航段是否有选择
+            Air_Route air_Route = new Air_Route(1, name, comboBox1.Text);
+            ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
 
+            if (null != comboBox2.Text && comboBox2.Text.Length > 0)
+            {
+                air_Route = new Air_Route(2, name, comboBox2.Text);
+                ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
 
-            // 动态添加一行
-            tableLayoutPanel1.RowCount++;
-            //设置高度
-            tableLayoutPanel1.Height = tableLayoutPanel1.RowCount * 40;
-            // 行高
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40));
-            // 设置cell样式，
-            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+                if (null != comboBox3.Text && comboBox3.Text.Length > 0)
+                {
+                    air_Route = new Air_Route(3, name, comboBox3.Text);
+                    ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
 
-            int i = tableLayoutPanel1.RowCount - 1;
-            // 添加控件
-            CheckBox p = new CheckBox();
-            p.Anchor = AnchorStyles.None;
-            p.TextAlign = ContentAlignment.MiddleCenter;
-            tableLayoutPanel1.Controls.Add(p, 0, tableLayoutPanel1.RowCount - 1);
-            p.Text = "" + i;
+                    if (null != comboBox4.Text && comboBox4.Text.Length > 0)
+                    {
+                        air_Route = new Air_Route(4, name, comboBox4.Text);
+                        ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
 
-            TextBox nameBoxBegin = new TextBox();
-            nameBoxBegin.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            nameBoxBegin.TextAlign = HorizontalAlignment.Center;
-            nameBoxBegin.Text = name;
-            tableLayoutPanel1.Controls.Add(nameBoxBegin, 1, i);
-
-            TextBox incBegin = new TextBox();
-            incBegin.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            incBegin.TextAlign = HorizontalAlignment.Center;
-            incBegin.Text = comboBox1.Text;
-            tableLayoutPanel1.Controls.Add(incBegin, 2, i);
+                        if (null != comboBox5.Text && comboBox5.Text.Length > 0)
+                        {
+                            air_Route = new Air_Route(5, name, comboBox5.Text);
+                            ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
+                        }
+                    }
+                }
+            }
 
             // todo 保存到数据库
 
+            showAllAirRoute();
             airRoute_event(true, 2);
 
             // MessageBox.Show("新增成功！");
@@ -84,76 +81,83 @@ namespace ADSB.MainUI.SubForm
         private void InitializeGMap()
         {
             // 下拉框初始化
-            comboBox1.Items.Add("上海-北京");
-            comboBox1.Items.Add("北京-南京");
-            comboBox1.Items.Add("南京-上海");
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirSegment ");
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                String name = Convert.ToString(dictionary["Name"]);
+                comboBox1.Items.Add(name);
+                comboBox2.Items.Add(name);
+                comboBox3.Items.Add(name);
+                comboBox4.Items.Add(name);
+                comboBox5.Items.Add(name);
+            }
 
-            comboBox2.Items.Add("深圳-西安");
-            comboBox2.Items.Add("西安-广州");
-            comboBox2.Items.Add("广州-深圳");
-
-            comboBox3.Items.Add("深圳3-西安");
-            comboBox3.Items.Add("西安3-广州");
-            comboBox3.Items.Add("广州3-深圳");
-
-            comboBox4.Items.Add("深圳4-西安");
-            comboBox4.Items.Add("西安4-广州");
-            comboBox4.Items.Add("广州4-深圳");
-
-            comboBox5.Items.Add("深圳5-西安");
-            comboBox5.Items.Add("西安5-广州");
-            comboBox5.Items.Add("广州5-深圳");
+            showAllAirRoute();
         }
 
 
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            // 行数
-            int row = 0;
-
-            for (int i = 0; i < tableLayoutPanel1.Controls.Count; i++)
-            {
-                Control ctl = tableLayoutPanel1.Controls[i];
-                // 默认CheckBox为行首控件
-                if (ctl.GetType().ToString().Contains("CheckBox"))
-                {
-                    CheckBox rb = (CheckBox)ctl;
-                    if (rb.Checked)
-                    {
-                        // 删除当前行的所有控件
-                        for (int j = 0; j < tableLayoutPanel1.ColumnCount; j++)
-                        {
-                            tableLayoutPanel1.Controls.RemoveAt(i);
-                        }
-
-                        // 移动,当前行row的下行往上移动
-                        for (int k = row; k < tableLayoutPanel1.RowCount - 1; k++)
-                        {
-                            Control ctlNext = tableLayoutPanel1.GetControlFromPosition(0, k + 1);
-                            ctlNext.Text = k.ToString();
-                            tableLayoutPanel1.SetCellPosition(ctlNext, new TableLayoutPanelCellPosition(0, k));
-                            Control ctlNext1 = tableLayoutPanel1.GetControlFromPosition(1, k + 1);
-                            tableLayoutPanel1.SetCellPosition(ctlNext1, new TableLayoutPanelCellPosition(1, k));
-                            Control ctlNext2 = tableLayoutPanel1.GetControlFromPosition(2, k + 1);
-                            tableLayoutPanel1.SetCellPosition(ctlNext2, new TableLayoutPanelCellPosition(2, k));
-                        }
-
-                        //移除最后一行，最后为空白行
-                        tableLayoutPanel1.RowStyles.RemoveAt(tableLayoutPanel1.RowCount - 1);
-                        tableLayoutPanel1.RowCount = tableLayoutPanel1.RowCount - 1;
-
-                        airRoute_event(true, 2);
-
-                        break;
-                    }
-                    row++;//行数加加
-                }
-            }
-
-            // 重新计算高度，否则最后一行偏大
-            tableLayoutPanel1.Height = tableLayoutPanel1.RowCount * 40;
+            String name = this.dataGridView1.CurrentRow.Cells["name"].Value.ToString();
+            ProfileHelper.Instance.Update("Delete FROM AirRoute WHERE Name = \"" + name + "\"");
+            showAllAirRoute();
         }
 
-   
+        /**
+        * 从数据库里面查出所有的数据，展示。
+        * */
+        private void showAllAirRoute()
+        {
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirRoute ORDER BY Name");
+            airRouteList.Clear();
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                int id = Convert.ToInt16(dictionary["Id"]);
+                String name = Convert.ToString(dictionary["Name"]);
+                String airSegmentName = Convert.ToString(dictionary["AirSegmentName"]);
+                Air_Route air_Route = new Air_Route(id, name, airSegmentName);
+                airRouteList.Add(air_Route);
+            }
+
+            this.dataGridView1.DataSource = null;
+            if (null != airRouteList && airRouteList.Count() > 0)
+            {
+                this.dataGridView1.DataSource = this.airRouteList;
+            }
+            
+        }
+
+
+    }
+}
+
+public class Air_Route
+{
+    private String name;
+    public String Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    private int id;
+    public int Id
+    {
+        get { return id; }
+        set { id = value; }
+    }
+
+    private String airSegmentName;
+    public String AirSegmentName
+    {
+        get { return airSegmentName; }
+        set { airSegmentName = value; }
+    }
+
+    public Air_Route(int id, String name, String airSegmentName)
+    {
+        this.id = id;
+        this.name = name;
+        this.airSegmentName = airSegmentName;
     }
 }

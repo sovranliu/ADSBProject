@@ -425,16 +425,16 @@ namespace ADSB.MainUI
             get;
             set;
         }
-        public List<GMapAirRoute> airRouteList
+        public List<GMapAirSegment> airSegmentList
         {
             get;
             set;
         }
 
-        public GMapAirRoute(String name, List<GMapAirRoute> airRouteList)
+        public GMapAirRoute(String name, List<GMapAirSegment> airSegmentList)
         {
             this.name = name;
-            this.airRouteList = airRouteList;
+            this.airSegmentList = airSegmentList;
         }
     }
 
