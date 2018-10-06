@@ -53,9 +53,9 @@ namespace ADSB.MainUI
                 foreach (DataRow item in dataSet.Tables[0].Rows)
                 {
                     Dictionary<string, object> kv = new Dictionary<string, object>();
-                    foreach (string colum in dataSet.Tables[0].Columns)
+                    foreach (System.Data.DataColumn colum in dataSet.Tables[0].Columns)
                     {
-                        kv[colum] = item[colum];
+                        kv[colum.ColumnName] = item[colum.ColumnName];
                     }
                     result.Add(kv);
                 }
