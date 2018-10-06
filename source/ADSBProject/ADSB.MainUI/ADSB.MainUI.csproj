@@ -184,6 +184,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubForm\Form_wayPoint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_wayPoint.Designer.cs">
+      <DependentUpon>Form_wayPoint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\Form_landStation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_landStation.Designer.cs">
+      <DependentUpon>Form_landStation.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\Form_airPort.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,12 +231,6 @@
     </Compile>
     <Compile Include="SubForm\Form_distanceFilter.Designer.cs">
       <DependentUpon>Form_distanceFilter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubForm\Form_earthStation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_earthStation.Designer.cs">
-      <DependentUpon>Form_earthStation.cs</DependentUpon>
     </Compile>
     <Compile Include="SubForm\Form_flyFilter.cs">
       <SubType>Form</SubType>
@@ -286,12 +292,6 @@
     <Compile Include="SubForm\Form_status.Designer.cs">
       <DependentUpon>Form_status.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\Form_wayPoint.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\Form_wayPoint.Designer.cs">
-      <DependentUpon>Form_wayPoint.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Controls\AlarmDataGrid.resx">
       <DependentUpon>AlarmDataGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -317,6 +317,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
+      <DependentUpon>Form_wayPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_landStation.resx">
+      <DependentUpon>Form_landStation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_airPort.resx">
       <DependentUpon>Form_airPort.cs</DependentUpon>
     </EmbeddedResource>
@@ -334,9 +340,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_distanceFilter.resx">
       <DependentUpon>Form_distanceFilter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_earthStation.resx">
-      <DependentUpon>Form_earthStation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_flyFilter.resx">
       <DependentUpon>Form_flyFilter.cs</DependentUpon>
@@ -367,9 +370,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_status.resx">
       <DependentUpon>Form_status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
-      <DependentUpon>Form_wayPoint.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <Fakes Include="Fakes\System.Data.SQLite.fakes" />

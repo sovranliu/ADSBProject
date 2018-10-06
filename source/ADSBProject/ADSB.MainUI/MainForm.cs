@@ -55,9 +55,9 @@ namespace ADSB.MainUI
         // 当前是否要展示航站点
         private Boolean wayPoint;
 
-        // 要展示的航线
-        private List<GMapAirRoute> listAirRoute;
-        // 当前是否要展示航线
+        // 要展示的航段
+        private List<GMapAirSegment> listAirSegment;
+        // 当前是否要展示航段
         private Boolean airSegment;
         
         List<PointLatLng> distincePairs = new List<PointLatLng>();
@@ -425,10 +425,10 @@ namespace ADSB.MainUI
                 ShowMaskLayerWindow();
 
                 // 如果地面站列表有修改
-                Form_earthStation earthStation = new Form_earthStation();
-                earthStation.earthStation_event += new Form_earthStation.earthStation(frm_changebox7_event);
+                Form_landStation landStation = new Form_landStation();
+                landStation.landStation_event += new Form_landStation.landStation(frm_changebox7_event);
 
-                earthStation.ShowDialog();
+                landStation.ShowDialog();
                 mapmask.Visible = false;
             }
         }

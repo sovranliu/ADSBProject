@@ -10,13 +10,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
 
 namespace ADSB.MainUI.SubForm
 {
+
     public partial class Form_wayPoint : Form_aTemplate
     {
         public delegate void wayPoint(Boolean selected, int flag);
         public event wayPoint wayPoint_event;
+
+        private GMapOverlay portSelOverlay = new GMapOverlay("portSelLayer"); //鼠标点击图层
+        private GMapOverlay portOverlay = new GMapOverlay("porteLayer"); //已有的展示图层
 
         public Form_wayPoint()
         {
@@ -29,69 +34,7 @@ namespace ADSB.MainUI.SubForm
             this.Close();
         }
 
-        private void skinButton1_Click(object sender, EventArgs e)
-        {
-            String name = skinTextBox2.Text;
-            if (null == name || name.Length == 0)
-            {
-                MessageBox.Show("请输入航路点名称！");
-                return;
-            }
-            if (null == skinTextBox3.Text || skinTextBox3.Text.Length == 0)
-            {
-                MessageBox.Show("请输入经纬度！");
-                return;
-            }
-            if (null == skinTextBox4.Text || skinTextBox4.Text.Length == 0)
-            {
-                MessageBox.Show("请输入经纬度！");
-                return;
-            }
-            double lat = System.Convert.ToDouble(skinTextBox3.Text);
-            double lang = System.Convert.ToDouble(skinTextBox4.Text);
-
-
-            // 动态添加一行
-            tableLayoutPanel1.RowCount++;
-            //设置高度
-            tableLayoutPanel1.Height = tableLayoutPanel1.RowCount * 40;
-            // 行高
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40));
-            // 设置cell样式，
-            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-
-            int i = tableLayoutPanel1.RowCount - 1;
-            // 添加控件
-            CheckBox p = new CheckBox();
-            p.Anchor = AnchorStyles.None;
-            p.TextAlign = ContentAlignment.MiddleCenter;
-            tableLayoutPanel1.Controls.Add(p, 0, tableLayoutPanel1.RowCount - 1);
-            p.Text = "" + i;
-
-            TextBox nameBox = new TextBox();
-            nameBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            nameBox.TextAlign = HorizontalAlignment.Center;
-            nameBox.Text = name;
-            tableLayoutPanel1.Controls.Add(nameBox, 1, i);
-
-            TextBox inc = new TextBox();
-            inc.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            inc.TextAlign = HorizontalAlignment.Center;
-            inc.Text = lat.ToString();
-            tableLayoutPanel1.Controls.Add(inc, 2, i);
-
-            TextBox outc = new TextBox();
-            outc.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            outc.TextAlign = HorizontalAlignment.Center;
-            outc.Text = lang.ToString();
-            tableLayoutPanel1.Controls.Add(outc, 3, i);
-
-            // todo 保存到数据库
-
-            wayPoint_event(true, 2);
-
-            // MessageBox.Show("新增成功！");
-        }
+        private List<Way_Point> wayPointList = new List<Way_Point>();
 
         private void InitializeGMap()
         {
@@ -105,9 +48,10 @@ namespace ADSB.MainUI.SubForm
             this.gMapControl1.DragButton = System.Windows.Forms.MouseButtons.Left;             //左键拖拽地图
             this.gMapControl1.Position = new PointLatLng(23.16, 113.27);                     //初始化地址 广州(23.16, 113.27) 北京(39.3, 116.5)
             this.gMapControl1.MouseDown += new MouseEventHandler(mapControl_MouseDown);
+            this.gMapControl1.Overlays.Add(portOverlay);
+            this.gMapControl1.Overlays.Add(portSelOverlay);
 
-            // TODO 获取地面目标信息，并初始化tableLayoutPanel1
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50));
+            showAllWayPoint();
             
         }
 
@@ -116,57 +60,119 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
+            showWayPoint(portSelOverlay, point.Lat, point.Lng, "选中的点");
         }
 
-        private void skinButton2_Click(object sender, EventArgs e)
+        private void skinButton1_Click(object sender, EventArgs e)
         {
-            // 行数
-            int row = 0;
-
-            for (int i = 0; i < tableLayoutPanel1.Controls.Count; i++)
+            String name = skinTextBox2.Text;
+            if (null == name || name.Length == 0)
             {
-                Control ctl = tableLayoutPanel1.Controls[i];
-                // 默认CheckBox为行首控件
-                if (ctl.GetType().ToString().Contains("CheckBox"))
-                {
-                    CheckBox rb = (CheckBox)ctl;
-                    if (rb.Checked)
-                    {
-                        // 删除当前行的所有控件
-                        for (int j = 0; j < tableLayoutPanel1.ColumnCount; j++)
-                        {
-                            tableLayoutPanel1.Controls.RemoveAt(i);
-                        }
-
-                        // 移动,当前行row的下行往上移动
-                        for (int k = row; k < tableLayoutPanel1.RowCount - 1; k++)
-                        {
-                            Control ctlNext = tableLayoutPanel1.GetControlFromPosition(0, k + 1);
-                            ctlNext.Text = k.ToString();
-                            tableLayoutPanel1.SetCellPosition(ctlNext, new TableLayoutPanelCellPosition(0, k));
-                            Control ctlNext1 = tableLayoutPanel1.GetControlFromPosition(1, k + 1);
-                            tableLayoutPanel1.SetCellPosition(ctlNext1, new TableLayoutPanelCellPosition(1, k));
-                            Control ctlNext2 = tableLayoutPanel1.GetControlFromPosition(2, k + 1);
-                            tableLayoutPanel1.SetCellPosition(ctlNext2, new TableLayoutPanelCellPosition(2, k));
-                            Control ctlNext3 = tableLayoutPanel1.GetControlFromPosition(3, k + 1);
-                            tableLayoutPanel1.SetCellPosition(ctlNext3, new TableLayoutPanelCellPosition(3, k));
-                        }
-
-                        //移除最后一行，最后为空白行
-                        tableLayoutPanel1.RowStyles.RemoveAt(tableLayoutPanel1.RowCount - 1);
-                        tableLayoutPanel1.RowCount = tableLayoutPanel1.RowCount - 1;
-
-                        wayPoint_event(true, 2);
-
-                        break;
-                    }
-                    row++;//行数加加
-                }
+                MessageBox.Show("请输入机场名称！");
+                return;
+            }
+            if (null == skinTextBox3.Text || skinTextBox3.Text.Length == 0)
+            {
+                MessageBox.Show("请输入经纬度！");
+                return;
+            }
+            if (null == skinTextBox4.Text || skinTextBox4.Text.Length == 0)
+            {
+                MessageBox.Show("请输入经纬度！");
+                return;
             }
 
-            // 重新计算高度，否则最后一行偏大
-            tableLayoutPanel1.Height = tableLayoutPanel1.RowCount * 40;
+            Way_Point way_Point = new Way_Point(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
+            // 插入数据库
+            ProfileHelper.Instance.Update("INSERT INTO WayPoint (Name, Lat, Lng) VALUES ('" + way_Point.Name + "', " + way_Point.Lat + ", " + way_Point.Lng + ")");
+            showAllWayPoint();
+
+            wayPoint_event(true, 2);
         }
 
+        /*
+         * 删除选中的行
+         * */
+        private void skinButton2_Click(object sender, EventArgs e)
+        {
+            String name = this.dataGridView1.CurrentRow.Cells["name"].Value.ToString();
+            ProfileHelper.Instance.Update("Delete FROM WayPoint WHERE Name = \"" + name + "\"");
+            showAllWayPoint();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
+            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
+            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
+            showWayPoint(portOverlay, lat, lang, name);
+        }
+
+        private void showWayPoint(GMapOverlay overlay, double lat, double lang, String name)
+        {
+            overlay.Markers.Clear();
+            PointLatLng point1 = new PointLatLng(lat, lang);
+            GMapWayPoint wayPoint = new GMapWayPoint(point1, name);
+            overlay.Markers.Add(wayPoint);
+            gMapControl1.Refresh();
+        }
+
+        /**
+         * 从数据库里面查出所有的数据，展示。
+         * */
+        private void showAllWayPoint()
+        {
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM WayPoint");
+            wayPointList.Clear();
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                String name = Convert.ToString(dictionary["Name"]);
+                double lat = Convert.ToDouble(dictionary["Lat"]);
+                double lang = Convert.ToDouble(dictionary["Lng"]);
+                Way_Point way_Point = new Way_Point(name, lat, lang);
+                wayPointList.Add(way_Point);
+            }
+
+            this.dataGridView1.DataSource = null;
+            if (null != wayPointList && wayPointList.Count() > 0)
+            {
+                this.dataGridView1.DataSource = this.wayPointList;
+            }
+
+        }
+    }
+
+
+
+    public class Way_Point
+    {
+        private String name;
+        public String Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        private double lat;
+        public double Lat
+        {
+            get { return lat; }
+            set { lat = value; }
+        }
+
+        private double lng;
+        public double Lng
+        {
+            get { return lng; }
+            set { lng = value; }
+        }
+
+        public Way_Point(String name, double lat, double lng)
+        {
+            this.name = name;
+            this.lat = lat;
+            this.lng = lng;
+        }
     }
 }

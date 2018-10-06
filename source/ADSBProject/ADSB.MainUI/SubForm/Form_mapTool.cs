@@ -13,7 +13,7 @@ namespace ADSB.MainUI.SubForm
 {
     public partial class Form_mapTool : Form_aTemplate
     {
-        // 1-航线checkbox选择显示，2-新增、删除了关注
+        // 1-航段checkbox选择显示，2-新增、删除了关注
         public delegate void changebox3(Boolean selected, int flag);
         public event changebox3 changebox3_event;
 
@@ -44,7 +44,7 @@ namespace ADSB.MainUI.SubForm
 
         }
 
-        // 航线
+        // 航段
         private void myCheckBox3_CheckedChanged(object sender, EventArgs e)
         {
             if (myCheckBox3.CheckState == CheckState.Checked)
