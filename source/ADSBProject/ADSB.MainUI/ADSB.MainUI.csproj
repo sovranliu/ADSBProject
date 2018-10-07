@@ -184,6 +184,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubForm\Form_airSpace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_airSpace.Designer.cs">
+      <DependentUpon>Form_airSpace.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\Form_wayPoint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,6 +323,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubForm\Form_airSpace.resx">
+      <DependentUpon>Form_airSpace.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
       <DependentUpon>Form_wayPoint.cs</DependentUpon>
     </EmbeddedResource>

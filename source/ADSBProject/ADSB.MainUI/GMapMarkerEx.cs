@@ -17,9 +17,9 @@ namespace ADSB.MainUI
         public Brush Fill = new SolidBrush(Color.FromArgb(155, Color.AliceBlue));
         //public Brush Fill = new System.Drawing.SolidBrush(Color.AliceBlue); 
         public bool IsFilled = true;
-        public GMapMarkerCircle(PointLatLng p) : base(p)
+        public GMapMarkerCircle(PointLatLng p, int radius) : base(p)
         {
-            Radius = 100000; // 0m
+            Radius = radius; // 0m
             P2 = p;
             IsHitTestVisible = false;
         }

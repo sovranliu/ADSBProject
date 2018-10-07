@@ -13,6 +13,10 @@ namespace ADSB.MainUI.SubForm
 {
     public partial class Form_mapTool : Form_aTemplate
     {
+        // 1-空域checkbox选择显示，2-新增、删除了关注
+        public delegate void changebox2(Boolean selected, int flag);
+        public event changebox2 changebox2_event;
+        
         // 1-航段checkbox选择显示，2-新增、删除了关注
         public delegate void changebox3(Boolean selected, int flag);
         public event changebox3 changebox3_event;
@@ -24,6 +28,9 @@ namespace ADSB.MainUI.SubForm
         // 1-航路点checkbox选择显示，2-新增、删除了关注
         public delegate void changebox5(Boolean selected, int flag);
         public event changebox5 changebox5_event;
+        
+        public delegate void changebox6(Boolean selected, int flag);
+        public event changebox6 changebox6_event;
 
         // 1-地面站checkbox选择显示，2-新增、删除了关注
         public delegate void changebox7(Boolean selected, int flag);
@@ -42,6 +49,22 @@ namespace ADSB.MainUI.SubForm
         private void skinLabel1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // 空域
+        private void myCheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox2.CheckState == CheckState.Checked)
+            {
+                changebox2_event(true, 1);
+                return;
+            }
+            changebox2_event(false, 1);
+        }
+
+        public void myCheckBox2_Selected()
+        {
+            myCheckBox2.Checked = true;
         }
 
         // 航段
@@ -93,6 +116,8 @@ namespace ADSB.MainUI.SubForm
             myCheckBox5.Checked = true;
         }
 
+
+
         // 地面站
         private void myCheckBox7_CheckedChanged(object sender, EventArgs e)
         {
@@ -108,5 +133,6 @@ namespace ADSB.MainUI.SubForm
         {
             myCheckBox7.Checked = true;
         }
+
     }
 }

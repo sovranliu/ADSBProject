@@ -22,13 +22,12 @@ namespace ADSB.MainUI
         private GMapOverlay distinceOverlay = new GMapOverlay("distinceLayer"); //测距图层
         private GMapOverlay landStationOverlay = new GMapOverlay("landStationLayer"); //地面站图层
         private GMapOverlay airPortOverlay = new GMapOverlay("airPortLayer"); //地面站图层
+        private GMapOverlay airSpaceOverlay = new GMapOverlay("airSpaceLayer"); //空域图层
         private GMapOverlay wayPointOverlay = new GMapOverlay("wayPointLayer"); //航站点图层
         private GMapOverlay airSegmentOverlay = new GMapOverlay("airSegmentLayer"); //航线图层
 
         // 是否是测距模式
         private bool isDistince = false;
-        // 是否是画布模式
-        private bool isCanvas = false;
 
         // private GMapMarkerImage currentMarker;
 
@@ -59,7 +58,12 @@ namespace ADSB.MainUI
         private List<GMapAirSegment> listAirSegment;
         // 当前是否要展示航段
         private Boolean airSegment;
-        
+
+        // 要展示的空域
+        private List<String> listAirSpace;
+        // 当前是否要展示空域
+        private Boolean airSpace;
+
         List<PointLatLng> distincePairs = new List<PointLatLng>();
        // private GMapAirPort airPort;
        // private GMapAirSegment airSegment;
@@ -188,17 +192,7 @@ namespace ADSB.MainUI
                 distinceOverlay.Routes.Add(r);
                 gMapControl1.Refresh();
             }
-
-            if (isCanvas)
-            {
-                // 这里获取经纬度
-                PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
-                // TODO 保存数据库
-                GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point);
-
-                distinceOverlay.Markers.Add(gMapMarkerCircle);
-                gMapControl1.Refresh();
-            }
+            
         }
 
         private void mapControl_OnMarkerClick(GMapMarker item, MouseEventArgs e)
@@ -510,7 +504,17 @@ namespace ADSB.MainUI
          * */
         private void skinLabel31_Click(object sender, EventArgs e)
         {
+            if (!IsPlayback)
+            {
+                ShowMaskLayerWindow();
 
+                // 如果空域列表有修改
+                Form_airSpace airSpace = new Form_airSpace();
+                airSpace.airSpace_event += new Form_airSpace.airSpace(frm_changebox5_event);
+
+                airSpace.ShowDialog();
+                mapmask.Visible = false;
+            }
         }
 
        

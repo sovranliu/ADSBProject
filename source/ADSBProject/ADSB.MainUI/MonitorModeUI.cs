@@ -107,6 +107,13 @@ namespace ADSB.MainUI
 
                 Form_mapTool test = new Form_mapTool();
 
+                test.changebox2_event += new Form_mapTool.changebox2(frm_changebox2_event);
+                // 初始化飞机场checkbox
+                if (airSpace)
+                {
+                    test.myCheckBox2_Selected();
+                }
+
                 test.changebox3_event += new Form_mapTool.changebox3(frm_changebox3_event);
                 // 初始化飞机场checkbox
                 if (airSegment)
@@ -138,6 +145,72 @@ namespace ADSB.MainUI
                 mapmask.Visible = false;
             }
 
+        }
+
+        /*
+        * 空域box
+        * */
+        void frm_changebox2_event(Boolean selected, int flag)
+        {
+            if (selected || (2 == flag && airSpace == true))
+            {
+                airSpace = true;
+                airSpaceOverlay.Clear();
+
+                listAirSpace = new List<String>();
+                List<Dictionary<string, object>> nameResult = ProfileHelper.Instance.Select("SELECT DISTINCT Name FROM AirSpace");
+                foreach (Dictionary<string, object> dictionary in nameResult)
+                {
+                    String name = Convert.ToString(dictionary["Name"]);
+                    listAirSpace.Add(name);
+                }
+
+                foreach (String name in listAirSpace)
+                {
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirSpace WHERE Name = \"" + name + "\"");
+                    if (result.Count > 0)
+                    {
+                        int type = Convert.ToInt16(result[0]["Type"]);
+                        if (1 == type)
+                        {
+                            // 圆形
+                            double t = Convert.ToDouble(result[0]["Lat"]);
+                            double g = Convert.ToDouble(result[0]["Lng"]);
+                            double radius = Convert.ToDouble(result[0]["Radius"]);
+                            PointLatLng point = new PointLatLng(t, g);
+                            GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)radius);
+                            airSpaceOverlay.Markers.Add(gMapMarkerCircle);
+                        }
+                        if (0 == type)
+                        {
+                            // 多边形
+                            List<PointLatLng> points = new List<PointLatLng>();
+                            foreach (Dictionary<string, object> dictionary in result)
+                            {
+                                double t = Convert.ToDouble(dictionary["Lat"]);
+                                double g = Convert.ToDouble(dictionary["Lng"]);
+                                PointLatLng point = new PointLatLng(t, g);
+                                points.Add(point);
+                            }
+                            GMapPolygon polygon = new GMapPolygon(points, "mypolygon");
+                            polygon.Fill = new SolidBrush(Color.FromArgb(50, Color.Red));
+                            polygon.Stroke = new Pen(Color.Red, 1);
+                            airSpaceOverlay.Polygons.Add(polygon);
+                        }
+                    }
+                }
+                this.gMapControl1.Overlays.Add(airSpaceOverlay);
+                gMapControl1.Refresh();
+            }
+            else
+            {
+                if (1 == flag)
+                {
+                    airSpace = false;
+                    airSpaceOverlay.Clear();
+                    gMapControl1.Refresh();
+                }
+            }
         }
 
         /*
@@ -278,6 +351,8 @@ namespace ADSB.MainUI
                 }
             }
         }
+
+        
 
         /**
          * 地面站box
