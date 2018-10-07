@@ -121,6 +121,7 @@
             this.skinButton1.Text = "确定";
             this.skinButton1.UseMnemonic = false;
             this.skinButton1.UseVisualStyleBackColor = false;
+            this.skinButton1.Click += new System.EventHandler(this.skinButton1_Click);
             // 
             // skinLabel8
             // 
@@ -189,15 +190,13 @@
             this.skinTextBox2.SkinTxt.Name = "BaseText";
             this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(65, 25);
             this.skinTextBox2.SkinTxt.TabIndex = 0;
-            this.skinTextBox2.SkinTxt.Text = "开始时间";
             this.skinTextBox2.SkinTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.skinTextBox2.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox2.SkinTxt.WaterText = "";
+            this.skinTextBox2.SkinTxt.WaterText = "开始时间";
             this.skinTextBox2.TabIndex = 19;
-            this.skinTextBox2.Text = "开始时间";
             this.skinTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.skinTextBox2.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox2.WaterText = "";
+            this.skinTextBox2.WaterText = "开始时间";
             this.skinTextBox2.WordWrap = true;
             // 
             // skinTextBox3
@@ -209,8 +208,7 @@
             this.skinTextBox3.IconMouseState = CCWin.SkinClass.ControlState.Normal;
             this.skinTextBox3.IsPasswordChat = '\0';
             this.skinTextBox3.IsSystemPasswordChar = false;
-            this.skinTextBox3.Lines = new string[] {
-        "结束时间"};
+            this.skinTextBox3.Lines = new string[0];
             this.skinTextBox3.Location = new System.Drawing.Point(183, 82);
             this.skinTextBox3.Margin = new System.Windows.Forms.Padding(0);
             this.skinTextBox3.MaxLength = 32767;
@@ -235,15 +233,13 @@
             this.skinTextBox3.SkinTxt.Name = "BaseText";
             this.skinTextBox3.SkinTxt.Size = new System.Drawing.Size(65, 25);
             this.skinTextBox3.SkinTxt.TabIndex = 0;
-            this.skinTextBox3.SkinTxt.Text = "结束时间";
             this.skinTextBox3.SkinTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.skinTextBox3.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox3.SkinTxt.WaterText = "";
+            this.skinTextBox3.SkinTxt.WaterText = "结束时间";
             this.skinTextBox3.TabIndex = 19;
-            this.skinTextBox3.Text = "结束时间";
             this.skinTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.skinTextBox3.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox3.WaterText = "";
+            this.skinTextBox3.WaterText = "结束时间";
             this.skinTextBox3.WordWrap = true;
             // 
             // skinTextBox4
@@ -318,6 +314,7 @@
             this.myCheckBox1.TabIndex = 35;
             this.myCheckBox1.Text = "正常";
             this.myCheckBox1.UseVisualStyleBackColor = false;
+            this.myCheckBox1.Click += new System.EventHandler(this.myCheckBox1_Click);
             // 
             // myCheckBox2
             // 
@@ -333,6 +330,7 @@
             this.myCheckBox2.TabIndex = 36;
             this.myCheckBox2.Text = "2倍";
             this.myCheckBox2.UseVisualStyleBackColor = false;
+            this.myCheckBox2.Click += new System.EventHandler(this.myCheckBox2_Click);
             // 
             // myCheckBox3
             // 
@@ -348,6 +346,7 @@
             this.myCheckBox3.TabIndex = 37;
             this.myCheckBox3.Text = "5倍";
             this.myCheckBox3.UseVisualStyleBackColor = false;
+            this.myCheckBox3.Click += new System.EventHandler(this.myCheckBox3_Click);
             // 
             // horizonLine1
             // 

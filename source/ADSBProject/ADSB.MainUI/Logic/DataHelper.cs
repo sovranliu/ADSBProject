@@ -228,6 +228,8 @@ namespace ADSB.MainUI
     public class DBDataSource : DataSource
     {
         private SQLiteConnection connection;
+        private int minId;
+        private int maxId;
         private int id; 
         
         public bool Initialize()
@@ -235,7 +237,8 @@ namespace ADSB.MainUI
             string dbPath = "Data Source =" + Environment.CurrentDirectory + "\\data.db";
             connection = new SQLiteConnection(dbPath);
             connection.Open();
-            id = 0;
+            Reset();
+            id = minId - 1;
             return true;
         }
 
@@ -247,6 +250,23 @@ namespace ADSB.MainUI
             }
             connection.Close();
             connection = null;
+        }
+
+        public void Reset()
+        {
+            using (SQLiteCommand cmd = connection.CreateCommand())
+            {
+                cmd.CommandText = "SELECT MIN(ID) AS MinID, MAX(ID) AS MaxID FROM Data WHERE 1 = 1";
+                DataSet dataSet = new DataSet();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
+                adapter.Fill(dataSet);
+                if (dataSet.Tables[0].Rows[0]["MinID"].GetType() == typeof(DBNull))
+                {
+                    return;
+                }
+                minId = (int)dataSet.Tables[0].Rows[0]["MinID"];
+                maxId = (int)dataSet.Tables[0].Rows[0]["MaxID"];
+            }
         }
 
         public Cat021Data GetData()
@@ -270,7 +290,7 @@ namespace ADSB.MainUI
                 }
                 else
                 {
-                    this.id++;
+                    this.id = (int)dataSet.Tables[0].Rows[0]["ID"];
                     Cat021Data data = new Cat021Data();
                     data.sModeAddress = (int) dataSet.Tables[0].Rows[0]["sModeAddress"];
                     data.flightNo = (string)dataSet.Tables[0].Rows[0]["flightNo"];
@@ -345,11 +365,13 @@ namespace ADSB.MainUI
             switch(type)
             {
                 case DataSourceType.DATASOURCE_NAME_UDP:
-                    UDPDataSource dataSource = new UDPDataSource();
-                    dataSource.Initialize();
-                    return dataSource;
+                    UDPDataSource udpDataSource = new UDPDataSource();
+                    udpDataSource.Initialize();
+                    return udpDataSource;
                 case DataSourceType.DATASOURCE_NAME_DB:
-                    break;
+                    DBDataSource dbDataSource = new DBDataSource();
+                    dbDataSource.Initialize();
+                    return dbDataSource;
                 case DataSourceType.DATASOURCE_NAME_SERIAL:
                     break;
             }
