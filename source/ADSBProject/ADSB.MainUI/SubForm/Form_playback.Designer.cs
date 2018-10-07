@@ -53,9 +53,10 @@
             this.skinLabel1.BorderColor = System.Drawing.Color.White;
             this.skinLabel1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
-            this.skinLabel1.Location = new System.Drawing.Point(96, 15);
+            this.skinLabel1.Location = new System.Drawing.Point(144, 22);
+            this.skinLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel1.Name = "skinLabel1";
-            this.skinLabel1.Size = new System.Drawing.Size(96, 28);
+            this.skinLabel1.Size = new System.Drawing.Size(146, 41);
             this.skinLabel1.TabIndex = 2;
             this.skinLabel1.Text = "回放设置";
             this.skinLabel1.Click += new System.EventHandler(this.skinLabel1_Click);
@@ -67,11 +68,12 @@
             this.sPnl_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.sPnl_close.DownBack = null;
-            this.sPnl_close.Location = new System.Drawing.Point(254, 3);
+            this.sPnl_close.Location = new System.Drawing.Point(381, 4);
+            this.sPnl_close.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.sPnl_close.MouseBack = null;
             this.sPnl_close.Name = "sPnl_close";
             this.sPnl_close.NormlBack = null;
-            this.sPnl_close.Size = new System.Drawing.Size(22, 22);
+            this.sPnl_close.Size = new System.Drawing.Size(33, 33);
             this.sPnl_close.TabIndex = 3;
             this.sPnl_close.Click += new System.EventHandler(this.sPnl_close_Click);
             // 
@@ -84,10 +86,11 @@
             this.skinLabel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel2.Location = new System.Drawing.Point(20, 97);
+            this.skinLabel2.Location = new System.Drawing.Point(30, 146);
+            this.skinLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel2.Name = "skinLabel2";
             this.skinLabel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.skinLabel2.Size = new System.Drawing.Size(59, 17);
+            this.skinLabel2.Size = new System.Drawing.Size(86, 24);
             this.skinLabel2.TabIndex = 5;
             this.skinLabel2.Text = "开始时间:";
             this.skinLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -110,13 +113,14 @@
             this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton1.IsDrawBorder = false;
             this.skinButton1.IsDrawGlass = false;
-            this.skinButton1.Location = new System.Drawing.Point(76, 252);
+            this.skinButton1.Location = new System.Drawing.Point(114, 378);
+            this.skinButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.skinButton1.MouseBack = null;
             this.skinButton1.Name = "skinButton1";
             this.skinButton1.NormlBack = null;
             this.skinButton1.Radius = 44;
             this.skinButton1.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinButton1.Size = new System.Drawing.Size(130, 44);
+            this.skinButton1.Size = new System.Drawing.Size(195, 66);
             this.skinButton1.TabIndex = 9;
             this.skinButton1.Text = "确定";
             this.skinButton1.UseMnemonic = false;
@@ -132,9 +136,10 @@
             this.skinLabel8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel8.Location = new System.Drawing.Point(20, 148);
+            this.skinLabel8.Location = new System.Drawing.Point(30, 222);
+            this.skinLabel8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel8.Name = "skinLabel8";
-            this.skinLabel8.Size = new System.Drawing.Size(59, 17);
+            this.skinLabel8.Size = new System.Drawing.Size(86, 24);
             this.skinLabel8.TabIndex = 15;
             this.skinLabel8.Text = "速率选择:";
             this.skinLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -148,9 +153,10 @@
             this.skinLabel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel3.Location = new System.Drawing.Point(16, 199);
+            this.skinLabel3.Location = new System.Drawing.Point(24, 298);
+            this.skinLabel3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel3.Name = "skinLabel3";
-            this.skinLabel3.Size = new System.Drawing.Size(66, 17);
+            this.skinLabel3.Size = new System.Drawing.Size(96, 24);
             this.skinLabel3.TabIndex = 17;
             this.skinLabel3.Text = "S模式地址:";
             this.skinLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -164,31 +170,31 @@
             this.skinTextBox2.IconMouseState = CCWin.SkinClass.ControlState.Normal;
             this.skinTextBox2.IsPasswordChat = '\0';
             this.skinTextBox2.IsSystemPasswordChar = false;
-            this.skinTextBox2.Lines = new string[] {
-        "开始时间"};
-            this.skinTextBox2.Location = new System.Drawing.Point(85, 82);
+            this.skinTextBox2.Lines = new string[0];
+            this.skinTextBox2.Location = new System.Drawing.Point(128, 123);
             this.skinTextBox2.Margin = new System.Windows.Forms.Padding(0);
             this.skinTextBox2.MaxLength = 32767;
-            this.skinTextBox2.MinimumSize = new System.Drawing.Size(28, 28);
+            this.skinTextBox2.MinimumSize = new System.Drawing.Size(42, 42);
             this.skinTextBox2.MouseBack = null;
             this.skinTextBox2.MouseState = CCWin.SkinClass.ControlState.Normal;
             this.skinTextBox2.Multiline = true;
             this.skinTextBox2.Name = "skinTextBox2";
             this.skinTextBox2.NormlBack = null;
-            this.skinTextBox2.Padding = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.skinTextBox2.Padding = new System.Windows.Forms.Padding(8, 15, 8, 8);
             this.skinTextBox2.ReadOnly = false;
             this.skinTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox2.Size = new System.Drawing.Size(75, 40);
+            this.skinTextBox2.Size = new System.Drawing.Size(112, 60);
             // 
             // 
             // 
             this.skinTextBox2.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.skinTextBox2.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTextBox2.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinTextBox2.SkinTxt.Location = new System.Drawing.Point(5, 10);
+            this.skinTextBox2.SkinTxt.Location = new System.Drawing.Point(8, 15);
+            this.skinTextBox2.SkinTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.skinTextBox2.SkinTxt.Multiline = true;
             this.skinTextBox2.SkinTxt.Name = "BaseText";
-            this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(65, 25);
+            this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(96, 37);
             this.skinTextBox2.SkinTxt.TabIndex = 0;
             this.skinTextBox2.SkinTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.skinTextBox2.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
@@ -209,29 +215,30 @@
             this.skinTextBox3.IsPasswordChat = '\0';
             this.skinTextBox3.IsSystemPasswordChar = false;
             this.skinTextBox3.Lines = new string[0];
-            this.skinTextBox3.Location = new System.Drawing.Point(183, 82);
+            this.skinTextBox3.Location = new System.Drawing.Point(274, 123);
             this.skinTextBox3.Margin = new System.Windows.Forms.Padding(0);
             this.skinTextBox3.MaxLength = 32767;
-            this.skinTextBox3.MinimumSize = new System.Drawing.Size(28, 28);
+            this.skinTextBox3.MinimumSize = new System.Drawing.Size(42, 42);
             this.skinTextBox3.MouseBack = null;
             this.skinTextBox3.MouseState = CCWin.SkinClass.ControlState.Normal;
             this.skinTextBox3.Multiline = true;
             this.skinTextBox3.Name = "skinTextBox3";
             this.skinTextBox3.NormlBack = null;
-            this.skinTextBox3.Padding = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this.skinTextBox3.Padding = new System.Windows.Forms.Padding(8, 15, 8, 8);
             this.skinTextBox3.ReadOnly = false;
             this.skinTextBox3.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox3.Size = new System.Drawing.Size(75, 40);
+            this.skinTextBox3.Size = new System.Drawing.Size(112, 60);
             // 
             // 
             // 
             this.skinTextBox3.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.skinTextBox3.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTextBox3.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinTextBox3.SkinTxt.Location = new System.Drawing.Point(5, 10);
+            this.skinTextBox3.SkinTxt.Location = new System.Drawing.Point(8, 15);
+            this.skinTextBox3.SkinTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.skinTextBox3.SkinTxt.Multiline = true;
             this.skinTextBox3.SkinTxt.Name = "BaseText";
-            this.skinTextBox3.SkinTxt.Size = new System.Drawing.Size(65, 25);
+            this.skinTextBox3.SkinTxt.Size = new System.Drawing.Size(96, 37);
             this.skinTextBox3.SkinTxt.TabIndex = 0;
             this.skinTextBox3.SkinTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.skinTextBox3.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
@@ -252,29 +259,30 @@
             this.skinTextBox4.IsPasswordChat = '\0';
             this.skinTextBox4.IsSystemPasswordChar = false;
             this.skinTextBox4.Lines = new string[0];
-            this.skinTextBox4.Location = new System.Drawing.Point(85, 185);
+            this.skinTextBox4.Location = new System.Drawing.Point(128, 278);
             this.skinTextBox4.Margin = new System.Windows.Forms.Padding(0);
             this.skinTextBox4.MaxLength = 32767;
-            this.skinTextBox4.MinimumSize = new System.Drawing.Size(28, 28);
+            this.skinTextBox4.MinimumSize = new System.Drawing.Size(42, 42);
             this.skinTextBox4.MouseBack = null;
             this.skinTextBox4.MouseState = CCWin.SkinClass.ControlState.Normal;
             this.skinTextBox4.Multiline = true;
             this.skinTextBox4.Name = "skinTextBox4";
             this.skinTextBox4.NormlBack = null;
-            this.skinTextBox4.Padding = new System.Windows.Forms.Padding(5);
+            this.skinTextBox4.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.skinTextBox4.ReadOnly = false;
             this.skinTextBox4.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox4.Size = new System.Drawing.Size(173, 40);
+            this.skinTextBox4.Size = new System.Drawing.Size(260, 60);
             // 
             // 
             // 
             this.skinTextBox4.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.skinTextBox4.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTextBox4.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinTextBox4.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.skinTextBox4.SkinTxt.Location = new System.Drawing.Point(8, 8);
+            this.skinTextBox4.SkinTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.skinTextBox4.SkinTxt.Multiline = true;
             this.skinTextBox4.SkinTxt.Name = "BaseText";
-            this.skinTextBox4.SkinTxt.Size = new System.Drawing.Size(163, 30);
+            this.skinTextBox4.SkinTxt.Size = new System.Drawing.Size(244, 44);
             this.skinTextBox4.SkinTxt.TabIndex = 0;
             this.skinTextBox4.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.skinTextBox4.SkinTxt.WaterText = "";
@@ -293,9 +301,10 @@
             this.skinLabel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel4.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel4.Location = new System.Drawing.Point(156, 88);
+            this.skinLabel4.Location = new System.Drawing.Point(234, 132);
+            this.skinLabel4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel4.Name = "skinLabel4";
-            this.skinLabel4.Size = new System.Drawing.Size(31, 25);
+            this.skinLabel4.Size = new System.Drawing.Size(46, 38);
             this.skinLabel4.TabIndex = 28;
             this.skinLabel4.Text = "－";
             this.skinLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -308,9 +317,10 @@
             this.myCheckBox1.CheckButtonWidth = 17;
             this.myCheckBox1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myCheckBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.myCheckBox1.Location = new System.Drawing.Point(85, 146);
+            this.myCheckBox1.Location = new System.Drawing.Point(128, 219);
+            this.myCheckBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.myCheckBox1.Name = "myCheckBox1";
-            this.myCheckBox1.Size = new System.Drawing.Size(51, 21);
+            this.myCheckBox1.Size = new System.Drawing.Size(72, 28);
             this.myCheckBox1.TabIndex = 35;
             this.myCheckBox1.Text = "正常";
             this.myCheckBox1.UseVisualStyleBackColor = false;
@@ -324,9 +334,10 @@
             this.myCheckBox2.CheckButtonWidth = 17;
             this.myCheckBox2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myCheckBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.myCheckBox2.Location = new System.Drawing.Point(151, 146);
+            this.myCheckBox2.Location = new System.Drawing.Point(226, 219);
+            this.myCheckBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.myCheckBox2.Name = "myCheckBox2";
-            this.myCheckBox2.Size = new System.Drawing.Size(46, 21);
+            this.myCheckBox2.Size = new System.Drawing.Size(65, 28);
             this.myCheckBox2.TabIndex = 36;
             this.myCheckBox2.Text = "2倍";
             this.myCheckBox2.UseVisualStyleBackColor = false;
@@ -340,9 +351,10 @@
             this.myCheckBox3.CheckButtonWidth = 17;
             this.myCheckBox3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myCheckBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.myCheckBox3.Location = new System.Drawing.Point(217, 146);
+            this.myCheckBox3.Location = new System.Drawing.Point(326, 219);
+            this.myCheckBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.myCheckBox3.Name = "myCheckBox3";
-            this.myCheckBox3.Size = new System.Drawing.Size(46, 21);
+            this.myCheckBox3.Size = new System.Drawing.Size(65, 28);
             this.myCheckBox3.TabIndex = 37;
             this.myCheckBox3.Text = "5倍";
             this.myCheckBox3.UseVisualStyleBackColor = false;
@@ -356,19 +368,19 @@
             this.horizonLine1.LineDashLength = 5;
             this.horizonLine1.LineLength = 217;
             this.horizonLine1.LineWidth = 1;
-            this.horizonLine1.Location = new System.Drawing.Point(32, 62);
+            this.horizonLine1.Location = new System.Drawing.Point(48, 93);
+            this.horizonLine1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.horizonLine1.Name = "horizonLine1";
             this.horizonLine1.Size = new System.Drawing.Size(219, 3);
             this.horizonLine1.TabIndex = 38;
             // 
             // Form_playback
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(280, 316);
+            this.ClientSize = new System.Drawing.Size(420, 474);
             this.Controls.Add(this.horizonLine1);
             this.Controls.Add(this.myCheckBox3);
             this.Controls.Add(this.myCheckBox2);
@@ -383,15 +395,10 @@
             this.Controls.Add(this.skinLabel2);
             this.Controls.Add(this.skinLabel4);
             this.Controls.Add(this.skinLabel3);
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form_playback";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form_playback";
-            this.TopMost = true;
-            this.TransparencyKey = System.Drawing.SystemColors.AppWorkspace;
             this.ResumeLayout(false);
             this.PerformLayout();
 
