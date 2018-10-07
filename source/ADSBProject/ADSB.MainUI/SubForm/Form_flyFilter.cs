@@ -13,6 +13,7 @@ namespace ADSB.MainUI.SubForm
 {
     public partial class Form_flyFilter : Form_aTemplate
     {
+        private Dictionary<String, GMapAirPlane> listAirplane;
         public Form_flyFilter()
         {
             InitializeComponent();
@@ -20,6 +21,35 @@ namespace ADSB.MainUI.SubForm
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
             SetStyle(ControlStyles.DoubleBuffer, true); // 双缓冲
+
+        }
+
+        public class FlyChangedEventArgs : EventArgs // 事件参数类
+        {
+            private Dictionary<String, GMapAirPlane> listAirplane;
+            public Dictionary<String, GMapAirPlane> ListAirplane
+            {
+                get { return listAirplane; }
+                set { listAirplane = value; }
+            }
+        }
+        // 声明委托
+        public delegate void FlyChangedEventHandler(object sender, FlyChangedEventArgs e);
+        // 定义事件
+        public event FlyChangedEventHandler FlyChanged;
+
+        // 触发事件的方法
+        protected virtual void OnFlyChanged(FlyChangedEventArgs e)
+        {
+            if (FlyChanged != null)
+                FlyChanged(this, e);
+
+            foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
+            {
+                AirplaneInfo airPlaneInfo = eachlistAirplane.AirPlaneMarkerInfo;
+                dGridFlyFilter.Rows.Add(airPlaneInfo.fid, airPlaneInfo.gv, airPlaneInfo.height, airPlaneInfo.speed);
+            }
+            this.skinLabel2.Text = "飞行器：" + listAirplane.Count.ToString();
         }
 
         private void sPnl_close_Click(object sender, EventArgs e)
@@ -38,11 +68,10 @@ namespace ADSB.MainUI.SubForm
         {
             this.dGridFlyFilter.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             dGridFlyFilter.RowTemplate.Height = 43;
-            dGridFlyFilter.Rows.Add("71bf95", "0", " ", " ");
-            dGridFlyFilter.Rows.Add("780b7d", "0", " ", " ");
-            dGridFlyFilter.Rows.Add("78048b", "0", " ", " ");
-            dGridFlyFilter.Rows.Add("780939", "0", " ", " ");
-
+            //dGridFlyFilter.Rows.Add("71bf95", "0", " ", " ");
+            //dGridFlyFilter.Rows.Add("780b7d", "0", " ", " ");
+            //dGridFlyFilter.Rows.Add("78048b", "0", " ", " ");
+            //dGridFlyFilter.Rows.Add("780939", "0", " ", " ");
         }
     }
 }

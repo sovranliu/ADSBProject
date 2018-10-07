@@ -75,13 +75,14 @@ namespace ADSB.MainUI
             {
                 ShowMaskLayerWindow();
 
-                Form test = new Form_flyFilter();
+                Form_flyFilter test = new Form_flyFilter();
                 test.Location = new Point(this.Location.X + 515, this.Location.Y + 160);
                 test.ShowDialog();
+
                 mapmask.Visible = false;
             }
-
         }
+
         //报警按钮
         private void sLabel_alarm_Click(object sender, EventArgs e)
         {

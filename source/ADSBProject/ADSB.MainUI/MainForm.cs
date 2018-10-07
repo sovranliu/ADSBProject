@@ -154,6 +154,8 @@ namespace ADSB.MainUI
             }
             listAirplane.Add(tmpData.flightNo.ToString(), tmpAirplane);
             remove = false;
+
+
             // planeOverlay.Markers.Add(tmpAirplane);
             // gMapControl1.Refresh();
         }
@@ -244,7 +246,6 @@ namespace ADSB.MainUI
         //初始化界面
         private void InitializeUI()
         {
-            sPnl_funcmore.Parent = gMapControl1;
             panelEx1.BackColor = Color.FromArgb(45, 0, 0, 0);
             panelEx1.Parent = gMapControl1;
             panelEx1.Visible = false;
@@ -516,7 +517,6 @@ namespace ADSB.MainUI
                 mapmask.Visible = false;
             }
         }
-
-       
+        
     }
 }
