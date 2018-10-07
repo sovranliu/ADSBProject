@@ -142,6 +142,14 @@ namespace ADSB.MainUI
                 {
                     test.myCheckBox7_Selected();
                 }
+
+                test.changebox9_event += new Form_mapTool.changebox9(frm_changebox9_event);
+                // 初始化地面站checkbox
+                if (flightCircle)
+                {
+                    test.myCheckBox9_Selected();
+                }
+
                 test.ShowDialog();
                 mapmask.Visible = false;
             }
@@ -353,8 +361,6 @@ namespace ADSB.MainUI
             }
         }
 
-        
-
         /**
          * 地面站box
          * */
@@ -398,9 +404,64 @@ namespace ADSB.MainUI
             }
         }
 
+        void frm_changebox9_event(Boolean selected)
+        {
+            if (selected)
+            {
+                flightCircle = true;
+                flightCircleOverlay.Clear();
+                if (landStation)
+                {
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
+                    foreach (Dictionary<string, object> dictionary in result)
+                    {
+                        String name = Convert.ToString(dictionary["Name"]);
+                        double lat = Convert.ToDouble(dictionary["Lat"]);
+                        double lang = Convert.ToDouble(dictionary["Lng"]);
+                        PointLatLng point = new PointLatLng(lat, lang);
+                        GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 100000);
+                        GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 200000);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
+                    }
+                }
 
-        //更多按钮
-        private void sPnl_funcmore_click(object sender, EventArgs e)
+                if(airPort)
+                {
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
+                    foreach (Dictionary<string, object> dictionary in result)
+                    {
+                        String name = Convert.ToString(dictionary["Name"]);
+                        double lat = Convert.ToDouble(dictionary["Lat"]);
+                        double lang = Convert.ToDouble(dictionary["Lng"]);
+                        PointLatLng point = new PointLatLng(lat, lang);
+                        GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 100000);
+                        GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 200000);
+                        GMapMarkerCircle gMapMarkerCircle3 = new GMapMarkerCircle(point, 300000);
+                        GMapMarkerCircle gMapMarkerCircle4 = new GMapMarkerCircle(point, 400000);
+                        GMapMarkerCircle gMapMarkerCircle5 = new GMapMarkerCircle(point, 500000);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle3);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle4);
+                        flightCircleOverlay.Markers.Add(gMapMarkerCircle5);
+                    }
+                }
+
+                this.gMapControl1.Overlays.Add(flightCircleOverlay);
+            }
+            else
+            {
+                flightCircle = false;
+                flightCircleOverlay.Clear();
+                this.gMapControl1.Overlays.Remove(flightCircleOverlay);
+            }
+            gMapControl1.Refresh();
+        }
+
+
+            //更多按钮
+            private void sPnl_funcmore_click(object sender, EventArgs e)
         {
             log.Writelogs("点击了\"更多\"按钮");
             /*

@@ -12,9 +12,9 @@ namespace ADSB.MainUI
         public int Radius;
         public PointLatLng P2;
         public bool IsMeter = true;
-        public Pen Stroke = new Pen(Color.MidnightBlue);
+        public Pen Stroke = new Pen(Color.MidnightBlue, 1);
 
-        public Brush Fill = new SolidBrush(Color.FromArgb(155, Color.AliceBlue));
+        public Brush Fill = new SolidBrush(Color.FromArgb(0, Color.AliceBlue));
         //public Brush Fill = new System.Drawing.SolidBrush(Color.AliceBlue); 
         public bool IsFilled = true;
         public GMapMarkerCircle(PointLatLng p, int radius) : base(p)

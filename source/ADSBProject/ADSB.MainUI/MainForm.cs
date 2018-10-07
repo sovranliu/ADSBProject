@@ -25,6 +25,7 @@ namespace ADSB.MainUI
         private GMapOverlay airSpaceOverlay = new GMapOverlay("airSpaceLayer"); //空域图层
         private GMapOverlay wayPointOverlay = new GMapOverlay("wayPointLayer"); //航站点图层
         private GMapOverlay airSegmentOverlay = new GMapOverlay("airSegmentLayer"); //航线图层
+        private GMapOverlay flightCircleOverlay = new GMapOverlay("flightCircleLayer"); //航迹圈图层
 
         // 是否是测距模式
         private bool isDistince = false;
@@ -63,6 +64,9 @@ namespace ADSB.MainUI
         private List<String> listAirSpace;
         // 当前是否要展示空域
         private Boolean airSpace;
+
+        // 当前是否要展示航迹圈
+        private Boolean flightCircle;
 
         List<PointLatLng> distincePairs = new List<PointLatLng>();
        // private GMapAirPort airPort;
@@ -475,7 +479,7 @@ namespace ADSB.MainUI
 
                 // 如果航线列表有修改
                 Form_airSegment airSegment = new Form_airSegment();
-                airSegment.airSegment_event += new Form_airSegment.airSegment(frm_changebox5_event);
+                airSegment.airSegment_event += new Form_airSegment.airSegment(frm_changebox3_event);
 
                 airSegment.ShowDialog();
                 mapmask.Visible = false;
@@ -511,7 +515,7 @@ namespace ADSB.MainUI
 
                 // 如果空域列表有修改
                 Form_airSpace airSpace = new Form_airSpace();
-                airSpace.airSpace_event += new Form_airSpace.airSpace(frm_changebox5_event);
+                airSpace.airSpace_event += new Form_airSpace.airSpace(frm_changebox2_event);
 
                 airSpace.ShowDialog();
                 mapmask.Visible = false;
