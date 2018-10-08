@@ -196,6 +196,12 @@
     <Compile Include="SubForm\Form_alarmSet.Designer.cs">
       <DependentUpon>Form_alarmSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubForm\Form_setup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_setup.Designer.cs">
+      <DependentUpon>Form_setup.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\Form_wayPoint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -334,6 +340,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_alarmSet.resx">
       <DependentUpon>Form_alarmSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_setup.resx">
+      <DependentUpon>Form_setup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
       <DependentUpon>Form_wayPoint.cs</DependentUpon>

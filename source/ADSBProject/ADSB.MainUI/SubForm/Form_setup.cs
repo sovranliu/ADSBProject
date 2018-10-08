@@ -11,29 +11,29 @@ using System.Windows.Forms;
 
 namespace ADSB.MainUI.SubForm
 {
-    public partial class Form_alarmSet : Form
+    public partial class Form_setup : Form_aTemplate
     {
-        public Form_alarmSet()
+        public Form_setup()
         {
             InitializeComponent();
-            this.skinTextBox1.Text = ConfigHelper.Instance.GetConfig("alarm_distance");
-            this.skinTextBox2.Text = ConfigHelper.Instance.GetConfig("alarm_hight");
+            String my_sAddress = ConfigHelper.Instance.GetConfig("my_sAddress");
+            if (!string.IsNullOrWhiteSpace(my_sAddress))
+            {
+                skinTextBox3.Text = my_sAddress;
+            }
         }
 
         private void sPnl_close_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        
 
         private void skinButton1_Click(object sender, EventArgs e)
         {
-            if (!this.skinTextBox1.Text.Equals(""))
+            if (!string.IsNullOrWhiteSpace(skinTextBox3.Text))
             {
-                ConfigHelper.Instance.SetConfig("alarm_distance", this.skinTextBox1.Text);
-            }
-            if (!this.skinTextBox2.Text.Equals(""))
-            {
-                ConfigHelper.Instance.SetConfig("alarm_hight", this.skinTextBox2.Text);
+                ConfigHelper.Instance.SetConfig("my_sAddress", skinTextBox3.Text);
             }
         }
     }

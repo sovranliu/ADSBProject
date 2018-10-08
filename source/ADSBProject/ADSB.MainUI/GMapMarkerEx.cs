@@ -209,11 +209,16 @@ namespace ADSB.MainUI
             ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
         }
 
-        public GMapAirPlane(PointLatLng p, Cat021Data data, bool selected) : base(p)
+        public GMapAirPlane(PointLatLng p, Cat021Data data, int selected) : base(p)
         {
-            if (selected)
+            // 中心机
+            if (1 ==selected)
             {
-                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4@3x.png") as Bitmap;
+            }
+            else if (2 == selected)
+            {
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4@2x.png") as Bitmap;
             }
             else
             {

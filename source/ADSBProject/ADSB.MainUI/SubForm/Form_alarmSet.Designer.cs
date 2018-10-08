@@ -62,7 +62,7 @@
             this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.sPnl_close.DownBack = null;
             this.sPnl_close.Location = new System.Drawing.Point(419, 13);
-            this.sPnl_close.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sPnl_close.Margin = new System.Windows.Forms.Padding(4);
             this.sPnl_close.MouseBack = null;
             this.sPnl_close.Name = "sPnl_close";
             this.sPnl_close.NormlBack = null;
@@ -89,7 +89,7 @@
             this.skinTextBox1.Multiline = true;
             this.skinTextBox1.Name = "skinTextBox1";
             this.skinTextBox1.NormlBack = null;
-            this.skinTextBox1.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.skinTextBox1.Padding = new System.Windows.Forms.Padding(8);
             this.skinTextBox1.ReadOnly = false;
             this.skinTextBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.skinTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -101,10 +101,10 @@
             this.skinTextBox1.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTextBox1.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinTextBox1.SkinTxt.Location = new System.Drawing.Point(8, 8);
-            this.skinTextBox1.SkinTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.skinTextBox1.SkinTxt.Margin = new System.Windows.Forms.Padding(4);
             this.skinTextBox1.SkinTxt.Multiline = true;
             this.skinTextBox1.SkinTxt.Name = "BaseText";
-            this.skinTextBox1.SkinTxt.Size = new System.Drawing.Size(230, 44);
+            this.skinTextBox1.SkinTxt.Size = new System.Drawing.Size(203, 44);
             this.skinTextBox1.SkinTxt.TabIndex = 0;
             this.skinTextBox1.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.skinTextBox1.SkinTxt.WaterText = "";
@@ -132,7 +132,7 @@
             this.skinButton1.IsDrawBorder = false;
             this.skinButton1.IsDrawGlass = false;
             this.skinButton1.Location = new System.Drawing.Point(130, 349);
-            this.skinButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.skinButton1.Margin = new System.Windows.Forms.Padding(4);
             this.skinButton1.MouseBack = null;
             this.skinButton1.Name = "skinButton1";
             this.skinButton1.NormlBack = null;
@@ -143,6 +143,7 @@
             this.skinButton1.Text = "确定";
             this.skinButton1.UseMnemonic = false;
             this.skinButton1.UseVisualStyleBackColor = false;
+            this.skinButton1.Click += new System.EventHandler(this.skinButton1_Click);
             // 
             // horizonLine1
             // 
@@ -153,7 +154,7 @@
             this.horizonLine1.LineLength = 216;
             this.horizonLine1.LineWidth = 1;
             this.horizonLine1.Location = new System.Drawing.Point(48, 93);
-            this.horizonLine1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.horizonLine1.Margin = new System.Windows.Forms.Padding(6);
             this.horizonLine1.Name = "horizonLine1";
             this.horizonLine1.Size = new System.Drawing.Size(218, 3);
             this.horizonLine1.TabIndex = 10;
@@ -248,7 +249,7 @@
             this.Controls.Add(this.skinLabel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_alarmSet";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

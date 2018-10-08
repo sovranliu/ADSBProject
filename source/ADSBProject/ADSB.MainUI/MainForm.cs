@@ -118,6 +118,8 @@ namespace ADSB.MainUI
             foreach (Dictionary<string, object> dictionary in result)
             {
                 int sModeAddress = Convert.ToInt32(dictionary["SModeAddress"]);
+                int index = this.dataGridView1.Rows.Add();
+                this.dataGridView1.Rows[index].Cells[0].Value = sModeAddress.ToString();
                 listAirplaneCheck.Add(sModeAddress, sModeAddress);
             }
         }
@@ -127,11 +129,32 @@ namespace ADSB.MainUI
             if (dataSource.Count == 0)
                 return;
             Cat021Data tmpData = dataSource.GetData();
-            bool isCheckedPlane = false;
+            int isCheckedPlane = 0;
+
+            // 获取中心机
+            String my_sAddress = ConfigHelper.Instance.GetConfig("my_sAddress");
+            int iAddress = Convert.ToInt32(my_sAddress);
+            if (!string.IsNullOrWhiteSpace(my_sAddress) && tmpData.sModeAddress == iAddress)
+            {
+                isCheckedPlane = 1;
+
+                ConfigHelper.Instance.SetConfig("my_flightNo", tmpData.flightNo.ToString().Trim());
+                ConfigHelper.Instance.SetConfig("my_latitude", tmpData.latitude.ToString());
+                ConfigHelper.Instance.SetConfig("my_longtitude", tmpData.longtitude.ToString());
+                ConfigHelper.Instance.SetConfig("my_elapsedTime", tmpData.elapsedTime.ToString());
+                ConfigHelper.Instance.SetConfig("my_geometricAltitude", tmpData.geometricAltitude.ToString());
+                ConfigHelper.Instance.SetConfig("my_barometricAltitude", tmpData.barometricAltitude.ToString());
+                ConfigHelper.Instance.SetConfig("my_airSpeed", tmpData.airSpeed.ToString());
+                ConfigHelper.Instance.SetConfig("my_airSpeedUnit", tmpData.airSpeedUnit.ToString());
+                ConfigHelper.Instance.SetConfig("my_aircraftAngle", tmpData.aircraftAngle.ToString());
+                ConfigHelper.Instance.SetConfig("my_groundSpeed", tmpData.groundSpeed.ToString());
+                ConfigHelper.Instance.SetConfig("my_emitterCategory", tmpData.emitterCategory.ToString());
+            }
+
             // 看飞机是否在选中列表中
             if (listAirplaneCheck.ContainsKey(tmpData.sModeAddress))
             {
-                isCheckedPlane = true;
+                isCheckedPlane = 2;
                 PointLatLng pointLatLng = new PointLatLng(tmpData.latitude, tmpData.longtitude);
                 if (pointPlaneLand.ContainsKey(tmpData.sModeAddress))
                 {
@@ -141,16 +164,16 @@ namespace ADSB.MainUI
             }
 
             GMapAirPlane tmpAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, isCheckedPlane);
-            GMapAirPlane removeAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, false);
+            GMapAirPlane removeAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, 0);
             bool remove = false;
             // 同一家飞机来了新的先从list里面移除掉
             foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
             {
-                if (eachlistAirplane.AirPlaneMarkerInfo.flightNo.Trim() == tmpData.flightNo.Trim())
+                if (eachlistAirplane.AirPlaneMarkerInfo.sModeAddress == tmpData.sModeAddress)
                 {
                     remove = true;
                     removeAirplane = eachlistAirplane;
-                    ProfileHelper.Instance.Update("Delete FROM Plane WHERE FlightNo = \"" + tmpData.flightNo.Trim() + "\"");
+                    ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress + "\"");
                 }
             }
 
@@ -177,10 +200,17 @@ namespace ADSB.MainUI
             }
             listAirplane.Add(tmpData.sModeAddress, tmpAirplane);
             // 插入数据库
-            String flightPlan = "未知";
             ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress.ToString().Trim() + "\"");
-            ProfileHelper.Instance.Update("INSERT INTO Plane (FlightNo, FlightPlan, SModeAddress) VALUES ('"
-                        + tmpData.flightNo.ToString() + "', '" + flightPlan + "', '" + tmpData.sModeAddress.ToString() + "')");
+            ProfileHelper.Instance.Update("INSERT INTO Plane (" +
+                "SModeAddress, FlightNo, Latitude, " +
+                "Longtitude, ElapsedTime, GeometricAltitude, " +
+                "BarometricAltitude, AirSpeed, AirSpeedUnit, " +
+                "AircraftAngle, GroundSpeed, EmitterCategory) VALUES ('" +
+                tmpData.sModeAddress + "', '" + tmpData.flightNo.ToString().Trim() + "', " + tmpData.latitude + ", " +
+                tmpData.longtitude + ", " + tmpData.elapsedTime + ", " + tmpData.geometricAltitude + ", " +
+                tmpData.barometricAltitude + ", " + tmpData.airSpeed + ", " + tmpData.airSpeedUnit + ", " +
+                tmpData.aircraftAngle + ", " + tmpData.groundSpeed + ", " + tmpData.emitterCategory +
+                ")");
             remove = false;
         }
 
@@ -237,12 +267,17 @@ namespace ADSB.MainUI
 
                     ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (FlightNo, FlightPlan, SModeAddress) VALUES ('"
                         + flightNo + "', '" + flightPlan + "', '" + sModeAddress + "')");
+
+                    int index = this.dataGridView1.Rows.Add();
+                    this.dataGridView1.Rows[index].Cells[0].Value = sModeAddress.ToString();
                 }
                 else
                 {
                     int sModeAddress = gMapAirPlane.AirPlaneMarkerInfo.sModeAddress;
                     pointPlaneLand.Remove(sModeAddress);
                     ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE SModeAddress = \"" + sModeAddress + "\"");
+
+                    // TODO 删除
                 }
             }
         }
@@ -281,6 +316,9 @@ namespace ADSB.MainUI
                     double disPlane = Distance(pointLandStation.Lat, pointLandStation.Lng, 
                         eachlistAirplane.AirPlaneMarkerInfo.latitude, eachlistAirplane.AirPlaneMarkerInfo.longtitude);
 
+                    // 判断是否要告警
+                    alarm(eachlistAirplane);
+
                     if (disPlane <= dis)
                     {
                         planeOverlay.Markers.Add(eachlistAirplane);
@@ -301,6 +339,10 @@ namespace ADSB.MainUI
                 foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
                 {
                     planeOverlay.Markers.Add(eachlistAirplane);
+
+                    // 判断是否要告警
+                    alarm(eachlistAirplane);
+
                     // 显示轨迹
                     int sModeAddress = eachlistAirplane.AirPlaneMarkerInfo.sModeAddress;
                     if (keyValuePairs.ContainsKey(sModeAddress) && !pointPlaneLand.ContainsKey(sModeAddress))
@@ -322,7 +364,7 @@ namespace ADSB.MainUI
             //    planeoverlay.routes.add(r);
             //}
 
-            // 只展示第一个地面站与途显飞机的距离
+            // 只展示第一个地面站与凸显飞机的距离
             if (hasLandStation)
             {
                 if (landStation && pointPlaneLand.Count > 0)
@@ -369,6 +411,42 @@ namespace ADSB.MainUI
             gMapControl1.Refresh();
         }
 
+        /**
+         * 判断是否要告警
+         * */
+        private void alarm(GMapAirPlane eachlistAirplane)
+        {
+            //获取告警直线距离
+            String distance = ConfigHelper.Instance.GetConfig("alarm_distance");
+            if (!string.IsNullOrWhiteSpace(distance))
+            {
+                double latitude = Convert.ToDouble(ConfigHelper.Instance.GetConfig("my_latitude"));
+                double longtitude = Convert.ToDouble(ConfigHelper.Instance.GetConfig("my_longtitude"));
+
+                double disPlane = Distance(latitude, longtitude,
+                            eachlistAirplane.AirPlaneMarkerInfo.latitude, eachlistAirplane.AirPlaneMarkerInfo.longtitude);
+
+                double alarm_distance = Convert.ToDouble(distance);
+
+                if(disPlane > 0.1 && alarm_distance >= disPlane)
+                {
+                    MessageBox.Show("距离报警！" + eachlistAirplane.AirPlaneMarkerInfo.sModeAddress.ToString() + "跟中心机距离：" + disPlane.ToString());
+                }
+            }
+
+            //String hight = ConfigHelper.Instance.GetConfig("alarm_hight");
+            //if (!string.IsNullOrWhiteSpace(hight))
+            //{
+            //    double geometricAltitude = Convert.ToDouble(ConfigHelper.Instance.GetConfig("geometricAltitude"));
+            //    double alarm_hight = Convert.ToDouble(hight);
+            //    if(alarm_hight >= geometricAltitude)
+            //    {
+            //        MessageBox.Show("高度报警！中心机高度：" + geometricAltitude.ToString());
+            //    }
+            //}
+
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.sTabControl.SelectedIndex = 1;
@@ -377,9 +455,9 @@ namespace ADSB.MainUI
             InitializeGMap();
 
             dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_UDP);
-            flyTimer.Interval = 1;
+            flyTimer.Interval = 100;
             flyTimer.Start();
-            displayTimer.Interval = 100;
+            displayTimer.Interval = 1000;
             displayTimer.Start();
         }
 
@@ -714,6 +792,17 @@ namespace ADSB.MainUI
                 mapmask.Visible = false;
             }
         }
-        
+
+        private void skinLabel34_Click(object sender, EventArgs e)
+        {
+            if (!IsPlayback)
+            {
+                ShowMaskLayerWindow();
+
+                Form_setup setup = new Form_setup();
+                setup.ShowDialog();
+                mapmask.Visible = false;
+            }
+        }
     }
 }

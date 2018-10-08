@@ -76,7 +76,7 @@ namespace ADSB.MainUI
                 ShowMaskLayerWindow();
 
                 Form_flyFilter test = new Form_flyFilter();
-                test.Location = new Point(this.Location.X + 515, this.Location.Y + 160);
+                test.Location = new Point(this.Location.X + 50, this.Location.Y + 16);
                 test.ShowDialog();
 
                 mapmask.Visible = false;
