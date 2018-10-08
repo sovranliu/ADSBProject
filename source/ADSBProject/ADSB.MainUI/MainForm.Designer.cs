@@ -76,15 +76,15 @@ namespace ADSB.MainUI
             this.sLabel2 = new CCWin.SkinControl.SkinLabel();
             this.slabel1 = new CCWin.SkinControl.SkinLabel();
             this.sTpMonitor = new CCWin.SkinControl.SkinTabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.skinProgressBar1 = new CCWin.SkinControl.SkinProgressBar();
             this.maskPlaybackRun = new ADSB.MainUI.Controls.MaskCircleLayer();
             this.maskPlaybackSetup = new ADSB.MainUI.Controls.MaskLayer();
             this.panelEx1 = new ADSB.MainUI.Controls.PanelEx(this.components);
             this.mapmask = new ADSB.MainUI.Controls.MaskLayer();
             this.skinPanel15 = new CCWin.SkinControl.SkinPanel();
+            this.button2 = new System.Windows.Forms.Button();
             this.skinLabel32 = new CCWin.SkinControl.SkinLabel();
+            this.button1 = new System.Windows.Forms.Button();
             this.skinLabel31 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel23 = new CCWin.SkinControl.SkinPanel();
             this.skinLabel30 = new CCWin.SkinControl.SkinLabel();
@@ -868,26 +868,6 @@ namespace ADSB.MainUI
             this.sTpMonitor.TabItemImage = null;
             this.sTpMonitor.Text = "skinTabPage2";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(-1, 609);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(89, 40);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "取消测距";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(-1, 550);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(89, 41);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "测距";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // skinProgressBar1
             // 
             this.skinProgressBar1.Back = null;
@@ -895,7 +875,7 @@ namespace ADSB.MainUI
             this.skinProgressBar1.BarBack = null;
             this.skinProgressBar1.BarRadiusStyle = CCWin.SkinClass.RoundStyle.All;
             this.skinProgressBar1.ForeColor = System.Drawing.Color.Transparent;
-            this.skinProgressBar1.Location = new System.Drawing.Point(0, 960);
+            this.skinProgressBar1.Location = new System.Drawing.Point(0, 930);
             this.skinProgressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.skinProgressBar1.Name = "skinProgressBar1";
             this.skinProgressBar1.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
@@ -908,7 +888,8 @@ namespace ADSB.MainUI
             // maskPlaybackRun
             // 
             this.maskPlaybackRun.BackColor = System.Drawing.Color.Transparent;
-            this.maskPlaybackRun.Location = new System.Drawing.Point(920, 1005);
+            this.maskPlaybackRun.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("maskPlaybackRun.BackgroundImage")));
+            this.maskPlaybackRun.Location = new System.Drawing.Point(920, 960);
             this.maskPlaybackRun.Margin = new System.Windows.Forms.Padding(4);
             this.maskPlaybackRun.Name = "maskPlaybackRun";
             this.maskPlaybackRun.Size = new System.Drawing.Size(78, 78);
@@ -919,7 +900,8 @@ namespace ADSB.MainUI
             // 
             // maskPlaybackSetup
             // 
-            this.maskPlaybackSetup.Location = new System.Drawing.Point(46, 1028);
+            this.maskPlaybackSetup.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.maskPlaybackSetup.Location = new System.Drawing.Point(46, 980);
             this.maskPlaybackSetup.Margin = new System.Windows.Forms.Padding(4);
             this.maskPlaybackSetup.Name = "maskPlaybackSetup";
             this.maskPlaybackSetup.Size = new System.Drawing.Size(84, 28);
@@ -929,7 +911,6 @@ namespace ADSB.MainUI
             // 
             // panelEx1
             // 
-            this.panelEx1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelEx1.BackgroundImage")));
             this.panelEx1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelEx1.Location = new System.Drawing.Point(0, 899);
@@ -992,6 +973,16 @@ namespace ADSB.MainUI
             this.skinPanel15.Size = new System.Drawing.Size(88, 748);
             this.skinPanel15.TabIndex = 19;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(-1, 609);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(89, 40);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "取消测距";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // skinLabel32
             // 
             this.skinLabel32.AutoSize = true;
@@ -1006,6 +997,16 @@ namespace ADSB.MainUI
             this.skinLabel32.TabIndex = 33;
             this.skinLabel32.Text = "航段";
             this.skinLabel32.Click += new System.EventHandler(this.skinLabel32_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(-1, 550);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 41);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "测距";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // skinLabel31
             // 

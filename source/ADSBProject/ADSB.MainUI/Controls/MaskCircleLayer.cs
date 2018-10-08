@@ -40,6 +40,10 @@ namespace ADSB.MainUI.Controls
             }
             else
                 e.Graphics.DrawRectangle(Pens.Black, 1, 1, this.Width - 2, this.Height - 2);
+            if(null != this.BackgroundImage)
+            {
+                e.Graphics.DrawImage(this.BackgroundImage, new PointF(0, 0));
+            }
         }
 
         protected override CreateParams CreateParams

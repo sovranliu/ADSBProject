@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADSB.MainUI.SubForm;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -70,6 +71,7 @@ namespace ADSB.MainUI
         private SQLiteConnection connection;
         private static Queue<Cat021Data> qData;
         private static bool isOn;
+        private Thread thRec;
 
         public bool Initialize()
         {
@@ -81,7 +83,7 @@ namespace ADSB.MainUI
             socket.Bind(point);
             isOn = true;
             qData = new Queue<Cat021Data>();
-            Thread thRec = new Thread(ReceiveMsg);
+            thRec = new Thread(ReceiveMsg);
             thRec.Start();
             return true;
         }
@@ -91,6 +93,8 @@ namespace ADSB.MainUI
             isOn = false;
             socket.Close();
             socket.Dispose();
+            thRec.Join();
+            thRec = null;
             if (null == connection)
             {
                 return;
@@ -131,9 +135,16 @@ namespace ADSB.MainUI
                 EndPoint point = new IPEndPoint(IPAddress.Any, 0);
                 byte[] buffer = new byte[1024];
                 // 接收数据报
-                int length = socket.ReceiveFrom(buffer, ref point);
-                Cat021Data outData = CommWrapper.decode(buffer);
-                qData.Enqueue(outData);
+                try
+                {
+                    int length = socket.ReceiveFrom(buffer, ref point);
+                    Cat021Data outData = CommWrapper.decode(buffer);
+                    qData.Enqueue(outData);
+                }
+                catch(Exception)
+                {
+                    return;
+                }
             }
         }
 
@@ -228,17 +239,18 @@ namespace ADSB.MainUI
     public class DBDataSource : DataSource
     {
         private SQLiteConnection connection;
-        private int minId;
-        private int maxId;
-        private int id; 
-        
+        public int MinId;
+        public int MaxId;
+        public int Id;
+
+
         public bool Initialize()
         {
             string dbPath = "Data Source =" + Environment.CurrentDirectory + "\\data.db";
             connection = new SQLiteConnection(dbPath);
             connection.Open();
             Reset();
-            id = minId - 1;
+            Id = MinId - 1;
             return true;
         }
 
@@ -257,6 +269,30 @@ namespace ADSB.MainUI
             using (SQLiteCommand cmd = connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT MIN(ID) AS MinID, MAX(ID) AS MaxID FROM Data WHERE 1 = 1";
+                if(Form_playback.sModeAddressList.Count > 0)
+                {
+                    String sModeAddressString = null;
+                    foreach(string sModeAddress in Form_playback.sModeAddressList)
+                    {
+                        if(null == sModeAddressString)
+                        {
+                            sModeAddressString = "'" + sModeAddress + "'";
+                        }
+                        else
+                        {
+                            sModeAddressString += ", '" + sModeAddress + "'";
+                        }
+                    }
+                    cmd.CommandText = cmd.CommandText + " AND sModeAddress IN (" + sModeAddressString + ")";
+                }
+                if(null != Form_playback.startTime)
+                {
+                    cmd.CommandText = cmd.CommandText + " AND createTime > " + Form_playback.startTime.Ticks;
+                }
+                if (null != Form_playback.endTime)
+                {
+                    cmd.CommandText = cmd.CommandText + " AND createTime < " + Form_playback.endTime.Ticks;
+                }
                 DataSet dataSet = new DataSet();
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
                 adapter.Fill(dataSet);
@@ -264,8 +300,8 @@ namespace ADSB.MainUI
                 {
                     return;
                 }
-                minId = (int)dataSet.Tables[0].Rows[0]["MinID"];
-                maxId = (int)dataSet.Tables[0].Rows[0]["MaxID"];
+                MinId = (int)dataSet.Tables[0].Rows[0]["MinID"];
+                MaxId = (int)dataSet.Tables[0].Rows[0]["MaxID"];
             }
         }
 
@@ -273,11 +309,36 @@ namespace ADSB.MainUI
         {
             using (SQLiteCommand cmd = connection.CreateCommand())
             {
-                cmd.CommandText = "SELECT * FROM Data WHERE ID > @ID ORDER BY ID ASC LIMIT 1";
+                cmd.CommandText = "SELECT * FROM Data WHERE ID > @ID";
+                if (Form_playback.sModeAddressList.Count > 0)
+                {
+                    String sModeAddressString = null;
+                    foreach (string sModeAddress in Form_playback.sModeAddressList)
+                    {
+                        if (null == sModeAddressString)
+                        {
+                            sModeAddressString = "'" + sModeAddress + "'";
+                        }
+                        else
+                        {
+                            sModeAddressString += ", '" + sModeAddress + "'";
+                        }
+                    }
+                    cmd.CommandText = cmd.CommandText + " AND sModeAddress IN (" + sModeAddressString + ")";
+                }
+                if (null != Form_playback.startTime)
+                {
+                    cmd.CommandText = cmd.CommandText + " AND createTime > " + Form_playback.startTime.Ticks;
+                }
+                if (null != Form_playback.endTime)
+                {
+                    cmd.CommandText = cmd.CommandText + " AND createTime < " + Form_playback.endTime.Ticks;
+                }
+                cmd.CommandText = cmd.CommandText + " ORDER BY ID ASC LIMIT 1";
                 SQLiteParameter parameter = new SQLiteParameter();
                 parameter.DbType = DbType.String;
                 parameter.ParameterName = "ID";
-                parameter.Value = id;
+                parameter.Value = Id;
                 cmd.Parameters.Add(parameter);
                 DataSet dataSet = new DataSet();
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
@@ -290,7 +351,7 @@ namespace ADSB.MainUI
                 }
                 else
                 {
-                    this.id = (int)dataSet.Tables[0].Rows[0]["ID"];
+                    this.Id = (int)dataSet.Tables[0].Rows[0]["ID"];
                     Cat021Data data = new Cat021Data();
                     data.sModeAddress = (int) dataSet.Tables[0].Rows[0]["sModeAddress"];
                     data.flightNo = (string)dataSet.Tables[0].Rows[0]["flightNo"];
@@ -319,7 +380,7 @@ namespace ADSB.MainUI
                     SQLiteParameter parameter = new SQLiteParameter();
                     parameter.DbType = System.Data.DbType.String;
                     parameter.ParameterName = "ID";
-                    parameter.Value = id;
+                    parameter.Value = Id;
                     cmd.Parameters.Add(parameter);
                     DataSet dataSet = new DataSet();
                     SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
@@ -330,7 +391,7 @@ namespace ADSB.MainUI
                     }
                     else
                     {
-                        return (int) dataSet.Tables[0].Rows[0]["Count"];
+                        return (int) (long) dataSet.Tables[0].Rows[0]["Count"];
                     }
                 }
             }

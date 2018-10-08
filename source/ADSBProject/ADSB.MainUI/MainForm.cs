@@ -296,14 +296,24 @@ namespace ADSB.MainUI
 
         #endregion
 
-        //来调试回放进度条
+        // 来调试回放进度条
         private void timerSPBarPlayback_Tick(object sender, EventArgs e)
         {
-            int temp;
-            temp = skinProgressBar1.Value + 1;
-            if (temp > 100) temp = 0;
-            skinProgressBar1.Value = temp;
-
+            if(0 == ((DBDataSource)dataSource).MaxId)
+            {
+                skinProgressBar1.Value = 100;
+                return;
+            }
+            int progress = (((DBDataSource) dataSource).Id - ((DBDataSource)dataSource).MinId) * 100 / ((DBDataSource)dataSource).MaxId;
+            if(progress < 0)
+            {
+                progress = 0;
+            }
+            else if (progress > 100)
+            {
+                progress = 100;
+            }
+            skinProgressBar1.Value = progress;
         }
 
         public static double HaverSin(double theta)
@@ -361,11 +371,45 @@ namespace ADSB.MainUI
 
         private void maskPlaybackRun_Click(object sender, EventArgs e)
         {
-            //点击了“开始回放”按钮
-            //MessageBox.Show("开始回放！");
+            // 启动回放
+            StartPlayBack();
+        }
+
+
+        public void ResetMap()
+        {
+            listAirplane.Clear();
+        }
+
+        public void StartPlayBack()
+        {
+            if (null != dataSource)
+            {
+                dataSource.Terminate();
+                dataSource = null;
+            }
+            dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_DB);
+            ResetMap();
             timerSPBarPlayback.Enabled = true;
             timerSPBarPlayback.Interval = 100;
+            timerSPBarPlayback.Start();
             skinProgressBar1.Value = 0;
+            skinProgressBar1.Enabled = false;
+        }
+
+        public void StopPlayBack()
+        {
+            timerSPBarPlayback.Enabled = false;
+            timerSPBarPlayback.Stop();
+            skinProgressBar1.Value = 0;
+            skinProgressBar1.Enabled = false;
+            if (null != dataSource)
+            {
+                dataSource.Terminate();
+                dataSource = null;
+            }
+            dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_UDP);
+            ResetMap();
         }
 
         private void maskPlaybackSetup_Click(object sender, EventArgs e)
@@ -390,9 +434,9 @@ namespace ADSB.MainUI
         {
             //该处绘制不容易添加的控件
 
-            SolidBrush textBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
-            Font textFont = new Font("微软雅黑", 42, FontStyle.Regular, GraphicsUnit.Document);
-            e.Graphics.DrawString("回放设置", textFont, textBrush, 31, 43);
+            //SolidBrush textBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
+            //Font textFont = new Font("微软雅黑", 42, FontStyle.Regular, GraphicsUnit.Document);
+            //e.Graphics.DrawString("回放设置", textFont, textBrush, 31, 60);
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -521,6 +565,10 @@ namespace ADSB.MainUI
                 mapmask.Visible = false;
             }
         }
-        
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
