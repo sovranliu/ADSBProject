@@ -1778,8 +1778,8 @@ namespace ADSB.MainUI
             // 
             // timerSPBarPlayback
             // 
-            this.timerSPBarPlayback.Interval = 1000;
-            this.timerSPBarPlayback.Tick += new System.EventHandler(this.timerSPBarPlayback_Tick);
+            this.playBackTimer.Interval = 1000;
+            this.playBackTimer.Tick += new System.EventHandler(this.playBackTimer_Tick);
             // 
             // dataGridView1
             // 

@@ -20,10 +20,9 @@ namespace ADSB.MainUI.Controls
             SetStyle(System.Windows.Forms.ControlStyles.Opaque, true);
             base.CreateControl();
         }
-
+        
         protected override void OnPaint(PaintEventArgs e)
         {
-
             base.OnPaint(e);
             alpha = 255 - (transparency * 255) / 100;
             Color color = Color.FromArgb(alpha, this.BackColor);

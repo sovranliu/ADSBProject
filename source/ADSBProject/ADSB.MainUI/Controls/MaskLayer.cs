@@ -24,7 +24,6 @@ namespace ADSB.MainUI.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
             base.OnPaint(e);
             alpha = 255 - (transparency * 255) / 100;
             Color color = Color.FromArgb(alpha, this.BackColor);
@@ -48,9 +47,7 @@ namespace ADSB.MainUI.Controls
                 SolidBrush textBrush = new SolidBrush(this.ForeColor);
                 Font textFont = new Font("微软雅黑", 42, FontStyle.Regular, GraphicsUnit.Document);
                 e.Graphics.DrawString(Title, textFont, textBrush, 0, 0);
-                Refresh();
             }
-            // 
         }
 
         protected override CreateParams CreateParams

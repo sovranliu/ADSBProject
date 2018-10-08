@@ -77,6 +77,7 @@ namespace ADSB.MainUI
        // private GMapAirSpace airSpace;
         private Timer flyTimer = new Timer();
         private Timer displayTimer = new Timer();
+        private Timer playBackTimer = new Timer();
 
         private DataSource dataSource;
 
@@ -108,6 +109,7 @@ namespace ADSB.MainUI
 
             flyTimer.Tick += new EventHandler(flyTimer_Tick);
             displayTimer.Tick += new EventHandler(displayTimer_Tick);
+            playBackTimer.Tick += new EventHandler(playBackTimer_Tick);
 
             log = new LogRecord();
         }
@@ -511,13 +513,14 @@ namespace ADSB.MainUI
         #endregion
 
         // 来调试回放进度条
-        private void timerSPBarPlayback_Tick(object sender, EventArgs e)
+        private void playBackTimer_Tick(object sender, EventArgs e)
         {
-            if(0 == ((DBDataSource)dataSource).MaxId)
+            if (0 == ((DBDataSource)dataSource).MaxId)
             {
                 skinProgressBar1.Value = 100;
                 return;
             }
+            System.Diagnostics.Debug.WriteLine("ID = " + (((DBDataSource)dataSource).Id + ", MinID = " + ((DBDataSource)dataSource).MinId) + ", MaxID = " + ((DBDataSource)dataSource).MaxId);
             int progress = (((DBDataSource) dataSource).Id - ((DBDataSource)dataSource).MinId) * 100 / ((DBDataSource)dataSource).MaxId;
             if(progress < 0)
             {
@@ -604,17 +607,15 @@ namespace ADSB.MainUI
             }
             dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_DB);
             ResetMap();
-            timerSPBarPlayback.Enabled = true;
-            timerSPBarPlayback.Interval = 100;
-            timerSPBarPlayback.Start();
+            playBackTimer.Interval = 100;
+            playBackTimer.Start();
             skinProgressBar1.Value = 0;
             skinProgressBar1.Enabled = false;
         }
 
         public void StopPlayBack()
         {
-            timerSPBarPlayback.Enabled = false;
-            timerSPBarPlayback.Stop();
+            playBackTimer.Stop();
             skinProgressBar1.Value = 0;
             skinProgressBar1.Enabled = false;
             if (null != dataSource)
@@ -648,9 +649,11 @@ namespace ADSB.MainUI
         {
             //该处绘制不容易添加的控件
 
-            //SolidBrush textBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
-            //Font textFont = new Font("微软雅黑", 42, FontStyle.Regular, GraphicsUnit.Document);
-            //e.Graphics.DrawString("回放设置", textFont, textBrush, 31, 60);
+            SolidBrush textBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
+            Font textFont = new Font("微软雅黑", 42, FontStyle.Regular, GraphicsUnit.Document);
+            e.Graphics.DrawString("回放设置", textFont, textBrush, 31, 65);
+
+            e.Graphics.DrawImage(maskPlaybackRun.BackgroundImage, new PointF(maskPlaybackRun.Left - panelEx1.Left, maskPlaybackRun.Top - panelEx1.Top));
         }
 
         private void button1_Click_1(object sender, EventArgs e)
