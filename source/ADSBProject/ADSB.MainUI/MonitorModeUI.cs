@@ -519,7 +519,6 @@ namespace ADSB.MainUI
                 maskPlaybackSetup.Visible = false;
                 maskPlaybackRun.Visible = false;
                 skinProgressBar1.Visible = false;
-                timerSPBarPlayback.Enabled = false;
                 StopPlayBack();
             }
             else   //显示回放框
@@ -527,8 +526,8 @@ namespace ADSB.MainUI
                 IsPlayback = true;
                 maskPlaybackSetup.Title = "回放设置";
                 panelEx1.Visible = true;
+                panelEx1.BackColor = Color.FromArgb(115, 0, 0, 0);
                 panelEx1.Refresh();
-                // panelEx1.BackColor = Color.FromArgb(115, 0, 0, 0);
                 maskPlaybackSetup.Visible = true;
                 maskPlaybackSetup.Refresh();
                 maskPlaybackRun.Visible = true;

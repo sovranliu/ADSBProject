@@ -300,8 +300,8 @@ namespace ADSB.MainUI
                 {
                     return;
                 }
-                MinId = (int)dataSet.Tables[0].Rows[0]["MinID"];
-                MaxId = (int)dataSet.Tables[0].Rows[0]["MaxID"];
+                MinId = (int)(long) dataSet.Tables[0].Rows[0]["MinID"];
+                MaxId = (int)(long) dataSet.Tables[0].Rows[0]["MaxID"];
             }
         }
 
@@ -351,20 +351,20 @@ namespace ADSB.MainUI
                 }
                 else
                 {
-                    this.Id = (int)dataSet.Tables[0].Rows[0]["ID"];
+                    this.Id = (int)(long)dataSet.Tables[0].Rows[0]["ID"];
                     Cat021Data data = new Cat021Data();
-                    data.sModeAddress = (int) dataSet.Tables[0].Rows[0]["sModeAddress"];
+                    data.sModeAddress = (int)(long)dataSet.Tables[0].Rows[0]["sModeAddress"];
                     data.flightNo = (string)dataSet.Tables[0].Rows[0]["flightNo"];
-                    data.latitude = (int)dataSet.Tables[0].Rows[0]["latitude"];
-                    data.longtitude = (int)dataSet.Tables[0].Rows[0]["longtitude"];
-                    data.elapsedTime = (int)dataSet.Tables[0].Rows[0]["elapsedTime"];
-                    data.geometricAltitude = (int)dataSet.Tables[0].Rows[0]["geometricAltitude"];
-                    data.barometricAltitude = (int)dataSet.Tables[0].Rows[0]["barometricAltitude"];
-                    data.airSpeed = (int)dataSet.Tables[0].Rows[0]["airSpeed"];
-                    data.airSpeedUnit = (byte)dataSet.Tables[0].Rows[0]["airSpeedUnit"];
-                    data.aircraftAngle = (int)dataSet.Tables[0].Rows[0]["aircraftAngle"];
-                    data.groundSpeed = (int)dataSet.Tables[0].Rows[0]["groundSpeed"];
-                    data.emitterCategory = (byte)dataSet.Tables[0].Rows[0]["emitterCategory"];
+                    data.latitude = (double)dataSet.Tables[0].Rows[0]["latitude"];
+                    data.longtitude = (double)dataSet.Tables[0].Rows[0]["longtitude"];
+                    data.elapsedTime = (double)dataSet.Tables[0].Rows[0]["elapsedTime"];
+                    data.geometricAltitude = (double)dataSet.Tables[0].Rows[0]["geometricAltitude"];
+                    data.barometricAltitude = (double)dataSet.Tables[0].Rows[0]["barometricAltitude"];
+                    data.airSpeed = (double)dataSet.Tables[0].Rows[0]["airSpeed"];
+                    data.airSpeedUnit = (byte)(long)dataSet.Tables[0].Rows[0]["airSpeedUnit"];
+                    data.aircraftAngle = (double)dataSet.Tables[0].Rows[0]["aircraftAngle"];
+                    data.groundSpeed = (double)dataSet.Tables[0].Rows[0]["groundSpeed"];
+                    data.emitterCategory = (byte)(long)dataSet.Tables[0].Rows[0]["emitterCategory"];
                     return data;
                 }
             }

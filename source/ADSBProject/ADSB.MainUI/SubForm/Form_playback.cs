@@ -14,8 +14,8 @@ namespace ADSB.MainUI.SubForm
     public partial class Form_playback : Form_aTemplate
     {
 
-        public static DateTime startTime;
-        public static DateTime endTime;
+        public static DateTime startTime = DateTime.Now.AddDays(-1);
+        public static DateTime endTime = DateTime.Now.AddDays(1);
         public static int speed = 1;
         public static List<String> sModeAddressList = new List<string>();
 
