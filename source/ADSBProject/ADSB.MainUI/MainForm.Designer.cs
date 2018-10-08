@@ -76,15 +76,15 @@ namespace ADSB.MainUI
             this.sLabel2 = new CCWin.SkinControl.SkinLabel();
             this.slabel1 = new CCWin.SkinControl.SkinLabel();
             this.sTpMonitor = new CCWin.SkinControl.SkinTabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.skinProgressBar1 = new CCWin.SkinControl.SkinProgressBar();
             this.maskPlaybackRun = new ADSB.MainUI.Controls.MaskCircleLayer();
             this.maskPlaybackSetup = new ADSB.MainUI.Controls.MaskLayer();
             this.panelEx1 = new ADSB.MainUI.Controls.PanelEx(this.components);
             this.mapmask = new ADSB.MainUI.Controls.MaskLayer();
             this.skinPanel15 = new CCWin.SkinControl.SkinPanel();
+            this.button2 = new System.Windows.Forms.Button();
             this.skinLabel32 = new CCWin.SkinControl.SkinLabel();
+            this.button1 = new System.Windows.Forms.Button();
             this.skinLabel31 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel23 = new CCWin.SkinControl.SkinPanel();
             this.skinLabel30 = new CCWin.SkinControl.SkinLabel();
@@ -130,6 +130,9 @@ namespace ADSB.MainUI
             this.sLabel_fly = new CCWin.SkinControl.SkinLabel();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
+            this.skinLine19 = new CCWin.SkinControl.SkinLine();
+            this.skinLabel33 = new CCWin.SkinControl.SkinLabel();
+            this.skinPanel11 = new CCWin.SkinControl.SkinPanel();
             this.sTabControl.SuspendLayout();
             this.sTpFly.SuspendLayout();
             this.skinPanel7.SuspendLayout();
@@ -868,26 +871,6 @@ namespace ADSB.MainUI
             this.sTpMonitor.TabItemImage = null;
             this.sTpMonitor.Text = "skinTabPage2";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(-1, 609);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(89, 40);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "取消测距";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(-1, 550);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(89, 41);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "测距";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // skinProgressBar1
             // 
             this.skinProgressBar1.Back = null;
@@ -956,6 +939,9 @@ namespace ADSB.MainUI
             this.skinPanel15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.skinPanel15.BackRectangle = new System.Drawing.Rectangle(0, 0, 0, 0);
             this.skinPanel15.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.skinPanel15.Controls.Add(this.skinLabel33);
+            this.skinPanel15.Controls.Add(this.skinLine19);
+            this.skinPanel15.Controls.Add(this.skinPanel11);
             this.skinPanel15.Controls.Add(this.button2);
             this.skinPanel15.Controls.Add(this.skinLabel32);
             this.skinPanel15.Controls.Add(this.button1);
@@ -992,6 +978,16 @@ namespace ADSB.MainUI
             this.skinPanel15.Size = new System.Drawing.Size(88, 748);
             this.skinPanel15.TabIndex = 19;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(-1, 609);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(89, 40);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "取消测距";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // skinLabel32
             // 
             this.skinLabel32.AutoSize = true;
@@ -999,13 +995,23 @@ namespace ADSB.MainUI
             this.skinLabel32.BorderColor = System.Drawing.Color.White;
             this.skinLabel32.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel32.Location = new System.Drawing.Point(24, 345);
+            this.skinLabel32.Location = new System.Drawing.Point(24, 295);
             this.skinLabel32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel32.Name = "skinLabel32";
             this.skinLabel32.Size = new System.Drawing.Size(42, 21);
             this.skinLabel32.TabIndex = 33;
             this.skinLabel32.Text = "航段";
             this.skinLabel32.Click += new System.EventHandler(this.skinLabel32_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(-1, 550);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 41);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "测距";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // skinLabel31
             // 
@@ -1014,7 +1020,7 @@ namespace ADSB.MainUI
             this.skinLabel31.BorderColor = System.Drawing.Color.White;
             this.skinLabel31.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel31.Location = new System.Drawing.Point(24, 512);
+            this.skinLabel31.Location = new System.Drawing.Point(24, 436);
             this.skinLabel31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel31.Name = "skinLabel31";
             this.skinLabel31.Size = new System.Drawing.Size(42, 21);
@@ -1029,7 +1035,7 @@ namespace ADSB.MainUI
             this.skinPanel23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel23.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel23.DownBack = null;
-            this.skinPanel23.Location = new System.Drawing.Point(28, 310);
+            this.skinPanel23.Location = new System.Drawing.Point(28, 260);
             this.skinPanel23.Margin = new System.Windows.Forms.Padding(4);
             this.skinPanel23.MouseBack = null;
             this.skinPanel23.Name = "skinPanel23";
@@ -1044,7 +1050,7 @@ namespace ADSB.MainUI
             this.skinLabel30.BorderColor = System.Drawing.Color.White;
             this.skinLabel30.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel30.Location = new System.Drawing.Point(24, 420);
+            this.skinLabel30.Location = new System.Drawing.Point(24, 365);
             this.skinLabel30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel30.Name = "skinLabel30";
             this.skinLabel30.Size = new System.Drawing.Size(42, 21);
@@ -1059,7 +1065,7 @@ namespace ADSB.MainUI
             this.skinPanel22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel22.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel22.DownBack = null;
-            this.skinPanel22.Location = new System.Drawing.Point(28, 477);
+            this.skinPanel22.Location = new System.Drawing.Point(28, 401);
             this.skinPanel22.Margin = new System.Windows.Forms.Padding(4);
             this.skinPanel22.MouseBack = null;
             this.skinPanel22.Name = "skinPanel22";
@@ -1072,7 +1078,7 @@ namespace ADSB.MainUI
             this.skinLine18.BackColor = System.Drawing.Color.Transparent;
             this.skinLine18.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine18.LineHeight = 1;
-            this.skinLine18.Location = new System.Drawing.Point(10, 448);
+            this.skinLine18.Location = new System.Drawing.Point(10, 390);
             this.skinLine18.Margin = new System.Windows.Forms.Padding(4);
             this.skinLine18.Name = "skinLine18";
             this.skinLine18.Size = new System.Drawing.Size(69, 3);
@@ -1086,7 +1092,7 @@ namespace ADSB.MainUI
             this.skinLabel29.BorderColor = System.Drawing.Color.White;
             this.skinLabel29.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel29.Location = new System.Drawing.Point(16, 270);
+            this.skinLabel29.Location = new System.Drawing.Point(16, 224);
             this.skinLabel29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel29.Name = "skinLabel29";
             this.skinLabel29.Size = new System.Drawing.Size(58, 21);
@@ -1101,7 +1107,7 @@ namespace ADSB.MainUI
             this.skinPanel21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel21.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel21.DownBack = null;
-            this.skinPanel21.Location = new System.Drawing.Point(28, 386);
+            this.skinPanel21.Location = new System.Drawing.Point(28, 331);
             this.skinPanel21.Margin = new System.Windows.Forms.Padding(4);
             this.skinPanel21.MouseBack = null;
             this.skinPanel21.Name = "skinPanel21";
@@ -1114,7 +1120,7 @@ namespace ADSB.MainUI
             this.skinLine17.BackColor = System.Drawing.Color.Transparent;
             this.skinLine17.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine17.LineHeight = 1;
-            this.skinLine17.Location = new System.Drawing.Point(10, 374);
+            this.skinLine17.Location = new System.Drawing.Point(5, 320);
             this.skinLine17.Margin = new System.Windows.Forms.Padding(4);
             this.skinLine17.Name = "skinLine17";
             this.skinLine17.Size = new System.Drawing.Size(69, 3);
@@ -1128,7 +1134,7 @@ namespace ADSB.MainUI
             this.skinPanel20.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel20.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel20.DownBack = null;
-            this.skinPanel20.Location = new System.Drawing.Point(28, 236);
+            this.skinPanel20.Location = new System.Drawing.Point(28, 190);
             this.skinPanel20.Margin = new System.Windows.Forms.Padding(4);
             this.skinPanel20.MouseBack = null;
             this.skinPanel20.Name = "skinPanel20";
@@ -1141,7 +1147,7 @@ namespace ADSB.MainUI
             this.skinLine16.BackColor = System.Drawing.Color.Transparent;
             this.skinLine16.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine16.LineHeight = 1;
-            this.skinLine16.Location = new System.Drawing.Point(10, 298);
+            this.skinLine16.Location = new System.Drawing.Point(10, 249);
             this.skinLine16.Margin = new System.Windows.Forms.Padding(4);
             this.skinLine16.Name = "skinLine16";
             this.skinLine16.Size = new System.Drawing.Size(69, 3);
@@ -1155,7 +1161,7 @@ namespace ADSB.MainUI
             this.skinLabel28.BorderColor = System.Drawing.Color.White;
             this.skinLabel28.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel28.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel28.Location = new System.Drawing.Point(24, 182);
+            this.skinLabel28.Location = new System.Drawing.Point(24, 152);
             this.skinLabel28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.skinLabel28.Name = "skinLabel28";
             this.skinLabel28.Size = new System.Drawing.Size(42, 21);
@@ -1170,7 +1176,7 @@ namespace ADSB.MainUI
             this.skinPanel19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel19.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel19.DownBack = null;
-            this.skinPanel19.Location = new System.Drawing.Point(28, 147);
+            this.skinPanel19.Location = new System.Drawing.Point(28, 117);
             this.skinPanel19.Margin = new System.Windows.Forms.Padding(4);
             this.skinPanel19.MouseBack = null;
             this.skinPanel19.Name = "skinPanel19";
@@ -1269,7 +1275,7 @@ namespace ADSB.MainUI
             this.skinLine9.BackColor = System.Drawing.Color.Transparent;
             this.skinLine9.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine9.LineHeight = 1;
-            this.skinLine9.Location = new System.Drawing.Point(10, 210);
+            this.skinLine9.Location = new System.Drawing.Point(10, 179);
             this.skinLine9.Margin = new System.Windows.Forms.Padding(4);
             this.skinLine9.Name = "skinLine9";
             this.skinLine9.Size = new System.Drawing.Size(69, 3);
@@ -1281,7 +1287,7 @@ namespace ADSB.MainUI
             this.skinLine8.BackColor = System.Drawing.Color.Transparent;
             this.skinLine8.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine8.LineHeight = 1;
-            this.skinLine8.Location = new System.Drawing.Point(10, 120);
+            this.skinLine8.Location = new System.Drawing.Point(10, 106);
             this.skinLine8.Margin = new System.Windows.Forms.Padding(4);
             this.skinLine8.Name = "skinLine8";
             this.skinLine8.Size = new System.Drawing.Size(69, 3);
@@ -1694,6 +1700,48 @@ namespace ADSB.MainUI
             this.timerSPBarPlayback.Interval = 1000;
             this.timerSPBarPlayback.Tick += new System.EventHandler(this.timerSPBarPlayback_Tick);
             // 
+            // skinLine19
+            // 
+            this.skinLine19.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine19.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine19.LineHeight = 1;
+            this.skinLine19.Location = new System.Drawing.Point(14, 461);
+            this.skinLine19.Margin = new System.Windows.Forms.Padding(4);
+            this.skinLine19.Name = "skinLine19";
+            this.skinLine19.Size = new System.Drawing.Size(69, 3);
+            this.skinLine19.TabIndex = 35;
+            this.skinLine19.Text = "skinLine19";
+            // 
+            // skinLabel33
+            // 
+            this.skinLabel33.AutoSize = true;
+            this.skinLabel33.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel33.BorderColor = System.Drawing.Color.White;
+            this.skinLabel33.Font = new System.Drawing.Font("微软雅黑", 8F);
+            this.skinLabel33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel33.Location = new System.Drawing.Point(9, 506);
+            this.skinLabel33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.skinLabel33.Name = "skinLabel33";
+            this.skinLabel33.Size = new System.Drawing.Size(74, 21);
+            this.skinLabel33.TabIndex = 36;
+            this.skinLabel33.Text = "告警条件";
+            this.skinLabel33.Click += new System.EventHandler(this.skinLabel33_Click);
+            // 
+            // skinPanel11
+            // 
+            this.skinPanel11.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel11.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("skinPanel11.BackgroundImage")));
+            this.skinPanel11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.skinPanel11.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinPanel11.DownBack = null;
+            this.skinPanel11.Location = new System.Drawing.Point(28, 472);
+            this.skinPanel11.Margin = new System.Windows.Forms.Padding(4);
+            this.skinPanel11.MouseBack = null;
+            this.skinPanel11.Name = "skinPanel11";
+            this.skinPanel11.NormlBack = null;
+            this.skinPanel11.Size = new System.Drawing.Size(30, 30);
+            this.skinPanel11.TabIndex = 35;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -1833,6 +1881,9 @@ namespace ADSB.MainUI
         private CCWin.SkinControl.SkinLine skinLine18;
         private CCWin.SkinControl.SkinLabel skinLabel32;
         private CCWin.SkinControl.SkinPanel skinPanel23;
+        private CCWin.SkinControl.SkinLabel skinLabel33;
+        private CCWin.SkinControl.SkinLine skinLine19;
+        private CCWin.SkinControl.SkinPanel skinPanel11;
     }
 }
 

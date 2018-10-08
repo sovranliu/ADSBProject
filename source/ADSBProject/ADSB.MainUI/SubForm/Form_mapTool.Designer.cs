@@ -108,6 +108,7 @@
             this.skinButton1.Text = "我知道了";
             this.skinButton1.UseMnemonic = false;
             this.skinButton1.UseVisualStyleBackColor = false;
+            this.skinButton1.Click += new System.EventHandler(this.skinButton1_Click);
             // 
             // skinComboBox2
             // 

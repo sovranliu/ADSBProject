@@ -100,14 +100,7 @@ namespace ADSB.MainUI.SubForm
                 changebox4_event(false, 1);
             }
 
-            if (myCheckBox9.CheckState == CheckState.Checked)
-            {
-                changebox9_event(true);
-            }
-            else
-            {
-                changebox9_event(false);
-            }
+            box9Set();
         }
 
         public void myCheckBox4_Selected()
@@ -144,15 +137,7 @@ namespace ADSB.MainUI.SubForm
             {
                 changebox7_event(false, 1);
             }
-
-            if (myCheckBox9.CheckState == CheckState.Checked)
-            {
-                changebox9_event(true);
-            }
-            else
-            {
-                changebox9_event(false);
-            }
+            box9Set();
         }
 
         public void myCheckBox7_Selected()
@@ -171,28 +156,63 @@ namespace ADSB.MainUI.SubForm
                 changebox9_event(false);
             }
 
-            if (myCheckBox7.CheckState == CheckState.Checked)
-            {
-                changebox7_event(true, 1);
-            }
-            else
-            {
-                changebox7_event(false, 1);
-            }
+            box7Set();
+            box4Set();
+        }
 
+        private void box4Set()
+        {
             if (myCheckBox4.CheckState == CheckState.Checked)
             {
                 changebox4_event(true, 1);
             }
             else
             {
-                changebox4_event(false, 1);
+                if (changebox4_event != null)
+                {
+                    changebox4_event(false, 1);
+                }
+            }
+        }
+
+        private void box7Set()
+        {
+            if (myCheckBox7.CheckState == CheckState.Checked)
+            {
+                changebox7_event(true, 1);
+            }
+            else
+            {
+                if (changebox7_event != null)
+                {
+                    changebox7_event(false, 1);
+                }
+            }
+        }
+
+        private void box9Set()
+        {
+            if (myCheckBox9.CheckState == CheckState.Checked)
+            {
+                changebox9_event(true);
+            }
+            else
+            {
+                if (changebox9_event != null)
+                {
+                    changebox9_event(false);
+                }
             }
         }
 
         public void myCheckBox9_Selected()
         {
             myCheckBox9.Checked = true;
+        }
+
+        private void skinButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

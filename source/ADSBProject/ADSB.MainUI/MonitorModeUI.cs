@@ -217,6 +217,7 @@ namespace ADSB.MainUI
                 {
                     airSpace = false;
                     airSpaceOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(airSpaceOverlay);
                     gMapControl1.Refresh();
                 }
             }
@@ -264,6 +265,7 @@ namespace ADSB.MainUI
                 {
                     airSegment = false;
                     airSegmentOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(airSegmentOverlay);
                     gMapControl1.Refresh();
                 }
             }
@@ -316,6 +318,7 @@ namespace ADSB.MainUI
                 {
                     airPort = false;
                     airPortOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(airPortOverlay);
                     gMapControl1.Refresh();
                 }
             }
@@ -356,6 +359,7 @@ namespace ADSB.MainUI
                 {
                     wayPoint = false;
                     wayPointOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(wayPointOverlay);
                     gMapControl1.Refresh();
                 }
             }
@@ -375,8 +379,10 @@ namespace ADSB.MainUI
 
                     listLandStations = new List<GMapLandStation>();
                     List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
-                    foreach (Dictionary<string, object> dictionary in result)
+                    // 只展示第一个
+                    if (result.Count() > 0)
                     {
+                        Dictionary<string, object> dictionary = result[0];
                         String name = Convert.ToString(dictionary["Name"]);
                         double lat = Convert.ToDouble(dictionary["Lat"]);
                         double lang = Convert.ToDouble(dictionary["Lng"]);
@@ -384,6 +390,7 @@ namespace ADSB.MainUI
                         GMapLandStation gMapLandStation = new GMapLandStation(point, name);
                         listLandStations.Add(gMapLandStation);
                     }
+                    
 
                     foreach (GMapLandStation landStation in listLandStations)
                     {
@@ -399,6 +406,7 @@ namespace ADSB.MainUI
                 {
                     landStation = false;
                     landStationOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(landStationOverlay);
                     gMapControl1.Refresh();
                 }
             }
@@ -418,11 +426,20 @@ namespace ADSB.MainUI
                         String name = Convert.ToString(dictionary["Name"]);
                         double lat = Convert.ToDouble(dictionary["Lat"]);
                         double lang = Convert.ToDouble(dictionary["Lng"]);
-                        PointLatLng point = new PointLatLng(lat, lang);
-                        GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 100000);
-                        GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 200000);
-                        flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
-                        flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
+                        double length = Convert.ToDouble(dictionary["Length"]);
+                        int num = Convert.ToInt16(dictionary["Num"]);
+                        while (num > 0)
+                        {
+                            PointLatLng point = new PointLatLng(lat, lang);
+                            GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)length * num);
+                            flightCircleOverlay.Markers.Add(gMapMarkerCircle);
+                            num--;
+                        }
+                        //PointLatLng point = new PointLatLng(lat, lang);
+                        //GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 10000);
+                        //GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 20000);
+                        //flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
+                        //flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
                     }
                 }
 
@@ -435,11 +452,11 @@ namespace ADSB.MainUI
                         double lat = Convert.ToDouble(dictionary["Lat"]);
                         double lang = Convert.ToDouble(dictionary["Lng"]);
                         PointLatLng point = new PointLatLng(lat, lang);
-                        GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 100000);
-                        GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 200000);
-                        GMapMarkerCircle gMapMarkerCircle3 = new GMapMarkerCircle(point, 300000);
-                        GMapMarkerCircle gMapMarkerCircle4 = new GMapMarkerCircle(point, 400000);
-                        GMapMarkerCircle gMapMarkerCircle5 = new GMapMarkerCircle(point, 500000);
+                        GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 10000);
+                        GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 20000);
+                        GMapMarkerCircle gMapMarkerCircle3 = new GMapMarkerCircle(point, 30000);
+                        GMapMarkerCircle gMapMarkerCircle4 = new GMapMarkerCircle(point, 40000);
+                        GMapMarkerCircle gMapMarkerCircle5 = new GMapMarkerCircle(point, 50000);
                         flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
                         flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
                         flightCircleOverlay.Markers.Add(gMapMarkerCircle3);
@@ -460,24 +477,7 @@ namespace ADSB.MainUI
         }
 
 
-            //更多按钮
-            private void sPnl_funcmore_click(object sender, EventArgs e)
-        {
-            log.Writelogs("点击了\"更多\"按钮");
-            /*
-            if (!IsPlayback)
-            {
-                ShowMaskLayerWindow();
-
-                // 如果地面站列表有修改
-                Form_earthStation earthStation = new Form_earthStation();
-                earthStation.earthStation_event += new Form_earthStation.earthStation(frm_changebox7_event);
-
-                earthStation.ShowDialog();
-                mapmask.Visible = false;
-            }
-            */
-        }
+     
 
         //地面站
         private void sPnl_dimianzhan_Click(object sender, EventArgs e)

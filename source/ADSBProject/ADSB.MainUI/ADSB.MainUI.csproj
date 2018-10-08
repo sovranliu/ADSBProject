@@ -190,6 +190,12 @@
     <Compile Include="SubForm\Form_airSpace.Designer.cs">
       <DependentUpon>Form_airSpace.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubForm\Form_alarmSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\Form_alarmSet.Designer.cs">
+      <DependentUpon>Form_alarmSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\Form_wayPoint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -325,6 +331,9 @@
     </Compile>
     <EmbeddedResource Include="SubForm\Form_airSpace.resx">
       <DependentUpon>Form_airSpace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\Form_alarmSet.resx">
+      <DependentUpon>Form_alarmSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\Form_wayPoint.resx">
       <DependentUpon>Form_wayPoint.cs</DependentUpon>
