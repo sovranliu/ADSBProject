@@ -12,6 +12,7 @@ namespace ADSB.MainUI.Controls
 {
     public partial class MaskLayer : UserControl
     {
+        public String Title;
         private int alpha, transparency=45;
 
         public MaskLayer()
@@ -39,7 +40,17 @@ namespace ADSB.MainUI.Controls
                 }
             }
             else
+            {
                 e.Graphics.DrawRectangle(Pens.Black, 1, 1, this.Width - 2, this.Height - 2);
+            }
+            if(null != Title)
+            {
+                SolidBrush textBrush = new SolidBrush(this.ForeColor);
+                Font textFont = new Font("微软雅黑", 42, FontStyle.Regular, GraphicsUnit.Document);
+                e.Graphics.DrawString(Title, textFont, textBrush, 0, 0);
+                Refresh();
+            }
+            // 
         }
 
         protected override CreateParams CreateParams

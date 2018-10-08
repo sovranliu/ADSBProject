@@ -70,7 +70,7 @@ namespace ADSB.MainUI.SubForm
             }
             catch(Exception)
             {
-                MessageBox.Show("参数不正确");
+                // MessageBox.Show("参数不正确");
             }
         }
 

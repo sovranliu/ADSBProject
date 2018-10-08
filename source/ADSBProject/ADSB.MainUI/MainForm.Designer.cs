@@ -878,7 +878,7 @@ namespace ADSB.MainUI
             this.skinProgressBar1.BarBack = null;
             this.skinProgressBar1.BarRadiusStyle = CCWin.SkinClass.RoundStyle.All;
             this.skinProgressBar1.ForeColor = System.Drawing.Color.Transparent;
-            this.skinProgressBar1.Location = new System.Drawing.Point(0, 960);
+            this.skinProgressBar1.Location = new System.Drawing.Point(0, 930);
             this.skinProgressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.skinProgressBar1.Name = "skinProgressBar1";
             this.skinProgressBar1.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
@@ -891,7 +891,8 @@ namespace ADSB.MainUI
             // maskPlaybackRun
             // 
             this.maskPlaybackRun.BackColor = System.Drawing.Color.Transparent;
-            this.maskPlaybackRun.Location = new System.Drawing.Point(920, 1005);
+            this.maskPlaybackRun.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("maskPlaybackRun.BackgroundImage")));
+            this.maskPlaybackRun.Location = new System.Drawing.Point(920, 960);
             this.maskPlaybackRun.Margin = new System.Windows.Forms.Padding(4);
             this.maskPlaybackRun.Name = "maskPlaybackRun";
             this.maskPlaybackRun.Size = new System.Drawing.Size(78, 78);
@@ -902,7 +903,8 @@ namespace ADSB.MainUI
             // 
             // maskPlaybackSetup
             // 
-            this.maskPlaybackSetup.Location = new System.Drawing.Point(46, 1028);
+            this.maskPlaybackSetup.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.maskPlaybackSetup.Location = new System.Drawing.Point(46, 980);
             this.maskPlaybackSetup.Margin = new System.Windows.Forms.Padding(4);
             this.maskPlaybackSetup.Name = "maskPlaybackSetup";
             this.maskPlaybackSetup.Size = new System.Drawing.Size(84, 28);
@@ -912,7 +914,6 @@ namespace ADSB.MainUI
             // 
             // panelEx1
             // 
-            this.panelEx1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelEx1.BackgroundImage")));
             this.panelEx1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelEx1.Location = new System.Drawing.Point(0, 899);
