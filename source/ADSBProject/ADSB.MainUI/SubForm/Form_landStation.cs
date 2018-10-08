@@ -60,7 +60,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
-            showLandStation(portSelOverlay, point.Lat, point.Lng, "选中的点");
+            showLandStation(portSelOverlay, point.Lat, point.Lng, "选中的点", 0, 1);
         }
 
         private void skinButton1_Click(object sender, EventArgs e)
@@ -69,6 +69,11 @@ namespace ADSB.MainUI.SubForm
             if (null == name || name.Length == 0)
             {
                 MessageBox.Show("请输入机场名称！");
+                return;
+            }
+            if (null == skinTextBox1.Text || skinTextBox1.Text.Length == 0)
+            {
+                MessageBox.Show("请输入IP！");
                 return;
             }
             if (null == skinTextBox3.Text || skinTextBox3.Text.Length == 0)
@@ -81,10 +86,31 @@ namespace ADSB.MainUI.SubForm
                 MessageBox.Show("请输入经纬度！");
                 return;
             }
+            if (null == skinTextBox5.Text || skinTextBox5.Text.Length == 0)
+            {
+                MessageBox.Show("请输入环数！");
+                return;
+            }
+            if (null == skinTextBox6.Text || skinTextBox6.Text.Length == 0)
+            {
+                MessageBox.Show("请输入环距离！");
+                return;
+            }
 
-            Land_Station land_Station = new Land_Station(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
+            Land_Station land_Station = new Land_Station(
+                name,
+                Convert.ToString(skinTextBox1.Text),
+                Convert.ToDouble(skinTextBox3.Text),
+                Convert.ToDouble(skinTextBox4.Text),
+                Convert.ToDouble(skinTextBox6.Text),
+                Convert.ToInt16(skinTextBox5.Text));
             // 插入数据库
-            ProfileHelper.Instance.Update("INSERT INTO LandStation (Name, Lat, Lng) VALUES ('" + land_Station.Name + "', " + land_Station.Lat + ", " + land_Station.Lng + ")");
+            ProfileHelper.Instance.Update(
+                "INSERT INTO LandStation (Name, IP, Lat, Lng, Num, Length) VALUES ('" + 
+                land_Station.Name + "', '" + land_Station.IP + "', " + 
+                land_Station.Lat + ", " + land_Station.Lng + ", " +
+                land_Station.Num + ", " + land_Station.Length +
+                ")");
             showAllLandStation();
 
             landStation_event(true, 2);
@@ -95,7 +121,7 @@ namespace ADSB.MainUI.SubForm
          * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            String name = this.dataGridView1.CurrentRow.Cells["name"].Value.ToString();
+            String name = this.dataGridView1.CurrentRow.Cells["Column1"].Value.ToString();
             ProfileHelper.Instance.Update("Delete FROM LandStation WHERE Name = \"" + name + "\"");
             showAllLandStation();
         }
@@ -104,17 +130,27 @@ namespace ADSB.MainUI.SubForm
         {
             int rowIndex = e.RowIndex;
             String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
-            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
-            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
-            showLandStation(portOverlay, lat, lang, name);
+            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行经度
+            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行纬度
+            int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环数
+            double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环距
+            showLandStation(portOverlay, lat, lang, name, num, length);
         }
 
-        private void showLandStation(GMapOverlay overlay, double lat, double lang, String name)
+        private void showLandStation(GMapOverlay overlay, double lat, double lang, String name, int num, double length)
         {
             overlay.Markers.Clear();
             PointLatLng point1 = new PointLatLng(lat, lang);
             GMapLandStation landSatsion = new GMapLandStation(point1, name);
             overlay.Markers.Add(landSatsion);
+
+            while (num > 0)
+            {
+                GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point1, (int)length * num);
+                overlay.Markers.Add(gMapMarkerCircle);
+                num--;
+            }
+
             gMapControl1.Refresh();
         }
 
@@ -128,9 +164,12 @@ namespace ADSB.MainUI.SubForm
             foreach (Dictionary<string, object> dictionary in result)
             {
                 String name = Convert.ToString(dictionary["Name"]);
+                String ip = Convert.ToString(dictionary["IP"]);
                 double lat = Convert.ToDouble(dictionary["Lat"]);
                 double lang = Convert.ToDouble(dictionary["Lng"]);
-                Land_Station land_Station = new Land_Station(name, lat, lang);
+                double length = Convert.ToDouble(dictionary["Length"]);
+                int num = Convert.ToInt16(dictionary["Num"]);
+                Land_Station land_Station = new Land_Station(name, ip, lat, lang, length, num);
                 landStationList.Add(land_Station);
             }
 
@@ -154,6 +193,13 @@ namespace ADSB.MainUI.SubForm
             set { name = value; }
         }
 
+        private String ip;
+        public String IP
+        {
+            get { return ip; }
+            set { ip = value; }
+        }
+
         private double lat;
         public double Lat
         {
@@ -168,11 +214,28 @@ namespace ADSB.MainUI.SubForm
             set { lng = value; }
         }
 
-        public Land_Station(String name, double lat, double lng)
+        private double length;
+        public double Length
+        {
+            get { return length; }
+            set { length = value; }
+        }
+
+        private int num;
+        public int Num
+        {
+            get { return num; }
+            set { num = value; }
+        }
+
+        public Land_Station(String name, String ip, double lat, double lng, double length, int num)
         {
             this.name = name;
+            this.ip = ip;
             this.lat = lat;
             this.lng = lng;
+            this.length = length;
+            this.num = num;
         }
     }
 }

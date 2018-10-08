@@ -190,13 +190,13 @@ namespace ADSB.MainUI
             set;
         }
 
-        public AirplaneInfo AirPlaneMarkerInfo
+        public Cat021Data AirPlaneMarkerInfo
         {
             get { return airplaneInfo; }
             set { airplaneInfo = value; }
         }
 
-        private AirplaneInfo airplaneInfo;
+        private Cat021Data airplaneInfo;
         //TODO:
         public GMapAirPlane(PointLatLng p) : base(p)
         {
@@ -222,17 +222,17 @@ namespace ADSB.MainUI
             
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
-            
-            airplaneInfo = new AirplaneInfo(data.flightNo.ToString(), data.aircraftAngle.ToString("F0"), data.geometricAltitude.ToString("F0"), data.airSpeed.ToString("F0"));
+
+            airplaneInfo = data;
 
             ToolTipMode = MarkerTooltipMode.OnMouseOver;
             ToolTipText = "S模式地址：" + data.sModeAddress.ToString() + "\r\n"
-                        + "SSR: " + "0" + "\r\n"
+                       // + "SSR: " + "0" + "\r\n"
                         + "FID: " + data.flightNo.ToString() + "\r\n"
+                        + "经度: " + p.Lat.ToString() + "\r\n"
+                        + "纬度: " + p.Lng.ToString() + "\r\n"
                         + "高度：" + data.geometricAltitude.ToString() + "\r\n";
 
-            //string.Format("{0}\r\n 
-            //                         {1}\r\n{2}\r\n{3}", "CQH8992", "GV:95°", "H:4686m", "S:748km/h");
             ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
             
 
@@ -249,7 +249,11 @@ namespace ADSB.MainUI
             Font Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold, GraphicsUnit.Pixel);
             //Brush Fill = new SolidBrush(Color.FromArgb(255, Color.Black));
             Brush Fill = new SolidBrush(Color.Red);
-            string strDesc = string.Format("{0}\r\n GV:{1}°\r\nH: {2}m\r\nS：{3}km/h", airplaneInfo.fid, airplaneInfo.gv, airplaneInfo.height, airplaneInfo.speed);
+            string strDesc = string.Format("{0}\r\n GV:{1}°\r\nH: {2}m\r\nS：{3}km/h", 
+                airplaneInfo.flightNo, 
+                airplaneInfo.aircraftAngle, 
+                airplaneInfo.geometricAltitude, 
+                airplaneInfo.airSpeedUnit);
             //g.DrawString(strDesc, Font, Fill, rectDesc);    //显示飞机信息
         }
 
