@@ -35,10 +35,10 @@ namespace ADSB.MainUI.SubForm
         // 1-地面站checkbox选择显示，2-新增、删除了关注
         public delegate void changebox7(Boolean selected, int flag);
         public event changebox7 changebox7_event;
-        
+
         // 1-航迹圈checkbox选择显示，2-新增、删除了关注
-        public delegate void changebox9(Boolean selected);
-        public event changebox9 changebox9_event;
+        // public delegate void changebox9(Boolean selected);
+        // public event changebox9 changebox9_event;
 
         public Form_mapTool()
         {
@@ -100,7 +100,7 @@ namespace ADSB.MainUI.SubForm
                 changebox4_event(false, 1);
             }
 
-            box9Set();
+            //box9Set();
         }
 
         public void myCheckBox4_Selected()
@@ -137,7 +137,7 @@ namespace ADSB.MainUI.SubForm
             {
                 changebox7_event(false, 1);
             }
-            box9Set();
+            //box9Set();
         }
 
         public void myCheckBox7_Selected()
@@ -145,20 +145,20 @@ namespace ADSB.MainUI.SubForm
             myCheckBox7.Checked = true;
         }
 
-        private void myCheckBox9_CheckedChanged(object sender, EventArgs e)
-        {
-            if (myCheckBox9.CheckState == CheckState.Checked)
-            {
-                changebox9_event(true);
-            }
-            else
-            {
-                changebox9_event(false);
-            }
+        //private void myCheckBox9_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (myCheckBox9.CheckState == CheckState.Checked)
+        //    {
+        //        changebox9_event(true);
+        //    }
+        //    else
+        //    {
+        //        changebox9_event(false);
+        //    }
 
-            box7Set();
-            box4Set();
-        }
+        //    box7Set();
+        //    box4Set();
+        //}
 
         private void box4Set()
         {
@@ -190,20 +190,20 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
-        private void box9Set()
-        {
-            if (myCheckBox9.CheckState == CheckState.Checked)
-            {
-                changebox9_event(true);
-            }
-            else
-            {
-                if (changebox9_event != null)
-                {
-                    changebox9_event(false);
-                }
-            }
-        }
+        //private void box9Set()
+        //{
+        //    if (myCheckBox9.CheckState == CheckState.Checked)
+        //    {
+        //        changebox9_event(true);
+        //    }
+        //    else
+        //    {
+        //        if (changebox9_event != null)
+        //        {
+        //            changebox9_event(false);
+        //        }
+        //    }
+        //}
 
         public void myCheckBox9_Selected()
         {

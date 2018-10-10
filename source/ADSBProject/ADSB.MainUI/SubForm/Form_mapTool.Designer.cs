@@ -159,7 +159,7 @@
             this.myCheckBox9.TabIndex = 42;
             this.myCheckBox9.Text = "航迹圈过滤";
             this.myCheckBox9.UseVisualStyleBackColor = false;
-            this.myCheckBox9.CheckedChanged += new System.EventHandler(this.myCheckBox9_CheckedChanged);
+            // this.myCheckBox9.CheckedChanged += new System.EventHandler(this.myCheckBox9_CheckedChanged);
             // 
             // myCheckBox8
             // 

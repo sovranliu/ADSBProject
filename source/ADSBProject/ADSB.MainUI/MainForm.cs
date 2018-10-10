@@ -131,11 +131,36 @@ namespace ADSB.MainUI
             listAirplaneCheck.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
-                int sModeAddress = Convert.ToInt32(dictionary["SModeAddress"]);
+                int id = Convert.ToInt32(dictionary["ID"]);
+                int type = Convert.ToInt32(dictionary["Type"]);
+                int idNum = Convert.ToInt32(dictionary["IDNum"]);
+                int length = Convert.ToInt32(dictionary["Length"]);
                 int index = this.dataGridView1.Rows.Add();
-                this.dataGridView1.Rows[index].Cells[0].Value = sModeAddress.ToString();
-                if(!listAirplaneCheck.ContainsKey(sModeAddress))
-                    listAirplaneCheck.Add(sModeAddress, sModeAddress);
+
+                if (1 == type)
+                {
+                    this.dataGridView1.Rows[index].Cells[0].Value = "飞行器";
+                    this.dataGridView1.Rows[index].Cells[1].Value = idNum;
+                    // 对于飞行器idNum就是address
+                    if (!listAirplaneCheck.ContainsKey(idNum))
+                        listAirplaneCheck.Add(idNum, idNum);
+                }
+                else
+                {
+                    this.dataGridView1.Rows[index].Cells[0].Value = "地面站";
+                    // 根据id查出地面站信息
+                    List<Dictionary<string, object>> stationList = ProfileHelper.Instance.Select("SELECT * FROM LandStation WHERE ID = " + idNum);
+                    if (stationList.Count() > 0)
+                    {
+                        Dictionary<string, object> station = stationList[0];
+                        String name = Convert.ToString(station["Name"]);
+                        this.dataGridView1.Rows[index].Cells[1].Value = name;
+                    }
+                    this.dataGridView1.Rows[index].Cells[3].Value = idNum;
+                }
+                
+                this.dataGridView1.Rows[index].Cells[2].Value = length;
+                this.dataGridView1.Rows[index].Cells[4].Value = id.ToString();
             }
         }
 
@@ -279,106 +304,70 @@ namespace ADSB.MainUI
                     listAirplaneCheck.Add(gMapAirPlane.AirPlaneMarkerInfo.sModeAddress, gMapAirPlane.AirPlaneMarkerInfo.sModeAddress);
                     // 插入数据库
                     String flightNo = gMapAirPlane.AirPlaneMarkerInfo.flightNo;
-                    String flightPlan = "未知";
                     String sModeAddress = Convert.ToString(gMapAirPlane.AirPlaneMarkerInfo.sModeAddress);
 
-                    ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (FlightNo, FlightPlan, SModeAddress) VALUES ('"
-                        + flightNo + "', '" + flightPlan + "', '" + sModeAddress + "')");
+                    ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (ID, Type, IDNum, Length) VALUES (NULL, 1, '" + sModeAddress + "', 0)");
                 }
                 else
                 {
                     int sModeAddress = gMapAirPlane.AirPlaneMarkerInfo.sModeAddress;
                     pointPlaneLand.Remove(sModeAddress);
-                    ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE SModeAddress = \"" + sModeAddress + "\"");
+                    ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
                 }
                 initListAirplaneCheck(false);
+            }
+            else if (item is GMapLandStation)
+            {
+                GMapLandStation gMapLandStation = item as GMapLandStation;
+                // 根据name查出地面站信息
+                List<Dictionary<string, object>> stationList = ProfileHelper.Instance.Select("SELECT * FROM LandStation WHERE Name = '" + gMapLandStation.Name + "'");
+                if (stationList.Count() > 0)
+                {
+                    Dictionary<string, object> dictionary = stationList[0];
+                    int id = Convert.ToInt32(dictionary["ID"]);
+                    List<Dictionary<string, object>> result =
+                        ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow WHERE Type = 2 AND IDNum = " + id);
+                    if (result.Count() == 0)
+                    {
+                        ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (ID, Type, IDNum, Length) VALUES (NULL, 2, '" + id + "', 0)");
+                    }
+                    else
+                    {
+                        ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
+                    }
+                    initListAirplaneCheck(false);
+                }
             }
         }
 
         private void displayTimer_Tick(object sender, EventArgs e)
         {
             planeOverlay.Markers.Clear();
-
-            // 获取地面站信息
-            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
-            bool hasLandStation = false;
-            Dictionary<string, object> dictionary;
-            String name;
-            double lat;
-            double lang ;
-            PointLatLng pointLandStation = new PointLatLng(0, 0); 
-            if (result.Count() > 0)
+            
+            foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
             {
-                hasLandStation = true;
-                dictionary = result[0];
-                name = Convert.ToString(dictionary["Name"]);
-                lat = Convert.ToDouble(dictionary["Lat"]);
-                lang = Convert.ToDouble(dictionary["Lng"]);
-                pointLandStation = new PointLatLng(lat, lang);
-            }
+                planeOverlay.Markers.Add(eachlistAirplane);
 
-            // 只展示环内的飞机
-            if (landStation && flightCircle && hasLandStation)
-            {
-                foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
+                // 判断是否要告警
+                alarm(eachlistAirplane);
+
+                // 显示轨迹
+                int sModeAddress = eachlistAirplane.AirPlaneMarkerInfo.sModeAddress;
+                if (keyValuePairs.ContainsKey(sModeAddress) && !pointPlaneLand.ContainsKey(sModeAddress))
                 {
-                    double length = Convert.ToDouble(result[0]["Length"]);
-                    int num = Convert.ToInt16(result[0]["Num"]);
-                    double dis = length * num;
-
-                    double disPlane = Distance(pointLandStation.Lat, pointLandStation.Lng, 
-                        eachlistAirplane.AirPlaneMarkerInfo.latitude, eachlistAirplane.AirPlaneMarkerInfo.longtitude);
-
-                    // 判断是否要告警
-                    alarm(eachlistAirplane);
-
-                    if (disPlane <= dis)
-                    {
-                        planeOverlay.Markers.Add(eachlistAirplane);
-                        // 显示轨迹
-                        int sma = eachlistAirplane.AirPlaneMarkerInfo.sModeAddress;
-                        if (keyValuePairs.ContainsKey(sma) && !pointPlaneLand.ContainsKey(sma))
-                        {
-                            List<PointLatLng> points = keyValuePairs[sma];
-                            GMapRoute r = new GMapRoute(points, "");
-                            r.Stroke = new Pen(Color.Green, 1);
-                            planeOverlay.Routes.Add(r);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
-                {
-                    planeOverlay.Markers.Add(eachlistAirplane);
-
-                    // 判断是否要告警
-                    alarm(eachlistAirplane);
-
-                    // 显示轨迹
-                    int sModeAddress = eachlistAirplane.AirPlaneMarkerInfo.sModeAddress;
-                    if (keyValuePairs.ContainsKey(sModeAddress) && !pointPlaneLand.ContainsKey(sModeAddress))
-                    {
-                        List<PointLatLng> points = keyValuePairs[sModeAddress];
-                        GMapRoute r = new GMapRoute(points, "");
-                        r.Stroke = new Pen(Color.Green, 1);
-                        planeOverlay.Routes.Add(r);
-                    }
+                    List<PointLatLng> points = keyValuePairs[sModeAddress];
+                    GMapRoute r = new GMapRoute(points, "");
+                    r.Stroke = new Pen(Color.Green, 1);
+                    planeOverlay.Routes.Add(r);
                 }
             }
 
-            // 展示飞机轨迹
-            //foreach (keyvaluepair<string, list<pointlatlng>> kvp in keyvaluepairs)
-            //{
-            //    list<pointlatlng> points = kvp.value;
-            //    gmaproute r = new gmaproute(points, "");
-            //    r.stroke = new pen(color.green, 1);
-            //    planeoverlay.routes.add(r);
-            //}
 
             // 只展示第一个地面站与凸显飞机的距离
-            if (hasLandStation)
+            // 获取地面站信息
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
+
+            if (result.Count() > 0)
             {
                 if (landStation && pointPlaneLand.Count > 0)
                 {
@@ -386,33 +375,41 @@ namespace ADSB.MainUI
                     gMapControl1.Overlays.Add(pointLandOverlay);
                     foreach (KeyValuePair<int, PointLatLng> kvp in pointPlaneLand)
                     {
-                        PointLatLng pointLatLngPlane = kvp.Value;
-                        double dis = Distance(pointLandStation.Lat, pointLandStation.Lng, pointLatLngPlane.Lat, pointLatLngPlane.Lng);
-                        GMapMarker m1 = new GMarkerGoogle(pointLatLngPlane, GMarkerGoogleType.blue_dot);
-                        m1.ToolTipText = dis.ToString();
-                        m1.ToolTipMode = MarkerTooltipMode.Always;
-                        pointLandOverlay.Markers.Add(m1);
-
-                        List<PointLatLng> points = new List<PointLatLng>();
-                        points.Add(pointLandStation);
-                        points.Add(pointLatLngPlane);
-                        GMapPolygon polygon = new GMapPolygon(points, dis.ToString());
-                        polygon.Fill = new SolidBrush(Color.FromArgb(50, Color.Red));
-                        // 虚线
-                        float[] dashValues = { 2, 3 };
-                        Pen pen = new Pen(Color.Blue, 1);
-                        pen.DashPattern = dashValues;
-                        polygon.Stroke = pen;
-                        pointLandOverlay.Polygons.Add(polygon);
-
-                        // 展示轨迹
-                        int sModeAddress = kvp.Key;
-                        if (keyValuePairs.ContainsKey(sModeAddress))
+                        foreach (Dictionary<string, object> dictionary in result)
                         {
-                            List<PointLatLng> point = keyValuePairs[sModeAddress];
-                            GMapRoute r = new GMapRoute(point, "");
-                            r.Stroke = new Pen(Color.Green, 1);
-                            planeOverlay.Routes.Add(r);
+                            String name = Convert.ToString(dictionary["Name"]);
+                            double lat = Convert.ToDouble(dictionary["Lat"]);
+                            double lang = Convert.ToDouble(dictionary["Lng"]);
+                            PointLatLng pointLandStation = new PointLatLng(lat, lang);
+                        
+                            PointLatLng pointLatLngPlane = kvp.Value;
+                            double dis = Distance(pointLandStation.Lat, pointLandStation.Lng, pointLatLngPlane.Lat, pointLatLngPlane.Lng);
+                            GMapMarker m1 = new GMarkerGoogle(pointLatLngPlane, GMarkerGoogleType.blue_dot);
+                            m1.ToolTipText = dis.ToString();
+                            m1.ToolTipMode = MarkerTooltipMode.Always;
+                            pointLandOverlay.Markers.Add(m1);
+
+                            List<PointLatLng> points = new List<PointLatLng>();
+                            points.Add(pointLandStation);
+                            points.Add(pointLatLngPlane);
+                            GMapPolygon polygon = new GMapPolygon(points, dis.ToString());
+                            polygon.Fill = new SolidBrush(Color.FromArgb(50, Color.Red));
+                            // 虚线
+                            float[] dashValues = { 2, 3 };
+                            Pen pen = new Pen(Color.Blue, 1);
+                            pen.DashPattern = dashValues;
+                            polygon.Stroke = pen;
+                            pointLandOverlay.Polygons.Add(polygon);
+
+                            // 展示轨迹
+                            int sModeAddress = kvp.Key;
+                            if (keyValuePairs.ContainsKey(sModeAddress))
+                            {
+                                List<PointLatLng> point = keyValuePairs[sModeAddress];
+                                GMapRoute r = new GMapRoute(point, "");
+                                r.Stroke = new Pen(Color.Green, 1);
+                                planeOverlay.Routes.Add(r);
+                            }
                         }
                     }
                 }
@@ -829,6 +826,21 @@ namespace ADSB.MainUI
         private void sPnl_close_Paint(object sender, PaintEventArgs e)
         {
             this.Close();
+        }
+
+        // 关注的目标单元格点击事件
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
+            {
+                if (null != dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value)
+                {
+                    string cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    int id = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[4].Value);
+                    ProfileHelper.Instance.Update("UPDATE PlaneFollow SET Length = " + cell + " WHERE ID = " + id);
+                }
+            }
+
         }
     }
 }

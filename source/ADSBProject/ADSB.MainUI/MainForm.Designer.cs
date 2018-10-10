@@ -77,7 +77,6 @@ namespace ADSB.MainUI
             this.slabel1 = new CCWin.SkinControl.SkinLabel();
             this.sTpMonitor = new CCWin.SkinControl.SkinTabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.skinProgressBar1 = new CCWin.SkinControl.SkinProgressBar();
             this.maskPlaybackRun = new ADSB.MainUI.Controls.MaskCircleLayer();
             this.maskPlaybackSetup = new ADSB.MainUI.Controls.MaskLayer();
@@ -123,6 +122,11 @@ namespace ADSB.MainUI
             this.skinLabel22 = new CCWin.SkinControl.SkinLabel();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sTabControl.SuspendLayout();
             this.sTpFly.SuspendLayout();
             this.skinPanel7.SuspendLayout();
@@ -841,18 +845,18 @@ namespace ADSB.MainUI
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1});
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5});
             this.dataGridView1.Location = new System.Drawing.Point(31, 255);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(160, 219);
+            this.dataGridView1.Size = new System.Drawing.Size(344, 219);
             this.dataGridView1.TabIndex = 28;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "关注的飞机";
-            this.Column1.Name = "Column1";
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             // 
             // skinProgressBar1
             // 
@@ -1490,21 +1494,34 @@ namespace ADSB.MainUI
             this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
             this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1});
-            this.dataGridView1.Location = new System.Drawing.Point(52, 410);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 28;
-            // 
             // Column1
             // 
-            this.Column1.HeaderText = "S模式地址";
+            this.Column1.HeaderText = "对象";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "编号";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "显示半径";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "地面站Id";
+            this.Column4.Name = "Column4";
+            this.Column4.Visible = false;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "ID";
+            this.Column5.Name = "Column5";
+            this.Column5.Visible = false;
             // 
             // MainForm
             // 
@@ -1633,6 +1650,10 @@ namespace ADSB.MainUI
         private CCWin.SkinControl.SkinPanel skinPanel24;
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
     }
 }
 

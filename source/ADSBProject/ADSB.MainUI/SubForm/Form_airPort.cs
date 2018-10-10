@@ -119,10 +119,10 @@ namespace ADSB.MainUI.SubForm
                    "UPDATE AirPort set " +
                         " Name = '" + air_Port.Name + "', " +
                         " Lat = " + air_Port.Lat + ", " +
-                        " Lng = " + air_Port.Lng  +
+                        " Lng = " + air_Port.Lng + ", " +
                         " Num = " + air_Port.Num + ", " +
                         " Length = " + air_Port.Length +
-                        " where ID = '" + skinLabel2.Text + "'");
+                        " where ID = " + skinLabel2.Text);
             }
             showAllAirPort();
 
@@ -145,8 +145,8 @@ namespace ADSB.MainUI.SubForm
             String name = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();//获得本行name
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行纬度
-            int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环数
-            double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环距
+            int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环数
+            double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环距
             int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());//获得本行ID
 
             skinButton1.Text = "更新";
@@ -170,6 +170,7 @@ namespace ADSB.MainUI.SubForm
             overlay.Markers.Clear();
             PointLatLng point1 = new PointLatLng(lat, lang);
             GMapAirPort airPort = new GMapAirPort(point1, name);
+            overlay.Markers.Add(airPort);
 
             while (num > 0)
             {
@@ -177,8 +178,7 @@ namespace ADSB.MainUI.SubForm
                 overlay.Markers.Add(gMapMarkerCircle);
                 num--;
             }
-
-            overlay.Markers.Add(airPort);
+            
             gMapControl1.Refresh();
         }
 
