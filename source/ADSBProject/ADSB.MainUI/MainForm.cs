@@ -842,5 +842,16 @@ namespace ADSB.MainUI
             }
 
         }
+
+        private void spMin_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void spClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            System.Environment.Exit(0);
+        }
     }
 }

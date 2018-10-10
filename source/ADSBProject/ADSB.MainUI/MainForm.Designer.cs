@@ -120,6 +120,8 @@ namespace ADSB.MainUI
             this.skinLabel19 = new CCWin.SkinControl.SkinLabel();
             this.skinLabel21 = new CCWin.SkinControl.SkinLabel();
             this.skinLabel22 = new CCWin.SkinControl.SkinLabel();
+            this.spMin = new CCWin.SkinControl.SkinPanel();
+            this.spClose = new CCWin.SkinControl.SkinPanel();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -833,6 +835,8 @@ namespace ADSB.MainUI
             this.sTpMonitor.Controls.Add(this.skinPanel15);
             this.sTpMonitor.Controls.Add(this.skinPanel3);
             this.sTpMonitor.Controls.Add(this.gMapControl1);
+			this.sTpMonitor.Controls.Add(this.spMin);
+			this.sTpMonitor.Controls.Add(this.spClose);
             this.sTpMonitor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sTpMonitor.Location = new System.Drawing.Point(0, 36);
             this.sTpMonitor.Name = "sTpMonitor";
@@ -915,6 +919,38 @@ namespace ADSB.MainUI
             this.mapmask.TabIndex = 24;
             this.mapmask.Transparency = 45;
             this.mapmask.Visible = false;
+			//
+            // spMin
+            // 
+            this.spMin.BackColor = System.Drawing.Color.Transparent;
+            this.spMin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spMin.BackgroundImage")));
+            this.spMin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.spMin.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.spMin.DownBack = null;
+            this.spMin.Location = new System.Drawing.Point(1838, 0);
+            this.spMin.Margin = new System.Windows.Forms.Padding(0);
+            this.spMin.MouseBack = null;
+            this.spMin.Name = "spMin";
+            this.spMin.NormlBack = null;
+            this.spMin.Size = new System.Drawing.Size(40, 40);
+            this.spMin.TabIndex = 29;
+            this.spMin.Click += new System.EventHandler(this.spMin_Click);
+			// 
+            // spClose
+            // 
+            this.spClose.BackColor = System.Drawing.Color.Transparent;
+            this.spClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spClose.BackgroundImage")));
+            this.spClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.spClose.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.spClose.DownBack = null;
+            this.spClose.Location = new System.Drawing.Point(1880, 0);
+            this.spClose.Margin = new System.Windows.Forms.Padding(0);
+            this.spClose.MouseBack = null;
+            this.spClose.Name = "spClose";
+            this.spClose.NormlBack = null;
+            this.spClose.Size = new System.Drawing.Size(40, 40);
+            this.spClose.TabIndex = 30;
+            this.spClose.Click += new System.EventHandler(this.spClose_Click);
             // 
             // skinPanel15
             // 
@@ -1654,6 +1690,8 @@ namespace ADSB.MainUI
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
+        private CCWin.SkinControl.SkinPanel spMin;
+        private CCWin.SkinControl.SkinPanel spClose;
     }
 }
 
