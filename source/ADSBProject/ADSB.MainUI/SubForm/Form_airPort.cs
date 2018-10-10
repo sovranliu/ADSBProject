@@ -57,6 +57,9 @@ namespace ADSB.MainUI.SubForm
 
         private void mapControl_MouseDown(object sender, MouseEventArgs e)
         {
+            skinButton1.Text = "新增";
+            skinLabel2.Text = "ID";
+            skinTextBox2.Text = "";
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
@@ -83,8 +86,21 @@ namespace ADSB.MainUI.SubForm
             }
 
             Air_Port air_Port = new Air_Port(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
-            // 插入数据库
-            ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng + ")");
+            if (skinLabel2.Text.Equals("ID"))
+            {
+                // 插入数据库
+                ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng + ")");
+            }
+            else if (!string.IsNullOrWhiteSpace(skinLabel2.Text))
+            {
+                // 更新数据库
+                ProfileHelper.Instance.Update(
+                   "UPDATE AirPort set " +
+                        " Name = '" + air_Port.Name + "', " +
+                        " Lat = " + air_Port.Lat + ", " +
+                        " Lng = " + air_Port.Lng  +
+                        " where Name = '" + skinLabel2.Text + "'");
+            }
             showAllAirPort();
 
             airPort_event(true, 2);
@@ -106,7 +122,18 @@ namespace ADSB.MainUI.SubForm
             String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
+
+            skinButton1.Text = "更新";
+            showLable(lat, lang, name);
             showAirPort(portOverlay, lat, lang, name);
+        }
+
+        private void showLable(double lat, double lang, String name)
+        {
+            skinTextBox2.Text = name;
+            skinTextBox3.Text = lat.ToString();
+            skinTextBox4.Text = lang.ToString();
+            skinLabel2.Text = name;
         }
 
         private void showAirPort(GMapOverlay overlay, double lat, double lang, String name)

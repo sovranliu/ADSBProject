@@ -308,7 +308,7 @@ namespace ADSB.MainUI
         //TODO:
         public GMapAirPort(PointLatLng p, String name) : base(p)
         {
-            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\airport_ic.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
 
@@ -395,7 +395,7 @@ namespace ADSB.MainUI
 
         public GMapLandStation(PointLatLng p, String name) : base(p)
         {
-            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\热气球.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\station_ic.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
 
@@ -507,7 +507,7 @@ namespace ADSB.MainUI
 
         public GMapWayPoint(PointLatLng p, String name) : base(p)
         {
-            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\导航管理.png") as Bitmap;
+            Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\航路点图.png") as Bitmap;
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);
             Pen = new Pen(Brushes.Red, 2);
 

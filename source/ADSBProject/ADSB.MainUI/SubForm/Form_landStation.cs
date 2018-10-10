@@ -57,6 +57,9 @@ namespace ADSB.MainUI.SubForm
 
         private void mapControl_MouseDown(object sender, MouseEventArgs e)
         {
+            skinButton1.Text = "新增";
+            skinLabel6.Text = "ID";
+            skinTextBox2.Text = "";
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
@@ -104,13 +107,30 @@ namespace ADSB.MainUI.SubForm
                 Convert.ToDouble(skinTextBox4.Text),
                 Convert.ToDouble(skinTextBox6.Text),
                 Convert.ToInt16(skinTextBox5.Text));
-            // 插入数据库
-            ProfileHelper.Instance.Update(
-                "INSERT INTO LandStation (Name, IP, Lat, Lng, Num, Length) VALUES ('" + 
-                land_Station.Name + "', '" + land_Station.IP + "', " + 
-                land_Station.Lat + ", " + land_Station.Lng + ", " +
-                land_Station.Num + ", " + land_Station.Length +
-                ")");
+            if (skinLabel6.Text.Equals("ID"))
+            {
+                // 插入数据库
+                ProfileHelper.Instance.Update(
+                    "INSERT INTO LandStation (Name, IP, Lat, Lng, Num, Length) VALUES ('" +
+                    land_Station.Name + "', '" + land_Station.IP + "', " +
+                    land_Station.Lat + ", " + land_Station.Lng + ", " +
+                    land_Station.Num + ", " + land_Station.Length +
+                    ")");
+            }
+            else if(!string.IsNullOrWhiteSpace(skinLabel6.Text))
+            {
+                // 更新数据库
+                ProfileHelper.Instance.Update(
+                   "UPDATE LandStation set " +
+                        " Name = '" + land_Station.Name + "', " +
+                        " IP = '" + land_Station.IP + "', " +
+                        " Lat = " + land_Station.Lat + ", " +
+                        " Lng = " + land_Station.Lng + ", " +
+                        " Num = " + land_Station.Num + ", " +
+                        " Length = " + land_Station.Length +
+                        " where Name = '" + skinLabel6.Text + "'");
+            }
+            
             showAllLandStation();
 
             landStation_event(true, 2);
@@ -130,11 +150,28 @@ namespace ADSB.MainUI.SubForm
         {
             int rowIndex = e.RowIndex;
             String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
+            String ip = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();//获得本行IP
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行纬度
             int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环数
             double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环距
+
+            skinButton1.Text = "更新";
+            showLable(lat, lang, name, num, length, ip);
             showLandStation(portOverlay, lat, lang, name, num, length);
+            
+        }
+
+        private void showLable(double lat, double lang, String name, int num, double length, String ip)
+        {
+            skinTextBox1.Text = ip;
+            skinTextBox2.Text = name;
+            skinTextBox3.Text = lat.ToString();
+            skinTextBox4.Text = lang.ToString();
+            skinTextBox5.Text = num.ToString();
+            skinTextBox6.Text = length.ToString();
+
+            skinLabel6.Text = name;
         }
 
         private void showLandStation(GMapOverlay overlay, double lat, double lang, String name, int num, double length)

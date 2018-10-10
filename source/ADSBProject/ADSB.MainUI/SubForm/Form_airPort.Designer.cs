@@ -46,6 +46,7 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.skinLabel2 = new CCWin.SkinControl.SkinLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -382,12 +383,29 @@
             this.Column3.HeaderText = "纬度";
             this.Column3.Name = "Column3";
             // 
+            // skinLabel2
+            // 
+            this.skinLabel2.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel2.AutoSize = true;
+            this.skinLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel2.BorderColor = System.Drawing.Color.White;
+            this.skinLabel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel2.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.skinLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel2.Location = new System.Drawing.Point(363, 90);
+            this.skinLabel2.Name = "skinLabel2";
+            this.skinLabel2.Size = new System.Drawing.Size(23, 19);
+            this.skinLabel2.TabIndex = 24;
+            this.skinLabel2.Text = "ID";
+            this.skinLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form_airPort
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(1176, 778);
+            this.Controls.Add(this.skinLabel2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.skinButton2);
             this.Controls.Add(this.gMapControl1);
@@ -404,9 +422,9 @@
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "Form_airPort";
             this.Text = "Form_earthStation";
+            this.TopMost = false;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.TopMost = false;
             this.PerformLayout();
 
         }
@@ -429,5 +447,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private CCWin.SkinControl.SkinLabel skinLabel2;
     }
 }

@@ -38,10 +38,19 @@ namespace ADSB.MainUI.SubForm
         {
             this.dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             dataGridView1.RowTemplate.Height = 43;
-            dataGridView1.Rows.Add("1", "12","13","14","15");
-            dataGridView1.Rows.Add("2", "12", "13", "14", "15");
-            dataGridView1.Rows.Add("3", "12", "13", "14", "15");
-            dataGridView1.Rows.Add("4", "12", "13", "14", "15");
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM Alarm");
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                String flightNo = Convert.ToString(dictionary["FlightNo"]);
+                int sModeAddress = Convert.ToInt32(dictionary["SModeAddress"]);
+                String info = Convert.ToString(dictionary["Info"]);
+                String writeTime = Convert.ToString(dictionary["WriteTime"]);
+                int index = this.dataGridView1.Rows.Add();
+                this.dataGridView1.Rows[index].Cells[0].Value = flightNo;
+                this.dataGridView1.Rows[index].Cells[1].Value = sModeAddress.ToString();
+                this.dataGridView1.Rows[index].Cells[2].Value = info;
+                this.dataGridView1.Rows[index].Cells[3].Value = writeTime;
+            }
 
         }
 

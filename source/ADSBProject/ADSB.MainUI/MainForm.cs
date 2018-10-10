@@ -105,7 +105,7 @@ namespace ADSB.MainUI
                          this.sTpFly.Height));
 
             InitializeUI();
-            initListAirplaneCheck();
+            initListAirplaneCheck(true);
 
             flyTimer.Tick += new EventHandler(flyTimer_Tick);
             displayTimer.Tick += new EventHandler(displayTimer_Tick);
@@ -114,15 +114,28 @@ namespace ADSB.MainUI
             log = new LogRecord();
         }
 
-        private void initListAirplaneCheck()
+        private void initListAirplaneCheck(bool first)
         {
+            if (!first)
+            {
+                int i = 0;
+                while (i >= 0)
+                {
+                    i = dataGridView1.RowCount - 2;
+                    if (i >= 0)
+                        dataGridView1.Rows.Remove(dataGridView1.Rows[i]);
+                    i--;
+                }
+            }
             List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow");
+            listAirplaneCheck.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
                 int sModeAddress = Convert.ToInt32(dictionary["SModeAddress"]);
                 int index = this.dataGridView1.Rows.Add();
                 this.dataGridView1.Rows[index].Cells[0].Value = sModeAddress.ToString();
-                listAirplaneCheck.Add(sModeAddress, sModeAddress);
+                if(!listAirplaneCheck.ContainsKey(sModeAddress))
+                    listAirplaneCheck.Add(sModeAddress, sModeAddress);
             }
         }
 
@@ -269,18 +282,14 @@ namespace ADSB.MainUI
 
                     ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (FlightNo, FlightPlan, SModeAddress) VALUES ('"
                         + flightNo + "', '" + flightPlan + "', '" + sModeAddress + "')");
-
-                    int index = this.dataGridView1.Rows.Add();
-                    this.dataGridView1.Rows[index].Cells[0].Value = sModeAddress.ToString();
                 }
                 else
                 {
                     int sModeAddress = gMapAirPlane.AirPlaneMarkerInfo.sModeAddress;
                     pointPlaneLand.Remove(sModeAddress);
                     ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE SModeAddress = \"" + sModeAddress + "\"");
-
-                    // TODO 删除
                 }
+                initListAirplaneCheck(false);
             }
         }
 
@@ -432,7 +441,13 @@ namespace ADSB.MainUI
 
                 if(disPlane > 0.1 && alarm_distance >= disPlane)
                 {
-                    MessageBox.Show("距离报警！" + eachlistAirplane.AirPlaneMarkerInfo.sModeAddress.ToString() + "跟中心机距离：" + disPlane.ToString());
+                    String info = "距离报警！" + eachlistAirplane.AirPlaneMarkerInfo.sModeAddress.ToString() + "跟中心机距离：" + disPlane.ToString();
+                    ProfileHelper.Instance.Update("INSERT INTO Alarm (" +
+                        "FlightNo, SModeAddress, Info, WriteTime) VALUES ('" +
+                        eachlistAirplane.AirPlaneMarkerInfo.flightNo.ToString().Trim() + "', '" + 
+                        eachlistAirplane.AirPlaneMarkerInfo.sModeAddress + "', " + 
+                        info + ", " + DateTime.Now.ToString() + ")");
+                    MessageBox.Show(info);
                 }
             }
 
@@ -806,6 +821,11 @@ namespace ADSB.MainUI
                 setup.ShowDialog();
                 mapmask.Visible = false;
             }
+        }
+
+        private void sPnl_close_Paint(object sender, PaintEventArgs e)
+        {
+            this.Close();
         }
     }
 }

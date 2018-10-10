@@ -34,20 +34,20 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_alarm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_alarm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.horizonLine1 = new ADSB.MainUI.Controls.HorizonLine();
-            this.skinButton1 = new CCWin.SkinControl.SkinButton();
-            this.sPnl_close = new CCWin.SkinControl.SkinPanel();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.horizonLine1 = new ADSB.MainUI.Controls.HorizonLine();
+            this.skinButton1 = new CCWin.SkinControl.SkinButton();
+            this.sPnl_close = new CCWin.SkinControl.SkinPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,8 +88,7 @@
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.dataGridView1.Location = new System.Drawing.Point(18, 132);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 88);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
@@ -109,81 +108,8 @@
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(492, 393);
+            this.dataGridView1.Size = new System.Drawing.Size(328, 262);
             this.dataGridView1.TabIndex = 13;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
-            this.label1.Location = new System.Drawing.Point(178, 22);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(174, 41);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "警告&&错误";
-            // 
-            // horizonLine1
-            // 
-            this.horizonLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.horizonLine1.LineBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.horizonLine1.LineDashColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
-            this.horizonLine1.LineDashLength = 5;
-            this.horizonLine1.LineLength = 267;
-            this.horizonLine1.LineWidth = 1;
-            this.horizonLine1.Location = new System.Drawing.Point(56, 93);
-            this.horizonLine1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.horizonLine1.Name = "horizonLine1";
-            this.horizonLine1.Size = new System.Drawing.Size(269, 3);
-            this.horizonLine1.TabIndex = 11;
-            // 
-            // skinButton1
-            // 
-            this.skinButton1.BackColor = System.Drawing.Color.Transparent;
-            this.skinButton1.BackRectangle = new System.Drawing.Rectangle(0, 0, 0, 0);
-            this.skinButton1.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(51)))), ((int)(((byte)(14)))));
-            this.skinButton1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(104)))), ((int)(((byte)(190)))));
-            this.skinButton1.BorderInflate = new System.Drawing.Size(0, 0);
-            this.skinButton1.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.skinButton1.DownBack = null;
-            this.skinButton1.DownBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(104)))), ((int)(((byte)(190)))));
-            this.skinButton1.FadeGlow = false;
-            this.skinButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.skinButton1.Font = new System.Drawing.Font("微软雅黑", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinButton1.ForeColor = System.Drawing.Color.White;
-            this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
-            this.skinButton1.IsDrawBorder = false;
-            this.skinButton1.IsDrawGlass = false;
-            this.skinButton1.Location = new System.Drawing.Point(124, 534);
-            this.skinButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.skinButton1.MouseBack = null;
-            this.skinButton1.Name = "skinButton1";
-            this.skinButton1.NormlBack = null;
-            this.skinButton1.Radius = 44;
-            this.skinButton1.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinButton1.Size = new System.Drawing.Size(255, 66);
-            this.skinButton1.TabIndex = 9;
-            this.skinButton1.Text = "关闭告警";
-            this.skinButton1.UseMnemonic = false;
-            this.skinButton1.UseVisualStyleBackColor = false;
-            // 
-            // sPnl_close
-            // 
-            this.sPnl_close.BackColor = System.Drawing.Color.Transparent;
-            this.sPnl_close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("sPnl_close.BackgroundImage")));
-            this.sPnl_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.sPnl_close.DownBack = null;
-            this.sPnl_close.Location = new System.Drawing.Point(465, 6);
-            this.sPnl_close.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.sPnl_close.MouseBack = null;
-            this.sPnl_close.Name = "sPnl_close";
-            this.sPnl_close.NormlBack = null;
-            this.sPnl_close.Size = new System.Drawing.Size(33, 33);
-            this.sPnl_close.TabIndex = 3;
-            this.sPnl_close.Click += new System.EventHandler(this.sPnl_close_Click);
             // 
             // Column1
             // 
@@ -221,25 +147,95 @@
             // 
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.Transparent;
             this.Column4.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Column4.HeaderText = "操作";
+            this.Column4.HeaderText = "警告时间";
             this.Column4.Name = "Column4";
             this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column4.Width = 61;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
+            this.label1.Location = new System.Drawing.Point(119, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(114, 28);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "警告&&错误";
+            // 
+            // horizonLine1
+            // 
+            this.horizonLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.horizonLine1.LineBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.horizonLine1.LineDashColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.horizonLine1.LineDashLength = 5;
+            this.horizonLine1.LineLength = 267;
+            this.horizonLine1.LineWidth = 1;
+            this.horizonLine1.Location = new System.Drawing.Point(37, 62);
+            this.horizonLine1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horizonLine1.Name = "horizonLine1";
+            this.horizonLine1.Size = new System.Drawing.Size(269, 3);
+            this.horizonLine1.TabIndex = 11;
+            // 
+            // skinButton1
+            // 
+            this.skinButton1.BackColor = System.Drawing.Color.Transparent;
+            this.skinButton1.BackRectangle = new System.Drawing.Rectangle(0, 0, 0, 0);
+            this.skinButton1.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(51)))), ((int)(((byte)(14)))));
+            this.skinButton1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(104)))), ((int)(((byte)(190)))));
+            this.skinButton1.BorderInflate = new System.Drawing.Size(0, 0);
+            this.skinButton1.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinButton1.DownBack = null;
+            this.skinButton1.DownBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(104)))), ((int)(((byte)(190)))));
+            this.skinButton1.FadeGlow = false;
+            this.skinButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinButton1.Font = new System.Drawing.Font("微软雅黑", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinButton1.ForeColor = System.Drawing.Color.White;
+            this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
+            this.skinButton1.IsDrawBorder = false;
+            this.skinButton1.IsDrawGlass = false;
+            this.skinButton1.Location = new System.Drawing.Point(83, 356);
+            this.skinButton1.MouseBack = null;
+            this.skinButton1.Name = "skinButton1";
+            this.skinButton1.NormlBack = null;
+            this.skinButton1.Radius = 44;
+            this.skinButton1.RoundStyle = CCWin.SkinClass.RoundStyle.All;
+            this.skinButton1.Size = new System.Drawing.Size(170, 44);
+            this.skinButton1.TabIndex = 9;
+            this.skinButton1.Text = "关闭告警";
+            this.skinButton1.UseMnemonic = false;
+            this.skinButton1.UseVisualStyleBackColor = false;
+            // 
+            // sPnl_close
+            // 
+            this.sPnl_close.BackColor = System.Drawing.Color.Transparent;
+            this.sPnl_close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("sPnl_close.BackgroundImage")));
+            this.sPnl_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.sPnl_close.DownBack = null;
+            this.sPnl_close.Location = new System.Drawing.Point(310, 4);
+            this.sPnl_close.MouseBack = null;
+            this.sPnl_close.Name = "sPnl_close";
+            this.sPnl_close.NormlBack = null;
+            this.sPnl_close.Size = new System.Drawing.Size(22, 22);
+            this.sPnl_close.TabIndex = 3;
+            this.sPnl_close.Click += new System.EventHandler(this.sPnl_close_Click);
+            // 
             // Form_alarm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(504, 630);
+            this.ClientSize = new System.Drawing.Size(336, 420);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.horizonLine1);
             this.Controls.Add(this.skinButton1);
             this.Controls.Add(this.sPnl_close);
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form_alarm";
             this.Text = "Form_alarm";
             this.Load += new System.EventHandler(this.Form_alarm_Load);
