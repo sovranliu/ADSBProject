@@ -56,6 +56,7 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -370,7 +371,8 @@
             this.Column2,
             this.Column3,
             this.Column5,
-            this.Column6});
+            this.Column6,
+            this.Column7});
             this.dataGridView1.Location = new System.Drawing.Point(12, 305);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
@@ -605,6 +607,13 @@
             this.Column6.HeaderText = "环距离";
             this.Column6.Name = "Column6";
             // 
+            // Column7
+            // 
+            this.Column7.DataPropertyName = "id";
+            this.Column7.HeaderText = "ID";
+            this.Column7.Name = "Column7";
+            this.Column7.Visible = false;
+            // 
             // Form_landStation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -663,12 +672,13 @@
         private CCWin.SkinControl.SkinTextBox skinTextBox6;
         private CCWin.SkinControl.SkinLabel skinLabel4;
         private CCWin.SkinControl.SkinLabel skinLabel5;
+        private CCWin.SkinControl.SkinLabel skinLabel6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private CCWin.SkinControl.SkinLabel skinLabel6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
     }
 }

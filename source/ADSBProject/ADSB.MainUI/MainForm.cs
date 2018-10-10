@@ -188,7 +188,7 @@ namespace ADSB.MainUI
                 {
                     remove = true;
                     removeAirplane = eachlistAirplane;
-                    ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress + "\"");
+                    // ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress + "\"");
                 }
             }
 
@@ -214,19 +214,21 @@ namespace ADSB.MainUI
                 listAirplane.Remove(tmpData.sModeAddress);
             }
             listAirplane.Add(tmpData.sModeAddress, tmpAirplane);
+            //
+            AirplaneManager.Instance.Add(tmpData);
             // 插入数据库
-            ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress.ToString().Trim() + "\"");
-            ProfileHelper.Instance.Update("INSERT INTO Plane (" +
-                "SModeAddress, FlightNo, Latitude, " +
-                "Longtitude, ElapsedTime, GeometricAltitude, " +
-                "BarometricAltitude, AirSpeed, AirSpeedUnit, " +
-                "AircraftAngle, GroundSpeed, EmitterCategory) VALUES ('" +
-                tmpData.sModeAddress + "', '" + tmpData.flightNo.ToString().Trim() + "', " + tmpData.latitude + ", " +
-                tmpData.longtitude + ", " + tmpData.elapsedTime + ", " + tmpData.geometricAltitude + ", " +
-                tmpData.barometricAltitude + ", " + tmpData.airSpeed + ", " + tmpData.airSpeedUnit + ", " +
-                tmpData.aircraftAngle + ", " + tmpData.groundSpeed + ", " + tmpData.emitterCategory +
-                ")");
-            remove = false;
+            //ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress.ToString().Trim() + "\"");
+            //ProfileHelper.Instance.Update("INSERT INTO Plane (" +
+            //    "SModeAddress, FlightNo, Latitude, " +
+            //    "Longtitude, ElapsedTime, GeometricAltitude, " +
+            //    "BarometricAltitude, AirSpeed, AirSpeedUnit, " +
+            //    "AircraftAngle, GroundSpeed, EmitterCategory) VALUES ('" +
+            //    tmpData.sModeAddress + "', '" + tmpData.flightNo.ToString().Trim() + "', " + tmpData.latitude + ", " +
+            //    tmpData.longtitude + ", " + tmpData.elapsedTime + ", " + tmpData.geometricAltitude + ", " +
+            //    tmpData.barometricAltitude + ", " + tmpData.airSpeed + ", " + tmpData.airSpeedUnit + ", " +
+            //    tmpData.aircraftAngle + ", " + tmpData.groundSpeed + ", " + tmpData.emitterCategory +
+            //    ")");
+            //remove = false;
         }
 
         private void sMonitorDis_MouseDown(object sender, MouseEventArgs e)
@@ -611,6 +613,7 @@ namespace ADSB.MainUI
         public void ResetMap()
         {
             listAirplane.Clear();
+            AirplaneManager.Instance.Clear();
         }
 
         public void StartPlayBack()

@@ -71,7 +71,7 @@ namespace ADSB.MainUI.SubForm
             String name = skinTextBox2.Text;
             if (null == name || name.Length == 0)
             {
-                MessageBox.Show("请输入机场名称！");
+                MessageBox.Show("请输入名称！");
                 return;
             }
             if (null == skinTextBox1.Text || skinTextBox1.Text.Length == 0)
@@ -101,6 +101,7 @@ namespace ADSB.MainUI.SubForm
             }
 
             Land_Station land_Station = new Land_Station(
+                0,
                 name,
                 Convert.ToString(skinTextBox1.Text),
                 Convert.ToDouble(skinTextBox3.Text),
@@ -111,7 +112,7 @@ namespace ADSB.MainUI.SubForm
             {
                 // 插入数据库
                 ProfileHelper.Instance.Update(
-                    "INSERT INTO LandStation (Name, IP, Lat, Lng, Num, Length) VALUES ('" +
+                    "INSERT INTO LandStation (ID, Name, IP, Lat, Lng, Num, Length) VALUES ( NULL, '" +
                     land_Station.Name + "', '" + land_Station.IP + "', " +
                     land_Station.Lat + ", " + land_Station.Lng + ", " +
                     land_Station.Num + ", " + land_Station.Length +
@@ -128,7 +129,7 @@ namespace ADSB.MainUI.SubForm
                         " Lng = " + land_Station.Lng + ", " +
                         " Num = " + land_Station.Num + ", " +
                         " Length = " + land_Station.Length +
-                        " where Name = '" + skinLabel6.Text + "'");
+                        " where ID = '" + skinLabel6.Text + "'");
             }
             
             showAllLandStation();
@@ -141,8 +142,8 @@ namespace ADSB.MainUI.SubForm
          * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            String name = this.dataGridView1.CurrentRow.Cells["Column1"].Value.ToString();
-            ProfileHelper.Instance.Update("Delete FROM LandStation WHERE Name = \"" + name + "\"");
+            String id = this.dataGridView1.CurrentRow.Cells["Column7"].Value.ToString();
+            ProfileHelper.Instance.Update("Delete FROM LandStation WHERE ID = \"" + id + "\"");
             showAllLandStation();
         }
 
@@ -155,14 +156,15 @@ namespace ADSB.MainUI.SubForm
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行纬度
             int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环数
             double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环距
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());//获得本行ID
 
             skinButton1.Text = "更新";
-            showLable(lat, lang, name, num, length, ip);
+            showLable(id, lat, lang, name, num, length, ip);
             showLandStation(portOverlay, lat, lang, name, num, length);
             
         }
 
-        private void showLable(double lat, double lang, String name, int num, double length, String ip)
+        private void showLable(int id, double lat, double lang, String name, int num, double length, String ip)
         {
             skinTextBox1.Text = ip;
             skinTextBox2.Text = name;
@@ -171,7 +173,7 @@ namespace ADSB.MainUI.SubForm
             skinTextBox5.Text = num.ToString();
             skinTextBox6.Text = length.ToString();
 
-            skinLabel6.Text = name;
+            skinLabel6.Text = id.ToString();
         }
 
         private void showLandStation(GMapOverlay overlay, double lat, double lang, String name, int num, double length)
@@ -200,13 +202,14 @@ namespace ADSB.MainUI.SubForm
             landStationList.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
+                int id = Convert.ToInt32(dictionary["ID"]);
                 String name = Convert.ToString(dictionary["Name"]);
                 String ip = Convert.ToString(dictionary["IP"]);
                 double lat = Convert.ToDouble(dictionary["Lat"]);
                 double lang = Convert.ToDouble(dictionary["Lng"]);
                 double length = Convert.ToDouble(dictionary["Length"]);
                 int num = Convert.ToInt16(dictionary["Num"]);
-                Land_Station land_Station = new Land_Station(name, ip, lat, lang, length, num);
+                Land_Station land_Station = new Land_Station(id, name, ip, lat, lang, length, num);
                 landStationList.Add(land_Station);
             }
 
@@ -265,8 +268,16 @@ namespace ADSB.MainUI.SubForm
             set { num = value; }
         }
 
-        public Land_Station(String name, String ip, double lat, double lng, double length, int num)
+        private int id;
+        public int ID
         {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public Land_Station(int id, String name, String ip, double lat, double lng, double length, int num)
+        {
+            this.id = id;
             this.name = name;
             this.ip = ip;
             this.lat = lat;

@@ -63,7 +63,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
-            showAirPort(portSelOverlay, point.Lat, point.Lng, "选中的点");
+            showAirPort(portSelOverlay, point.Lat, point.Lng, "选中的点", 0, 0);
         }
 
         private void skinButton1_Click(object sender, EventArgs e)
@@ -84,12 +84,33 @@ namespace ADSB.MainUI.SubForm
                 MessageBox.Show("请输入经纬度！");
                 return;
             }
+            if (null == skinTextBox1.Text || skinTextBox1.Text.Length == 0)
+            {
+                MessageBox.Show("请输入环数！");
+                return;
+            }
+            if (null == skinTextBox5.Text || skinTextBox5.Text.Length == 0)
+            {
+                MessageBox.Show("请输入环距离！");
+                return;
+            }
 
-            Air_Port air_Port = new Air_Port(name, Convert.ToDouble(skinTextBox3.Text), Convert.ToDouble(skinTextBox4.Text));
+            Air_Port air_Port = new Air_Port(
+                0, 
+                name,
+                Convert.ToDouble(skinTextBox3.Text),
+                Convert.ToDouble(skinTextBox4.Text),
+                Convert.ToInt16(skinTextBox1.Text),
+                Convert.ToDouble(skinTextBox5.Text));
             if (skinLabel2.Text.Equals("ID"))
             {
                 // 插入数据库
-                ProfileHelper.Instance.Update("INSERT INTO AirPort (Name, Lat, Lng) VALUES ('" + air_Port.Name + "', " + air_Port.Lat + ", " + air_Port.Lng + ")");
+                ProfileHelper.Instance.Update("INSERT INTO AirPort (ID, Name, Lat, Lng, Num, Length) VALUES (NULL, '" +
+                    air_Port.Name + "', " + 
+                    air_Port.Lat + ", " + 
+                    air_Port.Lng + ", " +
+                    air_Port.Num + ", " + 
+                    air_Port.Length + ")");
             }
             else if (!string.IsNullOrWhiteSpace(skinLabel2.Text))
             {
@@ -99,7 +120,9 @@ namespace ADSB.MainUI.SubForm
                         " Name = '" + air_Port.Name + "', " +
                         " Lat = " + air_Port.Lat + ", " +
                         " Lng = " + air_Port.Lng  +
-                        " where Name = '" + skinLabel2.Text + "'");
+                        " Num = " + air_Port.Num + ", " +
+                        " Length = " + air_Port.Length +
+                        " where ID = '" + skinLabel2.Text + "'");
             }
             showAllAirPort();
 
@@ -111,36 +134,50 @@ namespace ADSB.MainUI.SubForm
          * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            String name = this.dataGridView1.CurrentRow.Cells["name"].Value.ToString();
-            ProfileHelper.Instance.Update("Delete FROM AirPort WHERE Name = \"" + name + "\"");
+            String id = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            ProfileHelper.Instance.Update("Delete FROM AirPort WHERE ID = \"" + id + "\"");
             showAllAirPort();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
-            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
-            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
+            String name = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();//获得本行name
+            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行经度
+            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行纬度
+            int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环数
+            double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环距
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());//获得本行ID
 
             skinButton1.Text = "更新";
-            showLable(lat, lang, name);
-            showAirPort(portOverlay, lat, lang, name);
+            showLable(id, lat, lang, name, num, length);
+            showAirPort(portOverlay, lat, lang, name, num, length);
         }
 
-        private void showLable(double lat, double lang, String name)
+        private void showLable(int id, double lat, double lang, String name, int num, double length)
         {
             skinTextBox2.Text = name;
             skinTextBox3.Text = lat.ToString();
             skinTextBox4.Text = lang.ToString();
-            skinLabel2.Text = name;
+            skinTextBox1.Text = num.ToString();
+            skinTextBox5.Text = length.ToString();
+
+            skinLabel2.Text = id.ToString();
         }
 
-        private void showAirPort(GMapOverlay overlay, double lat, double lang, String name)
+        private void showAirPort(GMapOverlay overlay, double lat, double lang, String name, int num, double length)
         {
             overlay.Markers.Clear();
             PointLatLng point1 = new PointLatLng(lat, lang);
             GMapAirPort airPort = new GMapAirPort(point1, name);
+
+            while (num > 0)
+            {
+                GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point1, (int)length * num);
+                overlay.Markers.Add(gMapMarkerCircle);
+                num--;
+            }
+
             overlay.Markers.Add(airPort);
             gMapControl1.Refresh();
         }
@@ -157,7 +194,10 @@ namespace ADSB.MainUI.SubForm
                 String name = Convert.ToString(dictionary["Name"]);
                 double lat = Convert.ToDouble(dictionary["Lat"]);
                 double lang = Convert.ToDouble(dictionary["Lng"]);
-                Air_Port air_Port = new Air_Port(name, lat, lang);
+                int id = Convert.ToInt32(dictionary["ID"]);
+                double length = Convert.ToDouble(dictionary["Length"]);
+                int num = Convert.ToInt16(dictionary["Num"]);
+                Air_Port air_Port = new Air_Port(id, name, lat, lang, num, length);
                 airPortList.Add(air_Port);
             }
 
@@ -174,6 +214,12 @@ namespace ADSB.MainUI.SubForm
 
     public class Air_Port
     {
+        private int id;
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
         private String name;
         public String Name
         {
@@ -195,11 +241,28 @@ namespace ADSB.MainUI.SubForm
             set { lng = value; }
         }
 
-        public Air_Port(String name, double lat, double lng)
+        private double length;
+        public double Length
         {
+            get { return length; }
+            set { length = value; }
+        }
+
+        private int num;
+        public int Num
+        {
+            get { return num; }
+            set { num = value; }
+        }
+
+        public Air_Port(int id, String name, double lat, double lng, int num, double length)
+        {
+            this.id = id;
             this.name = name;
             this.lat = lat;
             this.lng = lng;
+            this.num = num;
+            this.length = length;
         }
     }
 }

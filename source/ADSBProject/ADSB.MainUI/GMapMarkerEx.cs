@@ -214,15 +214,15 @@ namespace ADSB.MainUI
             // 中心机
             if (1 ==selected)
             {
-                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4@3x.png") as Bitmap;
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式\\assets\\飞机 copy 4@3x.png") as Bitmap;
             }
             else if (2 == selected)
             {
-                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4@2x.png") as Bitmap;
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式\\assets\\飞机 copy 4@2x.png") as Bitmap;
             }
             else
             {
-                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式\\assets\\飞机 copy 4.png") as Bitmap;
             }
             
             Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2);

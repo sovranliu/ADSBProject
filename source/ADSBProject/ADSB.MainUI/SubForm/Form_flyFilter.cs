@@ -28,72 +28,39 @@ namespace ADSB.MainUI.SubForm
 
         private void flyFilterTimer_Tick(object sender, EventArgs e)
         {
-            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM Plane");
-            String querySModeAddress = this.skinTextBox1.Text.Trim();
-            if (!IsNumber(querySModeAddress))
+            int sModeAddres = 0;
+            if (IsNumber(this.skinTextBox1.Text.Trim()))
             {
-                return;
+                sModeAddres = Convert.ToInt32(this.skinTextBox1.Text.Trim());
             }
-            String queryFlightNo = this.skinTextBox2.Text.Trim();
-            String queryAirSpeedDown = this.skinTextBox3.Text.Trim();
-            if (!IsNumber(queryAirSpeedDown))
+            string flightNo = null;
+            if(!String.IsNullOrWhiteSpace(this.skinTextBox2.Text))
             {
-                return;
+                flightNo = this.skinTextBox2.Text.Trim();
             }
-            String queryAirSpeedUp = this.skinTextBox4.Text.Trim();
-            if (!IsNumber(queryAirSpeedUp))
+            double airSpeedMin = 0;
+            if (IsNumber(this.skinTextBox3.Text.Trim()))
             {
-                return;
+                airSpeedMin = Convert.ToDouble(this.skinTextBox3.Text.Trim());
             }
-            String queryGeometricAltitudeDown = this.skinTextBox5.Text.Trim();
-            if (!IsNumber(queryGeometricAltitudeDown))
+            double airSpeedMax = 0;
+            if (IsNumber(this.skinTextBox4.Text.Trim()))
             {
-                return;
+                airSpeedMax = Convert.ToDouble(this.skinTextBox4.Text.Trim());
             }
-            String queryGeometricAltitudeUp = this.skinTextBox6.Text.Trim();
-            if (!IsNumber(queryGeometricAltitudeUp))
+            double geometricAltitudeMin = 0;
+            if (IsNumber(this.skinTextBox5.Text.Trim()))
             {
-                return;
+                geometricAltitudeMin = Convert.ToDouble(this.skinTextBox5.Text.Trim());
             }
-
-            String condtion = " 1 = 1 ";
-            if (!string.IsNullOrWhiteSpace(querySModeAddress))
+            double geometricAltitudeMax = 0;
+            if (IsNumber(this.skinTextBox6.Text.Trim()))
             {
-                condtion += " AND SModeAddress = " + querySModeAddress.ToString();
+                geometricAltitudeMax = Convert.ToDouble(this.skinTextBox6.Text.Trim());
             }
-            if (!string.IsNullOrWhiteSpace(queryFlightNo))
-            {
-                condtion += " AND FlightNo = '" + queryFlightNo + "'";
-            }
-            if (!string.IsNullOrWhiteSpace(queryAirSpeedDown))
-            {
-                condtion += " AND AirSpeed >= " + queryAirSpeedDown.ToString();
-            }
-            if (!string.IsNullOrWhiteSpace(queryAirSpeedUp))
-            {
-                condtion += " AND AirSpeed <= " + queryAirSpeedUp.ToString();
-            }
-            if (!string.IsNullOrWhiteSpace(queryGeometricAltitudeDown))
-            {
-                condtion += " AND GeometricAltitude >= " + queryGeometricAltitudeDown.ToString();
-            }
-            if (!string.IsNullOrWhiteSpace(queryGeometricAltitudeUp))
-            {
-                condtion += " AND GeometricAltitude <= " + queryGeometricAltitudeUp.ToString();
-            }
-
-            if (condtion.Equals(" 1 = 1 "))
-            {
-                showGrid(result);
-            }
-            else
-            {
-                List<Dictionary<string, object>> resultSel = ProfileHelper.Instance.Select
-                ("SELECT * FROM Plane WHERE " + condtion);
-
-                showGrid(resultSel);
-            }
-            this.skinLabel2.Text = "飞行器" + result.Count().ToString();
+            List<Cat021Data> list = AirplaneManager.Instance.Query(sModeAddres, flightNo, airSpeedMin, airSpeedMax, geometricAltitudeMin, geometricAltitudeMax);
+            showGrid(list);
+            this.skinLabel2.Text = "飞行器" + list.Count().ToString();
         }
 
         /// <summary>
@@ -102,7 +69,7 @@ namespace ADSB.MainUI.SubForm
         public static bool IsNumber(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
-                return true;
+                return false;
             try
             {
                 double a = Convert.ToDouble(s);//如果成功就是小数
@@ -115,40 +82,99 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
-        private void showGrid(List<Dictionary<string, object>> resultSel)
+        private void showGrid(List<Cat021Data> data)
         {
-            int i = 0;
-            while (i >= 0)
+            List<DataGridViewRow> removeList = new List<DataGridViewRow>();
+            foreach (DataGridViewRow row in dGridFlyFilter.Rows)
             {
-                i = dGridFlyFilter.RowCount - 1;
-                if (i >= 0)
-                    dGridFlyFilter.Rows.Remove(dGridFlyFilter.Rows[i]);
-                i--;
+                bool sentry = false;
+                foreach(Cat021Data item in data)
+                {
+                    if(row.Cells[0].Value.ToString().Equals(item.sModeAddress.ToString()))
+                    {
+                        if(!row.Cells[1].Value.Equals(item.flightNo))
+                        {
+                            row.Cells[1].Value = item.flightNo;
+                        }
+                        if (!row.Cells[2].Value.Equals(item.latitude.ToString()))
+                        {
+                            row.Cells[2].Value = item.latitude.ToString();
+                        }
+                        if (!row.Cells[3].Value.Equals(item.longtitude.ToString()))
+                        {
+                            row.Cells[3].Value = item.longtitude.ToString();
+                        }
+                        if (!row.Cells[4].Value.Equals(item.elapsedTime.ToString()))
+                        {
+                            row.Cells[4].Value = item.elapsedTime.ToString();
+                        }
+                        if (!row.Cells[5].Value.Equals(item.geometricAltitude.ToString()))
+                        {
+                            row.Cells[5].Value = item.geometricAltitude.ToString();
+                        }
+                        if (!row.Cells[6].Value.Equals(item.barometricAltitude.ToString()))
+                        {
+                            row.Cells[6].Value = item.barometricAltitude.ToString();
+                        }
+                        if (!row.Cells[7].Value.Equals(item.airSpeed.ToString()))
+                        {
+                            row.Cells[7].Value = item.airSpeed.ToString();
+                        }
+                        if (!row.Cells[8].Value.Equals(item.airSpeedUnit.ToString()))
+                        {
+                            row.Cells[8].Value = item.airSpeedUnit.ToString();
+                        }
+                        if (!row.Cells[9].Value.Equals(item.aircraftAngle.ToString()))
+                        {
+                            row.Cells[9].Value = item.aircraftAngle.ToString();
+                        }
+                        if (!row.Cells[10].Value.Equals(item.groundSpeed.ToString()))
+                        {
+                            row.Cells[10].Value = item.groundSpeed.ToString();
+                        }
+                        if (!row.Cells[11].Value.Equals(item.emitterCategory.ToString()))
+                        {
+                            row.Cells[11].Value = item.emitterCategory.ToString();
+                        }
+                        sentry = true;
+                        break;
+                    }
+                }
+                if(!sentry)
+                {
+                    removeList.Add(row);
+                }
             }
-
-            foreach (Dictionary<string, object> dictionary in resultSel)
+            foreach (DataGridViewRow row in removeList)
             {
-                Plane_Follow plane_Follow = getPlaneFollow(dictionary);
-
-                IEnumerable<DataGridViewRow> enumerableList = this.dGridFlyFilter.Rows.Cast<DataGridViewRow>();
-                List<DataGridViewRow> list = (from item in enumerableList
-                                              where item.Cells[0].Value.ToString().IndexOf(plane_Follow.FlightNo) >= 0
-                                              select item).ToList();
-                if (list.Count <= 0)
+                dGridFlyFilter.Rows.Remove(row);
+            }
+            foreach (Cat021Data item in data)
+            {
+                bool sentry = false;
+                foreach (DataGridViewRow row in dGridFlyFilter.Rows)
+                {
+                    if (row.Cells[0].Value.ToString().Equals(item.sModeAddress.ToString()))
+                    {
+                        sentry = true;
+                        break;
+                    }
+                }
+                if(!sentry)
                 {
                     dGridFlyFilter.Rows.Add(
-                        plane_Follow.SModeAddress,
-                        plane_Follow.FlightNo,
-                        plane_Follow.Latitude,
-                        plane_Follow.Longtitude,
-                        plane_Follow.ElapsedTime,
-                        plane_Follow.GeometricAltitude,
-                        plane_Follow.BarometricAltitude,
-                        plane_Follow.AirSpeed,
-                        plane_Follow.AirSpeedUnit,
-                        plane_Follow.AircraftAngle,
-                        plane_Follow.GroundSpeed,
-                        plane_Follow.EmitterCategory);
+                            item.sModeAddress.ToString(),
+                            item.flightNo.ToString(),
+                            item.latitude.ToString(),
+                            item.longtitude.ToString(),
+                            item.elapsedTime.ToString(),
+                            item.geometricAltitude.ToString(),
+                            item.barometricAltitude.ToString(),
+                            item.airSpeed.ToString(),
+                            item.airSpeedUnit.ToString(),
+                            item.aircraftAngle.ToString(),
+                            item.groundSpeed.ToString(),
+                            item.emitterCategory.ToString());
                 }
             }
         }

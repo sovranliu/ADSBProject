@@ -169,6 +169,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GMapMarkerEx.cs" />
+    <Compile Include="Logic\AirplaneManager.cs" />
     <Compile Include="Logic\DataHelper.cs" />
     <Compile Include="Logic\ConfigHelper.cs" />
     <Compile Include="Logic\ProfileHelper.cs" />
