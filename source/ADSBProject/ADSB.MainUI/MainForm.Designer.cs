@@ -826,6 +826,8 @@ namespace ADSB.MainUI
             // sTpMonitor
             // 
             this.sTpMonitor.BackColor = System.Drawing.Color.Transparent;
+			this.sTpMonitor.Controls.Add(this.spMin);
+			this.sTpMonitor.Controls.Add(this.spClose);
             this.sTpMonitor.Controls.Add(this.dataGridView1);
             this.sTpMonitor.Controls.Add(this.skinProgressBar1);
             this.sTpMonitor.Controls.Add(this.maskPlaybackRun);
@@ -835,8 +837,6 @@ namespace ADSB.MainUI
             this.sTpMonitor.Controls.Add(this.skinPanel15);
             this.sTpMonitor.Controls.Add(this.skinPanel3);
             this.sTpMonitor.Controls.Add(this.gMapControl1);
-			this.sTpMonitor.Controls.Add(this.spMin);
-			this.sTpMonitor.Controls.Add(this.spClose);
             this.sTpMonitor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sTpMonitor.Location = new System.Drawing.Point(0, 36);
             this.sTpMonitor.Name = "sTpMonitor";
@@ -927,7 +927,7 @@ namespace ADSB.MainUI
             this.spMin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.spMin.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.spMin.DownBack = null;
-            this.spMin.Location = new System.Drawing.Point(1838, 0);
+            this.spMin.Location = new System.Drawing.Point(1840, 0);
             this.spMin.Margin = new System.Windows.Forms.Padding(0);
             this.spMin.MouseBack = null;
             this.spMin.Name = "spMin";
