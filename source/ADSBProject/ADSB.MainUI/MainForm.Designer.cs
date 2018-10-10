@@ -1776,11 +1776,6 @@ namespace ADSB.MainUI
             this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
             this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
             // 
-            // timerSPBarPlayback
-            // 
-            this.playBackTimer.Interval = 1000;
-            this.playBackTimer.Tick += new System.EventHandler(this.playBackTimer_Tick);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
