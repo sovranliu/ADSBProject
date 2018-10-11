@@ -134,9 +134,12 @@ namespace ADSB.MainUI.SubForm
          * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            String id = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
-            ProfileHelper.Instance.Update("Delete FROM AirPort WHERE ID = \"" + id + "\"");
-            showAllAirPort();
+            if (null != dataGridView1.CurrentRow)
+            { 
+                String id = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                ProfileHelper.Instance.Update("Delete FROM AirPort WHERE ID = \"" + id + "\"");
+                showAllAirPort();
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
