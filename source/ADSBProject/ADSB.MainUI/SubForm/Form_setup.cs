@@ -62,6 +62,22 @@ namespace ADSB.MainUI.SubForm
             ProfileHelper.Instance.Update("INSERT INTO CommonPlane (ID, Name, SModeAddress) " +
             "VALUES (NULL, '" + name + "', '" + sModeAddress + "')");
 
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow");
+            Boolean isCommon = false;
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                int sModeAddressSel = Convert.ToInt32(dictionary["IDNum"]);
+                int type = Convert.ToInt32(dictionary["Type"]);
+                if (1 == type && sModeAddressSel == Convert.ToInt32(sModeAddress))
+                {
+                    isCommon = true;
+                }
+            }
+            if (!isCommon)
+            {
+                ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (ID, Type, IDNum, Length) VALUES (NULL, 1, '" + sModeAddress + "', 0)");
+            }
+
             showAllCommonPlane();
         }
 
@@ -71,6 +87,10 @@ namespace ADSB.MainUI.SubForm
             {
                 String id = this.dataGridView1.CurrentRow.Cells[0].Value.ToString();
                 ProfileHelper.Instance.Update("Delete FROM CommonPlane WHERE ID = \"" + id + "\"");
+                //凸显里面删除
+                String sModeAddress = this.dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
+
                 showAllCommonPlane();
             }
         }

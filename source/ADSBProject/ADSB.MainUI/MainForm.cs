@@ -26,7 +26,8 @@ namespace ADSB.MainUI
         private GMapOverlay wayPointOverlay = new GMapOverlay("wayPointLayer"); //航站点图层
         private GMapOverlay pointLandOverlay = new GMapOverlay("pointLandLayer"); //航站点图层
         private GMapOverlay airSegmentOverlay = new GMapOverlay("airSegmentLayer"); //航线图层
-        private GMapOverlay flightCircleOverlay = new GMapOverlay("flightCircleLayer"); //航迹圈图层
+        private GMapOverlay landCircleOverlay = new GMapOverlay("landCircleLayer"); //地面站距离环图层
+        private GMapOverlay flightCircleOverlay = new GMapOverlay("flightCircleLayer"); //机场距离环图层
 
         // 是否是测距模式
         private bool isDistince = false;
@@ -74,6 +75,12 @@ namespace ADSB.MainUI
         // 当前是否要展示航迹圈
         private Boolean flightCircle;
 
+        // 当前是否要展示地面站距离环
+        private Boolean landDistenceCircle;
+
+        // 当前是否要展示地面站距离环
+        private Boolean airPortDistenceCircle;
+
         List<PointLatLng> distincePairs = new List<PointLatLng>();
        // private GMapAirPort airPort;
        // private GMapAirSegment airSegment;
@@ -109,7 +116,7 @@ namespace ADSB.MainUI
 
             InitializeUI();
             initListAirplaneCheck(true);
-            showAllCommonPlane();
+            //showAllCommonPlane();
 
             flyTimer.Tick += new EventHandler(flyTimer_Tick);
             displayTimer.Tick += new EventHandler(displayTimer_Tick);
@@ -125,7 +132,7 @@ namespace ADSB.MainUI
                 int i = 0;
                 while (i >= 0)
                 {
-                    i = dataGridView1.RowCount - 2;
+                    i = dataGridView1.RowCount - 1;
                     if (i >= 0)
                         dataGridView1.Rows.Remove(dataGridView1.Rows[i]);
                     i--;
@@ -133,38 +140,53 @@ namespace ADSB.MainUI
             }
             List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow");
             listAirplaneCheck.Clear();
+
+            // 先展示飞行器
             foreach (Dictionary<string, object> dictionary in result)
             {
                 int id = Convert.ToInt32(dictionary["ID"]);
                 int type = Convert.ToInt32(dictionary["Type"]);
                 int idNum = Convert.ToInt32(dictionary["IDNum"]);
                 int length = Convert.ToInt32(dictionary["Length"]);
-                int index = this.dataGridView1.Rows.Add();
-
+                
                 if (1 == type)
                 {
-                    this.dataGridView1.Rows[index].Cells[0].Value = "飞行器";
-                    this.dataGridView1.Rows[index].Cells[1].Value = idNum;
-                    // 对于飞行器idNum就是address
+                    int index = this.dataGridView1.Rows.Add();
+                    this.dataGridView1.Rows[index].Cells[1].Value = "飞行器";
+                    this.dataGridView1.Rows[index].Cells[2].Value = idNum;
+                    // 去重对于飞行器idNum就是address
                     if (!listAirplaneCheck.ContainsKey(idNum))
                         listAirplaneCheck.Add(idNum, idNum);
+                    this.dataGridView1.Rows[index].Cells[3].Value = length;
+                    this.dataGridView1.Rows[index].Cells[5].Value = id.ToString();
                 }
-                else
+            }
+
+            // 再展示地面站
+            foreach (Dictionary<string, object> dictionary in result)
+            {
+                int id = Convert.ToInt32(dictionary["ID"]);
+                int type = Convert.ToInt32(dictionary["Type"]);
+                int idNum = Convert.ToInt32(dictionary["IDNum"]);
+                int length = Convert.ToInt32(dictionary["Length"]);
+
+                if (1 != type)
                 {
-                    this.dataGridView1.Rows[index].Cells[0].Value = "地面站";
+                    int index = this.dataGridView1.Rows.Add();
+                    this.dataGridView1.Rows[index].Cells[1].Value = "地面站";
                     // 根据id查出地面站信息
                     List<Dictionary<string, object>> stationList = ProfileHelper.Instance.Select("SELECT * FROM LandStation WHERE ID = " + idNum);
                     if (stationList.Count() > 0)
                     {
                         Dictionary<string, object> station = stationList[0];
                         String name = Convert.ToString(station["Name"]);
-                        this.dataGridView1.Rows[index].Cells[1].Value = name;
+                        this.dataGridView1.Rows[index].Cells[2].Value = name;
                     }
-                    this.dataGridView1.Rows[index].Cells[3].Value = idNum;
+                    this.dataGridView1.Rows[index].Cells[4].Value = idNum;
+                    this.dataGridView1.Rows[index].Cells[3].Value = length;
+                    this.dataGridView1.Rows[index].Cells[5].Value = id.ToString();
                 }
                 
-                this.dataGridView1.Rows[index].Cells[2].Value = length;
-                this.dataGridView1.Rows[index].Cells[4].Value = id.ToString();
             }
 
         }
@@ -303,8 +325,27 @@ namespace ADSB.MainUI
                 else
                 {
                     int sModeAddress = gMapAirPlane.AirPlaneMarkerInfo.sModeAddress;
-                    pointPlaneLand.Remove(sModeAddress);
-                    ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
+                    Boolean isCommon = false;
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM CommonPlane");
+                    foreach (Dictionary<string, object> dictionary in result)
+                    {
+                        int sModeAddressSel = Convert.ToInt32(dictionary["SModeAddress"]);
+                        if (sModeAddressSel == sModeAddress)
+                        {
+                            isCommon = true;
+                        }
+                    }
+
+                    if (isCommon)
+                    {
+                        MessageBox.Show("常用飞机不可以直接在关注列表中直接删除，请去<常用飞行器>中删除！");
+                        return;
+                    }
+                    else
+                    {
+                        pointPlaneLand.Remove(sModeAddress);
+                        ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
+                    }
                 }
                 initListAirplaneCheck(false);
             }
@@ -431,24 +472,20 @@ namespace ADSB.MainUI
         private void showLandStation()
         {
             // 获取地面站信息
-            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
+            // List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
             bool hasLandStation = false;
-            Dictionary<string, object> dictionary;
-            String name;
-            double lat;
-            double lang;
+            String name = ConfigHelper.Instance.GetConfig("land_station_main_name");
+            
             PointLatLng pointLandStation = new PointLatLng(0, 0);
-            if (result.Count() > 0)
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 hasLandStation = true;
-                dictionary = result[0];
-                name = Convert.ToString(dictionary["Name"]);
-                lat = Convert.ToDouble(dictionary["Lat"]);
-                lang = Convert.ToDouble(dictionary["Lng"]);
+                double lat = Convert.ToDouble(ConfigHelper.Instance.GetConfig("land_station_main_lat"));
+                double lang = Convert.ToDouble(ConfigHelper.Instance.GetConfig("land_station_main_log"));
                 pointLandStation = new PointLatLng(lat, lang);
             }
 
-            // 只展示第一个地面站与凸显飞机的距离
+            // 只展示主地面站与凸显飞机的距离
             if (hasLandStation)
             {
                 if (landStation && pointPlaneLand.Count > 0)
@@ -871,7 +908,9 @@ namespace ADSB.MainUI
             }
         }
 
-
+        /**
+         * 告警
+         * */
         private void skinLabel33_Click(object sender, EventArgs e)
         {
             if (!IsPlayback)
@@ -885,6 +924,9 @@ namespace ADSB.MainUI
             }
         }
 
+        /**
+         * 常用飞行器
+         * */
         private void skinLabel34_Click(object sender, EventArgs e)
         {
             if (!IsPlayback)
@@ -902,7 +944,7 @@ namespace ADSB.MainUI
         {
             if (selected)
             {
-                showAllCommonPlane();
+                initListAirplaneCheck(false);
             }
         }
 
@@ -918,84 +960,126 @@ namespace ADSB.MainUI
             {
                 if (null != dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value)
                 {
-                    string cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    int id = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[4].Value);
+                    string cell = this.dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+                    int id = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
                     ProfileHelper.Instance.Update("UPDATE PlaneFollow SET Length = " + cell + " WHERE ID = " + id);
                 }
             }
 
         }
 
+        // 关注的目标单元格点击事件
+        private void dgv_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            int index = dataGridView1.CurrentRow.Index;
+            this.dataGridView1.Rows[e.RowIndex].Selected = true;
+           
+            if (Convert.ToBoolean(dataGridView1.Rows[index].Cells[0].Value))
+            {
+                dataGridView1.Rows[index].Cells[0].Value = false;
+                currentFellowId = 0;
+            }
+            else
+            {
+                dataGridView1.Rows[index].Cells[0].Value = true;
+                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
+                //其他的都是false
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (i != index)
+                    {
+                        dataGridView1.Rows[i].Cells[0].Value = false;
+                    }
+                }
+            }
+
+        }
+
         // 选中一行的事件
-        private void dgv_CellSel(object sender, DataGridViewCellEventArgs e)
+        //private void dgv_CellSel(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex > 0)
+        //    {
+        //        if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
+        //        {
+        //            if (null != dataGridView1.Rows[e.RowIndex])
+        //            {
+        //                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //// 选中的加入到关注飞行器里面 -- 作废
+        //private void dgv_CellSel2(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex > 0)
+        //    {
+        //        if (dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
+        //        {
+        //            if (null != dataGridView2.Rows[e.RowIndex])
+        //            {
+        //                int sModeAddress = Convert.ToInt32(this.dataGridView2.Rows[e.RowIndex].Cells[2].Value);
+
+        //                if (sModeAddress > 0)
+        //                {
+        //                    List<Dictionary<string, object>> result =
+        //                    ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow WHERE Type = 1 AND IDNum = " + sModeAddress);
+        //                    if (result.Count() == 0)
+        //                    {
+        //                        ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (ID, Type, IDNum, Length) VALUES (NULL, 1, '" + sModeAddress + "', 0)");
+        //                    }
+        //                    else
+        //                    {
+        //                        ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
+        //                    }
+
+        //                    initListAirplaneCheck(false);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+        //private List<Common_Plane> commonPlaneList = new List<Common_Plane>();
+        //private void showAllCommonPlane()
+        //{
+        //    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM CommonPlane");
+        //    commonPlaneList.Clear();
+        //    foreach (Dictionary<string, object> dictionary in result)
+        //    {
+        //        int id = Convert.ToInt32(dictionary["ID"]);
+        //        String name = Convert.ToString(dictionary["Name"]);
+        //        String sModeAddress = Convert.ToString(dictionary["SModeAddress"]);
+
+        //        Common_Plane air_Port = new Common_Plane(id, name, sModeAddress);
+        //        commonPlaneList.Add(air_Port);
+        //    }
+
+        //    this.dataGridView2.DataSource = null;
+        //    if (null != commonPlaneList && commonPlaneList.Count() > 0)
+        //    {
+        //        this.dataGridView2.DataSource = this.commonPlaneList;
+        //    }
+
+        //}
+
+
+
+        private void spMin_Click(object sender, EventArgs e)
         {
-            if (e.ColumnIndex > 0)
-            {
-                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
-                {
-                    if (null != dataGridView1.Rows[e.RowIndex])
-                    {
-                        currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[4].Value);
-                    }
-                }
-            }
+            this.WindowState = FormWindowState.Minimized;
         }
 
-        // 选中的加入到关注飞行器里面
-        private void dgv_CellSel2(object sender, DataGridViewCellEventArgs e)
+        private void spClose_Click(object sender, EventArgs e)
         {
-            if (e.ColumnIndex > 0)
-            {
-                if (dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
-                {
-                    if (null != dataGridView2.Rows[e.RowIndex])
-                    {
-                        int sModeAddress = Convert.ToInt32(this.dataGridView2.Rows[e.RowIndex].Cells[2].Value);
-
-                        if (sModeAddress > 0)
-                        {
-                            List<Dictionary<string, object>> result =
-                            ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow WHERE Type = 1 AND IDNum = " + sModeAddress);
-                            if (result.Count() == 0)
-                            {
-                                ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (ID, Type, IDNum, Length) VALUES (NULL, 1, '" + sModeAddress + "', 0)");
-                            }
-                            else
-                            {
-                                ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
-                            }
-
-                            initListAirplaneCheck(false);
-                        }
-                    }
-                }
-            }
+            this.Close();
+            System.Environment.Exit(0);
         }
-
-        private List<Common_Plane> commonPlaneList = new List<Common_Plane>();
-        private void showAllCommonPlane()
-        {
-            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM CommonPlane");
-            commonPlaneList.Clear();
-            foreach (Dictionary<string, object> dictionary in result)
-            {
-                int id = Convert.ToInt32(dictionary["ID"]);
-                String name = Convert.ToString(dictionary["Name"]);
-                String sModeAddress = Convert.ToString(dictionary["SModeAddress"]);
-
-                Common_Plane air_Port = new Common_Plane(id, name, sModeAddress);
-                commonPlaneList.Add(air_Port);
-            }
-
-            this.dataGridView2.DataSource = null;
-            if (null != commonPlaneList && commonPlaneList.Count() > 0)
-            {
-                this.dataGridView2.DataSource = this.commonPlaneList;
-            }
-
-        }
-
-
     }
 }
 

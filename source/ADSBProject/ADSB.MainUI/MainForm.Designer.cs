@@ -33,6 +33,8 @@ namespace ADSB.MainUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.sTabControl = new CCWin.SkinControl.SkinTabControl();
             this.sTpFly = new CCWin.SkinControl.SkinTabPage();
             this.sPnl_Func = new CCWin.SkinControl.SkinPanel();
@@ -76,7 +78,10 @@ namespace ADSB.MainUI
             this.sLabel2 = new CCWin.SkinControl.SkinLabel();
             this.slabel1 = new CCWin.SkinControl.SkinLabel();
             this.sTpMonitor = new CCWin.SkinControl.SkinTabPage();
+            this.spMin = new CCWin.SkinControl.SkinPanel();
+            this.spClose = new CCWin.SkinControl.SkinPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.cb_check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -127,10 +132,6 @@ namespace ADSB.MainUI
             this.skinLabel22 = new CCWin.SkinControl.SkinLabel();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sTabControl.SuspendLayout();
             this.sTpFly.SuspendLayout();
             this.skinPanel7.SuspendLayout();
@@ -142,7 +143,6 @@ namespace ADSB.MainUI
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.skinPanel15.SuspendLayout();
             this.skinPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // sTabControl
@@ -829,7 +829,8 @@ namespace ADSB.MainUI
             // sTpMonitor
             // 
             this.sTpMonitor.BackColor = System.Drawing.Color.Transparent;
-            this.sTpMonitor.Controls.Add(this.dataGridView2);
+            this.sTpMonitor.Controls.Add(this.spMin);
+            this.sTpMonitor.Controls.Add(this.spClose);
             this.sTpMonitor.Controls.Add(this.dataGridView1);
             this.sTpMonitor.Controls.Add(this.skinProgressBar1);
             this.sTpMonitor.Controls.Add(this.maskPlaybackRun);
@@ -847,23 +848,83 @@ namespace ADSB.MainUI
             this.sTpMonitor.TabItemImage = null;
             this.sTpMonitor.Text = "skinTabPage2";
             // 
+            // spMin
+            // 
+            this.spMin.BackColor = System.Drawing.Color.Transparent;
+            this.spMin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spMin.BackgroundImage")));
+            this.spMin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.spMin.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.spMin.DownBack = null;
+            this.spMin.Location = new System.Drawing.Point(1220, 0);
+            this.spMin.Margin = new System.Windows.Forms.Padding(0);
+            this.spMin.MouseBack = null;
+            this.spMin.Name = "spMin";
+            this.spMin.NormlBack = null;
+            this.spMin.Size = new System.Drawing.Size(30, 30);
+            this.spMin.TabIndex = 29;
+            this.spMin.Click += new System.EventHandler(this.spMin_Click);
+            // 
+            // spClose
+            // 
+            this.spClose.BackColor = System.Drawing.Color.Transparent;
+            this.spClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spClose.BackgroundImage")));
+            this.spClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.spClose.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.spClose.DownBack = null;
+            this.spClose.Location = new System.Drawing.Point(1250, 0);
+            this.spClose.Margin = new System.Windows.Forms.Padding(0);
+            this.spClose.MouseBack = null;
+            this.spClose.Name = "spClose";
+            this.spClose.NormlBack = null;
+            this.spClose.Size = new System.Drawing.Size(30, 30);
+            this.spClose.TabIndex = 30;
+            this.spClose.Click += new System.EventHandler(this.spClose_Click);
+            // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightCyan;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(223)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cb_check,
             this.Column1,
             this.Column2,
             this.Column3,
             this.Column4,
             this.Column5});
-            this.dataGridView1.Location = new System.Drawing.Point(31, 255);
+            this.dataGridView1.EnableHeadersVisualStyles = false;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.dataGridView1.Location = new System.Drawing.Point(11, 29);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 30;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(344, 219);
             this.dataGridView1.TabIndex = 28;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellSel);
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
+            this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseClick);
+            // 
+            // cb_check
+            // 
+            this.cb_check.DataPropertyName = "IsChecked";
+            this.cb_check.FalseValue = false;
+            this.cb_check.HeaderText = "选择";
+            this.cb_check.Name = "cb_check";
+            this.cb_check.ReadOnly = true;
+            this.cb_check.TrueValue = true;
+            this.cb_check.Width = 40;
             // 
             // Column1
             // 
@@ -886,12 +947,14 @@ namespace ADSB.MainUI
             // 
             this.Column4.HeaderText = "地面站Id";
             this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             this.Column4.Visible = false;
             // 
             // Column5
             // 
             this.Column5.HeaderText = "ID";
             this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
             this.Column5.Visible = false;
             // 
             // skinProgressBar1
@@ -1006,11 +1069,11 @@ namespace ADSB.MainUI
             this.skinLabel34.BorderColor = System.Drawing.Color.White;
             this.skinLabel34.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel34.Location = new System.Drawing.Point(11, 517);
+            this.skinLabel34.Location = new System.Drawing.Point(0, 510);
             this.skinLabel34.Name = "skinLabel34";
-            this.skinLabel34.Size = new System.Drawing.Size(41, 16);
+            this.skinLabel34.Size = new System.Drawing.Size(63, 16);
             this.skinLabel34.TabIndex = 38;
-            this.skinLabel34.Text = "中心机";
+            this.skinLabel34.Text = "常用飞行器";
             this.skinLabel34.Click += new System.EventHandler(this.skinLabel34_Click);
             // 
             // skinLabel33
@@ -1034,7 +1097,7 @@ namespace ADSB.MainUI
             this.skinPanel24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel24.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel24.DownBack = null;
-            this.skinPanel24.Location = new System.Drawing.Point(19, 495);
+            this.skinPanel24.Location = new System.Drawing.Point(19, 487);
             this.skinPanel24.MouseBack = null;
             this.skinPanel24.Name = "skinPanel24";
             this.skinPanel24.NormlBack = null;
@@ -1309,7 +1372,7 @@ namespace ADSB.MainUI
             this.skinLabel26.BorderColor = System.Drawing.Color.White;
             this.skinLabel26.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel26.Location = new System.Drawing.Point(15, 466);
+            this.skinLabel26.Location = new System.Drawing.Point(19, 458);
             this.skinLabel26.Name = "skinLabel26";
             this.skinLabel26.Size = new System.Drawing.Size(30, 16);
             this.skinLabel26.TabIndex = 24;
@@ -1323,7 +1386,7 @@ namespace ADSB.MainUI
             this.skinPanel18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel18.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel18.DownBack = null;
-            this.skinPanel18.Location = new System.Drawing.Point(19, 447);
+            this.skinPanel18.Location = new System.Drawing.Point(25, 439);
             this.skinPanel18.MouseBack = null;
             this.skinPanel18.Name = "skinPanel18";
             this.skinPanel18.NormlBack = null;
@@ -1393,7 +1456,7 @@ namespace ADSB.MainUI
             this.skinPanel14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel14.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel14.DownBack = null;
-            this.skinPanel14.Location = new System.Drawing.Point(213, 21);
+            this.skinPanel14.Location = new System.Drawing.Point(213, 24);
             this.skinPanel14.MouseBack = null;
             this.skinPanel14.Name = "skinPanel14";
             this.skinPanel14.NormlBack = null;
@@ -1461,7 +1524,7 @@ namespace ADSB.MainUI
             this.skinLabel19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel19.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel19.Location = new System.Drawing.Point(240, 24);
+            this.skinLabel19.Location = new System.Drawing.Point(240, 27);
             this.skinLabel19.Name = "skinLabel19";
             this.skinLabel19.Size = new System.Drawing.Size(32, 17);
             this.skinLabel19.TabIndex = 5;
@@ -1530,42 +1593,6 @@ namespace ADSB.MainUI
             this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
             this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
             // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column6,
-            this.Column7,
-            this.Column8});
-            this.dataGridView2.Location = new System.Drawing.Point(31, 72);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(251, 150);
-            this.dataGridView2.TabIndex = 29;
-            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellSel2);
-            // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "id";
-            this.Column6.HeaderText = "ID";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Visible = false;
-            // 
-            // Column7
-            // 
-            this.Column7.DataPropertyName = "name";
-            this.Column7.HeaderText = "名称";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            // 
-            // Column8
-            // 
-            this.Column8.DataPropertyName = "sModeAddress";
-            this.Column8.HeaderText = "S模式地址";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1597,7 +1624,6 @@ namespace ADSB.MainUI
             this.skinPanel15.PerformLayout();
             this.skinPanel3.ResumeLayout(false);
             this.skinPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1698,10 +1724,11 @@ namespace ADSB.MainUI
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
-        private DataGridView dataGridView2;
-        private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Column7;
-        private DataGridViewTextBoxColumn Column8;
+
+        private CCWin.SkinControl.SkinPanel spMin;
+        private CCWin.SkinControl.SkinPanel spClose;
+        private DataGridViewCheckBoxColumn cb_check;
     }
 }
+
 

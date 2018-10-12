@@ -40,6 +40,15 @@ namespace ADSB.MainUI.SubForm
         public delegate void changebox9(Boolean selected);
         public event changebox9 changebox9_event;
 
+        // 1-地面站距离环checkbox选择显示，2-新增、删除了关注
+        public delegate void changebox10(Boolean selected);
+        public event changebox10 changebox10_event;
+        
+        // 1-机场距离环checkbox选择显示，2-新增、删除了关注
+        public delegate void changebox11(Boolean selected);
+        public event changebox11 changebox11_event;
+
+
         public Form_mapTool()
         {
             InitializeComponent();
@@ -100,7 +109,7 @@ namespace ADSB.MainUI.SubForm
                 changebox4_event(false, 1);
             }
 
-            box9Set();
+            box10Set();
         }
 
         public void myCheckBox4_Selected()
@@ -136,6 +145,7 @@ namespace ADSB.MainUI.SubForm
                 changebox7_event(false, 1);
             }
             box9Set();
+            box10Set();
         }
 
         public void myCheckBox7_Selected()
@@ -155,7 +165,7 @@ namespace ADSB.MainUI.SubForm
             }
 
             box7Set();
-            box4Set();
+            // box4Set();
         }
 
         private void box4Set()
@@ -203,6 +213,21 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
+        private void box10Set()
+        {
+            if (myCheckBox10.CheckState == CheckState.Checked)
+            {
+                changebox10_event(true);
+            }
+            else
+            {
+                if (changebox10_event != null)
+                {
+                    changebox10_event(false);
+                }
+            }
+        }
+
         public void myCheckBox9_Selected()
         {
             myCheckBox9.Checked = true;
@@ -216,6 +241,47 @@ namespace ADSB.MainUI.SubForm
         private void myCheckBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        // 距离环
+        private void myCheckBox10_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox10.CheckState == CheckState.Checked)
+            {
+                changebox10_event(true);
+            }
+            else
+            {
+                if (changebox10_event != null)
+                {
+                    changebox10_event(false);
+                }
+            }
+        }
+
+        public void myCheckBox10_Selected()
+        {
+            myCheckBox10.Checked = true;
+        }
+
+        private void myCheckBox11_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox11.CheckState == CheckState.Checked)
+            {
+                changebox11_event(true);
+            }
+            else
+            {
+                if (changebox11_event != null)
+                {
+                    changebox11_event(false);
+                }
+            }
+        }
+
+        public void myCheckBox11_Selected()
+        {
+            myCheckBox11.Checked = true;
         }
     }
 }
