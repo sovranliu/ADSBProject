@@ -45,6 +45,14 @@
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BeginWayPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EndWayPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Show = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.skinLabel2 = new CCWin.SkinControl.SkinLabel();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.skinLabel4 = new CCWin.SkinControl.SkinLabel();
+            this.skinLabel5 = new CCWin.SkinControl.SkinLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +63,7 @@
             this.skinLabel1.BorderColor = System.Drawing.Color.White;
             this.skinLabel1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
-            this.skinLabel1.Location = new System.Drawing.Point(166, 9);
+            this.skinLabel1.Location = new System.Drawing.Point(95, 9);
             this.skinLabel1.Name = "skinLabel1";
             this.skinLabel1.Size = new System.Drawing.Size(96, 28);
             this.skinLabel1.TabIndex = 2;
@@ -68,7 +76,7 @@
             this.sPnl_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.sPnl_close.DownBack = null;
-            this.sPnl_close.Location = new System.Drawing.Point(809, 9);
+            this.sPnl_close.Location = new System.Drawing.Point(820, 0);
             this.sPnl_close.MouseBack = null;
             this.sPnl_close.Name = "sPnl_close";
             this.sPnl_close.NormlBack = null;
@@ -93,7 +101,7 @@
             this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton1.IsDrawBorder = false;
             this.skinButton1.IsDrawGlass = false;
-            this.skinButton1.Location = new System.Drawing.Point(90, 365);
+            this.skinButton1.Location = new System.Drawing.Point(26, 333);
             this.skinButton1.MouseBack = null;
             this.skinButton1.Name = "skinButton1";
             this.skinButton1.NormlBack = null;
@@ -115,7 +123,7 @@
             this.skinLabel8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel8.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel8.Location = new System.Drawing.Point(86, 90);
+            this.skinLabel8.Location = new System.Drawing.Point(31, 85);
             this.skinLabel8.Name = "skinLabel8";
             this.skinLabel8.Size = new System.Drawing.Size(48, 19);
             this.skinLabel8.TabIndex = 15;
@@ -131,7 +139,7 @@
             this.skinLabel9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel9.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel9.Location = new System.Drawing.Point(86, 178);
+            this.skinLabel9.Location = new System.Drawing.Point(31, 138);
             this.skinLabel9.Name = "skinLabel9";
             this.skinLabel9.Size = new System.Drawing.Size(48, 19);
             this.skinLabel9.TabIndex = 16;
@@ -147,7 +155,7 @@
             this.skinLabel3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel3.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel3.Location = new System.Drawing.Point(86, 273);
+            this.skinLabel3.Location = new System.Drawing.Point(31, 180);
             this.skinLabel3.Name = "skinLabel3";
             this.skinLabel3.Size = new System.Drawing.Size(48, 19);
             this.skinLabel3.TabIndex = 17;
@@ -164,19 +172,19 @@
             this.skinTextBox2.IsPasswordChat = '\0';
             this.skinTextBox2.IsSystemPasswordChar = false;
             this.skinTextBox2.Lines = new string[0];
-            this.skinTextBox2.Location = new System.Drawing.Point(171, 81);
+            this.skinTextBox2.Location = new System.Drawing.Point(89, 81);
             this.skinTextBox2.Margin = new System.Windows.Forms.Padding(0);
             this.skinTextBox2.MaxLength = 32767;
             this.skinTextBox2.MinimumSize = new System.Drawing.Size(28, 28);
             this.skinTextBox2.MouseBack = null;
             this.skinTextBox2.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox2.Multiline = true;
+            this.skinTextBox2.Multiline = false;
             this.skinTextBox2.Name = "skinTextBox2";
             this.skinTextBox2.NormlBack = null;
             this.skinTextBox2.Padding = new System.Windows.Forms.Padding(5);
             this.skinTextBox2.ReadOnly = false;
             this.skinTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox2.Size = new System.Drawing.Size(165, 40);
+            this.skinTextBox2.Size = new System.Drawing.Size(165, 28);
             // 
             // 
             // 
@@ -184,9 +192,8 @@
             this.skinTextBox2.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTextBox2.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinTextBox2.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox2.SkinTxt.Multiline = true;
             this.skinTextBox2.SkinTxt.Name = "BaseText";
-            this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(155, 30);
+            this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(155, 18);
             this.skinTextBox2.SkinTxt.TabIndex = 0;
             this.skinTextBox2.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.skinTextBox2.SkinTxt.WaterText = "";
@@ -204,7 +211,7 @@
             this.horizonLine1.LineDashLength = 5;
             this.horizonLine1.LineLength = 217;
             this.horizonLine1.LineWidth = 1;
-            this.horizonLine1.Location = new System.Drawing.Point(108, 62);
+            this.horizonLine1.Location = new System.Drawing.Point(35, 49);
             this.horizonLine1.Name = "horizonLine1";
             this.horizonLine1.Size = new System.Drawing.Size(219, 3);
             this.horizonLine1.TabIndex = 20;
@@ -226,7 +233,7 @@
             this.skinButton2.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton2.IsDrawBorder = false;
             this.skinButton2.IsDrawGlass = false;
-            this.skinButton2.Location = new System.Drawing.Point(219, 365);
+            this.skinButton2.Location = new System.Drawing.Point(156, 333);
             this.skinButton2.MouseBack = null;
             this.skinButton2.Name = "skinButton2";
             this.skinButton2.NormlBack = null;
@@ -242,7 +249,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(171, 177);
+            this.comboBox1.Location = new System.Drawing.Point(89, 137);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(165, 20);
             this.comboBox1.TabIndex = 23;
@@ -250,7 +257,7 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(171, 275);
+            this.comboBox2.Location = new System.Drawing.Point(89, 182);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(165, 20);
             this.comboBox2.TabIndex = 24;
@@ -263,13 +270,17 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
             this.BeginWayPoint,
-            this.EndWayPoint});
-            this.dataGridView1.Location = new System.Drawing.Point(411, 62);
+            this.EndWayPoint,
+            this.Type,
+            this.Show,
+            this.ID});
+            this.dataGridView1.Location = new System.Drawing.Point(309, 31);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(351, 346);
+            this.dataGridView1.Size = new System.Drawing.Size(505, 346);
             this.dataGridView1.TabIndex = 25;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // name
             // 
@@ -289,12 +300,101 @@
             this.EndWayPoint.HeaderText = "终点";
             this.EndWayPoint.Name = "EndWayPoint";
             // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "type";
+            this.Type.HeaderText = "类型";
+            this.Type.Name = "Type";
+            // 
+            // Show
+            // 
+            this.Show.DataPropertyName = "show";
+            this.Show.HeaderText = "展示";
+            this.Show.Name = "Show";
+            // 
+            // ID
+            // 
+            this.ID.DataPropertyName = "id";
+            this.ID.HeaderText = "Column1";
+            this.ID.Name = "ID";
+            this.ID.Visible = false;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(89, 228);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(165, 20);
+            this.comboBox3.TabIndex = 27;
+            // 
+            // skinLabel2
+            // 
+            this.skinLabel2.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel2.AutoSize = true;
+            this.skinLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel2.BorderColor = System.Drawing.Color.White;
+            this.skinLabel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel2.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel2.Location = new System.Drawing.Point(31, 226);
+            this.skinLabel2.Name = "skinLabel2";
+            this.skinLabel2.Size = new System.Drawing.Size(48, 19);
+            this.skinLabel2.TabIndex = 26;
+            this.skinLabel2.Text = "类型：";
+            this.skinLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(90, 277);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(165, 20);
+            this.comboBox4.TabIndex = 29;
+            // 
+            // skinLabel4
+            // 
+            this.skinLabel4.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel4.AutoSize = true;
+            this.skinLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel4.BorderColor = System.Drawing.Color.White;
+            this.skinLabel4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel4.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel4.Location = new System.Drawing.Point(32, 275);
+            this.skinLabel4.Name = "skinLabel4";
+            this.skinLabel4.Size = new System.Drawing.Size(48, 19);
+            this.skinLabel4.TabIndex = 28;
+            this.skinLabel4.Text = "显示：";
+            this.skinLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // skinLabel5
+            // 
+            this.skinLabel5.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel5.AutoSize = true;
+            this.skinLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel5.BorderColor = System.Drawing.Color.White;
+            this.skinLabel5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel5.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.skinLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.skinLabel5.Location = new System.Drawing.Point(260, 33);
+            this.skinLabel5.Name = "skinLabel5";
+            this.skinLabel5.Size = new System.Drawing.Size(23, 19);
+            this.skinLabel5.TabIndex = 30;
+            this.skinLabel5.Text = "ID";
+            this.skinLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.skinLabel5.Visible = false;
+            // 
             // Form_airSegment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(832, 450);
+            this.ClientSize = new System.Drawing.Size(842, 402);
+            this.Controls.Add(this.skinLabel5);
+            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.skinLabel4);
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.skinLabel2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
@@ -330,8 +430,16 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private CCWin.SkinControl.SkinLabel skinLabel2;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private CCWin.SkinControl.SkinLabel skinLabel4;
+        private CCWin.SkinControl.SkinLabel skinLabel5;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn BeginWayPoint;
         private System.Windows.Forms.DataGridViewTextBoxColumn EndWayPoint;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Show;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
     }
 }

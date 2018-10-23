@@ -52,6 +52,14 @@ namespace ADSB.MainUI.SubForm
         public Form_mapTool()
         {
             InitializeComponent();
+
+            // 初始化下拉框的值
+            String comboBox = ConfigHelper.Instance.GetConfig("show_num");
+            if (!string.IsNullOrEmpty(comboBox))
+            {
+                int sel = skinComboBox2.Items.IndexOf(comboBox);
+                skinComboBox2.SelectedIndex = sel;
+            }
         }
 
         private void sPnl_close_Click(object sender, EventArgs e)
@@ -282,6 +290,15 @@ namespace ADSB.MainUI.SubForm
         public void myCheckBox11_Selected()
         {
             myCheckBox11.Checked = true;
+        }
+
+        // 展示多少个轨迹点
+        private void skinComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(skinComboBox2.Text))
+            {
+                ConfigHelper.Instance.SetConfig("show_num", skinComboBox2.Text);
+            }
         }
     }
 }

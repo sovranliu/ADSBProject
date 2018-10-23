@@ -33,25 +33,58 @@ namespace ADSB.MainUI.SubForm
         private void skinButton1_Click(object sender, EventArgs e)
         {
             String name = skinTextBox2.Text;
-            if (null == name || name.Length == 0)
+            if (string.IsNullOrEmpty(name))
             {
                 MessageBox.Show("请输入航段名称！");
                 return;
             }
-            if (null == comboBox1.Text || comboBox1.Text.Length == 0)
+            if (string.IsNullOrEmpty(comboBox1.Text))
             {
                 MessageBox.Show("请选择起点！");
                 return;
             }
-            if (null == comboBox2.Text || comboBox2.Text.Length == 0)
+            if (string.IsNullOrEmpty(comboBox2.Text))
             {
                 MessageBox.Show("请选择终点！");
                 return;
             }
 
-            Air_Segment airSegmente = new Air_Segment(name, comboBox1.Text, comboBox2.Text);
-            // 插入数据库
-            ProfileHelper.Instance.Update("INSERT INTO AirSegment (Name, BeginWayPoint, EndWayPoint) VALUES ('" + airSegmente.Name + "', '" + airSegmente.BeginWayPoint + "', '" + airSegmente.EndWayPoint + "')");
+            if (string.IsNullOrEmpty(comboBox3.Text))
+            {
+                MessageBox.Show("请选择类型！");
+                return;
+            }
+
+            Air_Segment airSegmente = new Air_Segment(0, name, comboBox1.Text, comboBox2.Text, comboBox3.Text, comboBox4.Text);
+            if (skinLabel5.Text.Equals("ID"))
+            {
+                // 插入数据库
+                ProfileHelper.Instance.Update("INSERT INTO AirSegment (Id, Name, BeginWayPoint, EndWayPoint, Type, Show) VALUES ( NULL, '" +
+                    airSegmente.Name + "', '" + airSegmente.BeginWayPoint + "', '" + airSegmente.EndWayPoint + "', '" +
+                    airSegmente.Type + "', '" + airSegmente.Show + "')");
+            }
+            else if (!string.IsNullOrWhiteSpace(skinLabel5.Text))
+            {
+                // 更新数据库
+                ProfileHelper.Instance.Update(
+                   "UPDATE AirSegment set " +
+                        " Name = '" + airSegmente.Name + "', " +
+                        " BeginWayPoint = '" + airSegmente.BeginWayPoint + "', " +
+                        " EndWayPoint = '" + airSegmente.EndWayPoint + "', " +
+                        " Type = '" + airSegmente.Type + "', " +
+                        " Show = '" + airSegmente.Show + "'" + 
+                        " where ID = " + skinLabel5.Text);
+
+                // 更新后初始化组件
+                skinTextBox2.Text = "";
+                comboBox1.Text = "";
+                comboBox2.Text = "";
+                comboBox3.Text = "";
+                comboBox4.Text = "";
+
+                skinButton1.Text = "新增";
+            }
+
             showAllAirSegment();
             airSegment_event(true, 2);
         }
@@ -66,6 +99,10 @@ namespace ADSB.MainUI.SubForm
                 comboBox1.Items.Add(name);
                 comboBox2.Items.Add(name);
             }
+            comboBox3.Items.Add("民航航班");
+            comboBox3.Items.Add("自定航班");
+            comboBox4.Items.Add("是");
+            comboBox4.Items.Add("否");
 
             showAllAirSegment();
             // TODO 获取地面目标信息，并初始化tableLayoutPanel1
@@ -89,10 +126,13 @@ namespace ADSB.MainUI.SubForm
             airSegmentList.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
+                int id = Convert.ToInt32(dictionary["ID"]);
                 String name = Convert.ToString(dictionary["Name"]);
                 String beginWayPoint = Convert.ToString(dictionary["BeginWayPoint"]);
                 String endWayPoint = Convert.ToString(dictionary["EndWayPoint"]);
-                Air_Segment air_Segment = new Air_Segment(name, beginWayPoint, endWayPoint);
+                String type = Convert.ToString(dictionary["Type"]);
+                String show = Convert.ToString(dictionary["Show"]);
+                Air_Segment air_Segment = new Air_Segment(id, name, beginWayPoint, endWayPoint, type, show);
                 airSegmentList.Add(air_Segment);
             }
 
@@ -101,13 +141,44 @@ namespace ADSB.MainUI.SubForm
             {
                 this.dataGridView1.DataSource = this.airSegmentList;
             }
-
         }
 
+        // 更新
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            String beginWayPoint = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+            String endWayPoint = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+            String type = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+            String show = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
+
+            skinButton1.Text = "更新";
+            showAllAirSegment();
+            showLable(id, name, beginWayPoint, endWayPoint, type, show);
+        }
+
+        private void showLable(int id, String name, String beginWayPoint, String endWayPoint, String type, String show)
+        {
+            skinTextBox2.Text = name;
+            comboBox1.Text = beginWayPoint;
+            comboBox2.Text = endWayPoint;
+            comboBox3.Text = type;
+            comboBox4.Text = show;
+
+            skinLabel5.Text = id.ToString();
+        }
     }
 }
 public class Air_Segment
 {
+    private int id;
+    public int ID
+    {
+        get { return id; }
+        set { id = value; }
+    }
     private String name;
     public String Name
     {
@@ -129,10 +200,26 @@ public class Air_Segment
         set { endWayPoint = value; }
     }
 
-    public Air_Segment(String name, String beginWayPoint, String endWayPoint)
+    private String type;
+    public String Type
     {
+        get { return type; }
+        set { type = value; }
+    }
+
+    private String show;
+    public String Show
+    {
+        get { return show; }
+        set { show = value; }
+    }
+    public Air_Segment(int id, String name, String beginWayPoint, String endWayPoint, String type, String show)
+    {
+        this.id = id;
         this.name = name;
         this.BeginWayPoint = beginWayPoint;
         this.EndWayPoint = endWayPoint;
+        this.Type = type;
+        this.Show = show;
     }
 }

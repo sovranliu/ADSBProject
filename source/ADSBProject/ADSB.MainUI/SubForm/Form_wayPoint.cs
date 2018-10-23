@@ -143,8 +143,6 @@ namespace ADSB.MainUI.SubForm
         }
     }
 
-
-
     public class Way_Point
     {
         private String name;

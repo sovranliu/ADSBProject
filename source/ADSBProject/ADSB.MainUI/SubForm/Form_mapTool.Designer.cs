@@ -118,12 +118,43 @@
             this.skinComboBox2.FormattingEnabled = true;
             this.skinComboBox2.ItemBorderColor = System.Drawing.Color.White;
             this.skinComboBox2.Items.AddRange(new object[] {
-            "3"});
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30"});
             this.skinComboBox2.Location = new System.Drawing.Point(250, 293);
             this.skinComboBox2.Name = "skinComboBox2";
-            this.skinComboBox2.Size = new System.Drawing.Size(51, 40);
+            this.skinComboBox2.Size = new System.Drawing.Size(73, 40);
             this.skinComboBox2.TabIndex = 23;
             this.skinComboBox2.WaterText = "";
+            this.skinComboBox2.SelectedIndexChanged += new System.EventHandler(this.skinComboBox2_SelectedIndexChanged);
             // 
             // skinLabel6
             // 

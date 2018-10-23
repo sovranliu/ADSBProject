@@ -100,6 +100,9 @@
     <Reference Include="CSkin">
       <HintPath>CSkin 4.0\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="IrisSkin4">
+      <HintPath>..\..\..\..\..\..\..\Downloads\irisskin4.dll\IrisSkin4.dll\IrisSkin4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -170,6 +173,7 @@
     </Compile>
     <Compile Include="GMapMarkerEx.cs" />
     <Compile Include="Logic\AirplaneManager.cs" />
+    <Compile Include="Logic\AMapProvider.cs" />
     <Compile Include="Logic\DataHelper.cs" />
     <Compile Include="Logic\ConfigHelper.cs" />
     <Compile Include="Logic\ProfileHelper.cs" />

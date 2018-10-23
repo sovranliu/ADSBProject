@@ -58,9 +58,9 @@
             this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
             this.skinLabel1.Location = new System.Drawing.Point(175, 22);
             this.skinLabel1.Name = "skinLabel1";
-            this.skinLabel1.Size = new System.Drawing.Size(96, 28);
+            this.skinLabel1.Size = new System.Drawing.Size(117, 28);
             this.skinLabel1.TabIndex = 2;
-            this.skinLabel1.Text = "机场管理";
+            this.skinLabel1.Text = "航路点管理";
             // 
             // sPnl_close
             // 

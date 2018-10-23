@@ -33,64 +33,60 @@ namespace ADSB.MainUI.SubForm
         private void skinButton1_Click(object sender, EventArgs e)
         {
             String name = skinTextBox2.Text;
-            if (null == name || name.Length == 0)
+            if (string.IsNullOrEmpty(name))
             {
                 MessageBox.Show("请输入航线名称！");
                 return;
             }
-            if (null == comboBox1.Text || comboBox1.Text.Length == 0)
+            if (string.IsNullOrEmpty(skinTextBox1.Text))
             {
                 MessageBox.Show("请至少选择一个航段！");
                 return;
             }
-            Air_Route air_Route = new Air_Route(1, name, comboBox1.Text);
-            ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
-
-            if (null != comboBox2.Text && comboBox2.Text.Length > 0)
+            if (string.IsNullOrEmpty(comboBox2.Text))
             {
-                air_Route = new Air_Route(2, name, comboBox2.Text);
-                ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
-
-                if (null != comboBox3.Text && comboBox3.Text.Length > 0)
-                {
-                    air_Route = new Air_Route(3, name, comboBox3.Text);
-                    ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
-
-                    if (null != comboBox4.Text && comboBox4.Text.Length > 0)
-                    {
-                        air_Route = new Air_Route(4, name, comboBox4.Text);
-                        ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
-
-                        if (null != comboBox5.Text && comboBox5.Text.Length > 0)
-                        {
-                            air_Route = new Air_Route(5, name, comboBox5.Text);
-                            ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, AirSegmentName) VALUES (" + air_Route.Id + ", '" + air_Route.Name + "', '" + air_Route.AirSegmentName + "')");
-                        }
-                    }
-                }
+                MessageBox.Show("请至少选择一个航段！");
+                return;
             }
+            if (string.IsNullOrEmpty(comboBox3.Text))
+            {
+                MessageBox.Show("请至少选择一个航段！");
+                return;
+            }
+            if (string.IsNullOrEmpty(comboBox4.Text))
+            {
+                MessageBox.Show("请至少选择一个航段！");
+                return;
+            }
+            Air_Route air_Route = new Air_Route(1, name, skinTextBox1.Text, comboBox2.Text, comboBox3.Text, comboBox4.Text);
+            ProfileHelper.Instance.Update("INSERT INTO AirRoute (Id, Name, PointType, PointName, Type, Show) VALUES ( NULL, '" + 
+                air_Route.Name + "', '" + air_Route.PointType + "', '" + air_Route.PointName + "', '" + 
+                air_Route.Type + "', '" + air_Route.Show + "')");
 
-            // todo 保存到数据库
+            skinButton3.Visible = true;
+            skinButton1.Text = "继续";
+            int num = Convert.ToInt32(skinTextBox1.Text) + 1;
+            skinTextBox1.Text = num.ToString();
 
             showAllAirRoute();
             airRoute_event(true, 2);
-
-            // MessageBox.Show("新增成功！");
         }
 
         private void InitializeGMap()
         {
             // 下拉框初始化
-            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirSegment ");
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM WayPoint");
             foreach (Dictionary<string, object> dictionary in result)
             {
                 String name = Convert.ToString(dictionary["Name"]);
-                comboBox1.Items.Add(name);
                 comboBox2.Items.Add(name);
-                comboBox3.Items.Add(name);
-                comboBox4.Items.Add(name);
-                comboBox5.Items.Add(name);
             }
+
+            skinTextBox1.Text = "1";
+            comboBox3.Items.Add("民航航班");
+            comboBox3.Items.Add("自定航班");
+            comboBox4.Items.Add("是");
+            comboBox4.Items.Add("否");
 
             showAllAirRoute();
         }
@@ -112,10 +108,13 @@ namespace ADSB.MainUI.SubForm
             airRouteList.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
-                int id = Convert.ToInt16(dictionary["Id"]);
+                int id = Convert.ToInt16(dictionary["ID"]);
                 String name = Convert.ToString(dictionary["Name"]);
-                String airSegmentName = Convert.ToString(dictionary["AirSegmentName"]);
-                Air_Route air_Route = new Air_Route(id, name, airSegmentName);
+                String pointType = Convert.ToString(dictionary["PointType"]);
+                String pointName = Convert.ToString(dictionary["PointName"]);
+                String type = Convert.ToString(dictionary["Type"]);
+                String show = Convert.ToString(dictionary["Show"]);
+                Air_Route air_Route = new Air_Route(id, name, pointType, pointName, type, show);
                 airRouteList.Add(air_Route);
             }
 
@@ -127,12 +126,23 @@ namespace ADSB.MainUI.SubForm
             
         }
 
-
+        private void skinButton3_Click(object sender, EventArgs e)
+        {
+            skinButton3.Visible = false;
+            skinTextBox1.Text = "1";
+            skinButton1.Text = "新增";
+        }
     }
 }
 
 public class Air_Route
 {
+    private int id;
+    public int ID
+    {
+        get { return id; }
+        set { id = value; }
+    }
     private String name;
     public String Name
     {
@@ -140,24 +150,41 @@ public class Air_Route
         set { name = value; }
     }
 
-    private int id;
-    public int Id
+    private String pointType;
+    public String PointType
     {
-        get { return id; }
-        set { id = value; }
+        get { return pointType; }
+        set { pointType = value; }
     }
 
-    private String airSegmentName;
-    public String AirSegmentName
+    private String pointName;
+    public String PointName
     {
-        get { return airSegmentName; }
-        set { airSegmentName = value; }
+        get { return pointName; }
+        set { pointName = value; }
     }
 
-    public Air_Route(int id, String name, String airSegmentName)
+    private String type;
+    public String Type
+    {
+        get { return type; }
+        set { type = value; }
+    }
+
+    private String show;
+    public String Show
+    {
+        get { return show; }
+        set { show = value; }
+    }
+
+    public Air_Route(int id, String name, String pointType, String pointName, String type, String show)
     {
         this.id = id;
         this.name = name;
-        this.airSegmentName = airSegmentName;
+        this.pointType = pointType;
+        this.pointName = pointName;
+        this.type = type;
+        this.show = show;
     }
 }

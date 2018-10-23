@@ -46,6 +46,11 @@ namespace ADSB.MainUI
         private Dictionary<int, PointLatLng> pointPlaneLand = new Dictionary<int, PointLatLng>();
         // 画飞机轨迹
         private Dictionary<int, List<PointLatLng>> keyValuePairs = new Dictionary<int, List<PointLatLng>>();
+        private Dictionary<int, int> showValue = new Dictionary<int, int>();
+        // 展示几个轨迹
+        private int showPoint;
+        // 轨迹循环队列长度
+        private int showPointMax = 30;
 
         // 要展示的地面站
         private List<GMapLandStation> listLandStations;
@@ -116,7 +121,6 @@ namespace ADSB.MainUI
 
             InitializeUI();
             initListAirplaneCheck(true);
-            //showAllCommonPlane();
 
             flyTimer.Tick += new EventHandler(flyTimer_Tick);
             displayTimer.Tick += new EventHandler(displayTimer_Tick);
@@ -125,6 +129,7 @@ namespace ADSB.MainUI
             log = new LogRecord();
         }
 
+        // 展示凸显飞行器、地面站
         private void initListAirplaneCheck(bool first)
         {
             if (!first)
@@ -186,17 +191,17 @@ namespace ADSB.MainUI
                     this.dataGridView1.Rows[index].Cells[3].Value = length;
                     this.dataGridView1.Rows[index].Cells[5].Value = id.ToString();
                 }
-                
             }
 
         }
 
+        // 区别飞行器是正常机、凸显机还是中心机；记录轨迹点
         private void flyTimer_Tick(object sender, EventArgs e)
         {
             if (dataSource.Count == 0)
                 return;
             Cat021Data tmpData = dataSource.GetData();
-            int isCheckedPlane = 0;
+            int isCheckedPlane = 0; // 0-普通飞行器，1-凸显飞行器，2-中心机
 
             // 获取中心机
             String my_sAddress = ConfigHelper.Instance.GetConfig("my_sAddress");
@@ -204,70 +209,79 @@ namespace ADSB.MainUI
             if (!string.IsNullOrWhiteSpace(my_sAddress) && tmpData.sModeAddress == iAddress)
             {
                 isCheckedPlane = 1;
-
-                ConfigHelper.Instance.SetConfig("my_flightNo", tmpData.flightNo.ToString().Trim());
-                ConfigHelper.Instance.SetConfig("my_latitude", tmpData.latitude.ToString());
-                ConfigHelper.Instance.SetConfig("my_longtitude", tmpData.longtitude.ToString());
-                ConfigHelper.Instance.SetConfig("my_elapsedTime", tmpData.elapsedTime.ToString());
-                ConfigHelper.Instance.SetConfig("my_geometricAltitude", tmpData.geometricAltitude.ToString());
-                ConfigHelper.Instance.SetConfig("my_barometricAltitude", tmpData.barometricAltitude.ToString());
-                ConfigHelper.Instance.SetConfig("my_airSpeed", tmpData.airSpeed.ToString());
-                ConfigHelper.Instance.SetConfig("my_airSpeedUnit", tmpData.airSpeedUnit.ToString());
-                ConfigHelper.Instance.SetConfig("my_aircraftAngle", tmpData.aircraftAngle.ToString());
-                ConfigHelper.Instance.SetConfig("my_groundSpeed", tmpData.groundSpeed.ToString());
-                ConfigHelper.Instance.SetConfig("my_emitterCategory", tmpData.emitterCategory.ToString());
+                initCenterPlane(tmpData);
             }
 
-            // 看飞机是否在选中列表中
-            if (listAirplaneCheck.ContainsKey(tmpData.sModeAddress))
+            PointLatLng pointLatLng = new PointLatLng(tmpData.latitude, tmpData.longtitude);
+            // 看飞机是否在凸显列表中
+            if (1 != isCheckedPlane)
             {
-                isCheckedPlane = 2;
-                PointLatLng pointLatLng = new PointLatLng(tmpData.latitude, tmpData.longtitude);
-                if (pointPlaneLand.ContainsKey(tmpData.sModeAddress))
+                if (listAirplaneCheck.ContainsKey(tmpData.sModeAddress))
                 {
-                    pointPlaneLand.Remove(tmpData.sModeAddress);
+                    isCheckedPlane = 2;
+                    
+                    if (pointPlaneLand.ContainsKey(tmpData.sModeAddress))
+                    {
+                        pointPlaneLand.Remove(tmpData.sModeAddress);
+                    }
+                    pointPlaneLand.Add(tmpData.sModeAddress, pointLatLng);
                 }
-                pointPlaneLand.Add(tmpData.sModeAddress, pointLatLng);
             }
 
             GMapAirPlane tmpAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, isCheckedPlane);
-            GMapAirPlane removeAirplane = new GMapAirPlane(new PointLatLng(tmpData.latitude, tmpData.longtitude), tmpData, 0);
-            bool remove = false;
-            // 同一家飞机来了新的先从list里面移除掉
-            foreach (GMapAirPlane eachlistAirplane in listAirplane.Values)
+            int sModeAddress = tmpData.sModeAddress;
+
+            // 轨迹点处理
+            List<PointLatLng> points;
+            if (keyValuePairs.ContainsKey(sModeAddress))
             {
-                if (eachlistAirplane.AirPlaneMarkerInfo.sModeAddress == tmpData.sModeAddress)
+                points = keyValuePairs[sModeAddress];
+                showValue[sModeAddress] = showValue[sModeAddress] + 1;
+                if (29 == showValue[sModeAddress])
                 {
-                    remove = true;
-                    removeAirplane = eachlistAirplane;
-                    // ProfileHelper.Instance.Update("Delete FROM Plane WHERE SModeAddress = \"" + tmpData.sModeAddress + "\"");
+                    pointMax(points);
                 }
+                points.Add(pointLatLng);
+            }
+            else
+            {
+                points = new List<PointLatLng>(showPointMax);
+                points.Add(pointLatLng);
+                keyValuePairs.Add(sModeAddress, points);
+                showValue[sModeAddress] = 0;
             }
 
-            if (remove)
-            {
-                PointLatLng pointLatLng = new PointLatLng(tmpData.latitude, tmpData.longtitude);
-
-                List<PointLatLng> points;
-                if (keyValuePairs.ContainsKey(tmpData.sModeAddress))
-                {
-                    points = keyValuePairs[tmpData.sModeAddress];
-                    points.Add(pointLatLng);
-                }
-                else
-                {
-                    points = new List<PointLatLng>();
-                    points.Add(pointLatLng);
-                    keyValuePairs.Add(tmpData.sModeAddress, points);
-                }
-            }
-            if (listAirplane.ContainsKey(tmpData.sModeAddress))
+            // 同一架飞机来了新的先从list里面移除掉
+            if (listAirplane.ContainsKey(sModeAddress))
             { 
-                listAirplane.Remove(tmpData.sModeAddress);
+                listAirplane.Remove(sModeAddress);
             }
-            listAirplane.Add(tmpData.sModeAddress, tmpAirplane);
+            listAirplane.Add(sModeAddress, tmpAirplane);
             
             AirplaneManager.Instance.Add(tmpData);
+        }
+
+        private void pointMax(List<PointLatLng> points)
+        {
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                points[i] = points[i + 1];
+            }
+        }
+
+        private void initCenterPlane(Cat021Data tmpData)
+        {
+            ConfigHelper.Instance.SetConfig("my_flightNo", tmpData.flightNo.ToString().Trim());
+            ConfigHelper.Instance.SetConfig("my_latitude", tmpData.latitude.ToString());
+            ConfigHelper.Instance.SetConfig("my_longtitude", tmpData.longtitude.ToString());
+            ConfigHelper.Instance.SetConfig("my_elapsedTime", tmpData.elapsedTime.ToString());
+            ConfigHelper.Instance.SetConfig("my_geometricAltitude", tmpData.geometricAltitude.ToString());
+            ConfigHelper.Instance.SetConfig("my_barometricAltitude", tmpData.barometricAltitude.ToString());
+            ConfigHelper.Instance.SetConfig("my_airSpeed", tmpData.airSpeed.ToString());
+            ConfigHelper.Instance.SetConfig("my_airSpeedUnit", tmpData.airSpeedUnit.ToString());
+            ConfigHelper.Instance.SetConfig("my_aircraftAngle", tmpData.aircraftAngle.ToString());
+            ConfigHelper.Instance.SetConfig("my_groundSpeed", tmpData.groundSpeed.ToString());
+            ConfigHelper.Instance.SetConfig("my_emitterCategory", tmpData.emitterCategory.ToString());
         }
 
         private void sMonitorDis_MouseDown(object sender, MouseEventArgs e)
@@ -347,7 +361,6 @@ namespace ADSB.MainUI
                         ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
                     }
                 }
-                initListAirplaneCheck(false);
             }
             else if (item is GMapLandStation)
             {
@@ -368,9 +381,9 @@ namespace ADSB.MainUI
                     {
                         ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
                     }
-                    initListAirplaneCheck(false);
                 }
             }
+            initListAirplaneCheck(false);
         }
 
         private void displayTimer_Tick(object sender, EventArgs e)
@@ -452,17 +465,35 @@ namespace ADSB.MainUI
                 {
                     planeOverlay.Markers.Add(eachlistAirplane);
 
-                    // 判断是否要告警
-                    alarm(eachlistAirplane);
+                    // TODO 判断是否要告警
+                    // alarm(eachlistAirplane);
 
                     // 显示轨迹
                     int sModeAddress = eachlistAirplane.AirPlaneMarkerInfo.sModeAddress;
                     if (keyValuePairs.ContainsKey(sModeAddress) && !pointPlaneLand.ContainsKey(sModeAddress))
                     {
-                        List<PointLatLng> points = keyValuePairs[sModeAddress];
-                        GMapRoute r = new GMapRoute(points, "");
-                        r.Stroke = new Pen(Color.Green, 1);
-                        planeOverlay.Routes.Add(r);
+                        String comboBox = ConfigHelper.Instance.GetConfig("show_num");
+                        if (!string.IsNullOrEmpty(comboBox))
+                        {
+                            int showNum = Convert.ToInt32(comboBox);
+                            if (showNum >= 0)
+                            {
+                                List<PointLatLng> points = keyValuePairs[sModeAddress];
+                                List<PointLatLng> pointsShow = new List<PointLatLng>();
+                                int begin = points.Count() - showNum - 1;
+                                if (begin < 0)
+                                {
+                                    begin = 0;
+                                }
+                                for (int i = begin; i < points.Count(); i++)
+                                {
+                                    pointsShow.Add(points[i]);
+                                }
+                                GMapRoute r = new GMapRoute(pointsShow, "");
+                                r.Stroke = new Pen(Color.Green, 1);
+                                planeOverlay.Routes.Add(r);
+                            }
+                        }
                     }
                 }
             }
@@ -619,7 +650,8 @@ namespace ADSB.MainUI
         private void InitializeGMap()
         {
             this.gMapControl1.CacheLocation = System.Windows.Forms.Application.StartupPath;    //缓冲区路径
-            this.gMapControl1.MapProvider = GMapProviders.GoogleChinaMap;                      //谷歌中国区地图加载
+            // this.gMapControl1.MapProvider = GMapProviders.GoogleChinaMap;                      //谷歌中国区地图加载
+            this.gMapControl1.MapProvider = AMapProvider.Instance;                      //高德地图加载
             this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //地图模式
             this.gMapControl1.MinZoom = 1;                                                     //最小比例
             this.gMapControl1.MaxZoom = 23;                                                    //最大比例
@@ -627,6 +659,7 @@ namespace ADSB.MainUI
             this.gMapControl1.ShowCenter = false;                                              //不显示中心十字点
             this.gMapControl1.DragButton = System.Windows.Forms.MouseButtons.Left;             //左键拖拽地图
             this.gMapControl1.Position = new PointLatLng(23.16, 113.27);                     //初始化地址 广州(23.16, 113.27) 北京(39.3, 116.5)
+            
             //添加到图层
             this.gMapControl1.Overlays.Add(planeOverlay);
 
@@ -954,7 +987,7 @@ namespace ADSB.MainUI
         }
 
         // 关注的目标单元格点击事件
-        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
             {
@@ -965,28 +998,26 @@ namespace ADSB.MainUI
                     ProfileHelper.Instance.Update("UPDATE PlaneFollow SET Length = " + cell + " WHERE ID = " + id);
                 }
             }
-
         }
 
         // 关注的目标单元格点击事件
         private void dgv_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0)
+            if (e.RowIndex < 0 || e.ColumnIndex != 0)
             {
                 return;
             }
             int index = dataGridView1.CurrentRow.Index;
             this.dataGridView1.Rows[e.RowIndex].Selected = true;
-           
+
             if (Convert.ToBoolean(dataGridView1.Rows[index].Cells[0].Value))
             {
                 dataGridView1.Rows[index].Cells[0].Value = false;
-                currentFellowId = 0;
+                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
             }
             else
             {
                 dataGridView1.Rows[index].Cells[0].Value = true;
-                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
                 //其他的都是false
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
@@ -996,78 +1027,7 @@ namespace ADSB.MainUI
                     }
                 }
             }
-
         }
-
-        // 选中一行的事件
-        //private void dgv_CellSel(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex > 0)
-        //    {
-        //        if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
-        //        {
-        //            if (null != dataGridView1.Rows[e.RowIndex])
-        //            {
-        //                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //// 选中的加入到关注飞行器里面 -- 作废
-        //private void dgv_CellSel2(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex > 0)
-        //    {
-        //        if (dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected)
-        //        {
-        //            if (null != dataGridView2.Rows[e.RowIndex])
-        //            {
-        //                int sModeAddress = Convert.ToInt32(this.dataGridView2.Rows[e.RowIndex].Cells[2].Value);
-
-        //                if (sModeAddress > 0)
-        //                {
-        //                    List<Dictionary<string, object>> result =
-        //                    ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow WHERE Type = 1 AND IDNum = " + sModeAddress);
-        //                    if (result.Count() == 0)
-        //                    {
-        //                        ProfileHelper.Instance.Update("INSERT INTO PlaneFollow (ID, Type, IDNum, Length) VALUES (NULL, 1, '" + sModeAddress + "', 0)");
-        //                    }
-        //                    else
-        //                    {
-        //                        ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 1 AND IDNum = \"" + sModeAddress + "\"");
-        //                    }
-
-        //                    initListAirplaneCheck(false);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private List<Common_Plane> commonPlaneList = new List<Common_Plane>();
-        //private void showAllCommonPlane()
-        //{
-        //    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM CommonPlane");
-        //    commonPlaneList.Clear();
-        //    foreach (Dictionary<string, object> dictionary in result)
-        //    {
-        //        int id = Convert.ToInt32(dictionary["ID"]);
-        //        String name = Convert.ToString(dictionary["Name"]);
-        //        String sModeAddress = Convert.ToString(dictionary["SModeAddress"]);
-
-        //        Common_Plane air_Port = new Common_Plane(id, name, sModeAddress);
-        //        commonPlaneList.Add(air_Port);
-        //    }
-
-        //    this.dataGridView2.DataSource = null;
-        //    if (null != commonPlaneList && commonPlaneList.Count() > 0)
-        //    {
-        //        this.dataGridView2.DataSource = this.commonPlaneList;
-        //    }
-
-        //}
-
 
 
         private void spMin_Click(object sender, EventArgs e)
@@ -1079,6 +1039,11 @@ namespace ADSB.MainUI
         {
             this.Close();
             System.Environment.Exit(0);
+        }
+
+        private void gMapControl1_Load(object sender, EventArgs e)
+        {
+            //skinEngine1.SkinFile = Application.StartupPath + @"\DeepCyan.ssk";
         }
     }
 }

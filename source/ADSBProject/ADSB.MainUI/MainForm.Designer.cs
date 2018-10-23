@@ -33,8 +33,6 @@ namespace ADSB.MainUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.sTabControl = new CCWin.SkinControl.SkinTabControl();
             this.sTpFly = new CCWin.SkinControl.SkinTabPage();
             this.sPnl_Func = new CCWin.SkinControl.SkinPanel();
@@ -89,8 +87,10 @@ namespace ADSB.MainUI
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.skinProgressBar1 = new CCWin.SkinControl.SkinProgressBar();
             this.maskPlaybackRun = new ADSB.MainUI.Controls.MaskCircleLayer();
+            this.button2 = new System.Windows.Forms.Button();
             this.maskPlaybackSetup = new ADSB.MainUI.Controls.MaskLayer();
             this.panelEx1 = new ADSB.MainUI.Controls.PanelEx(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.mapmask = new ADSB.MainUI.Controls.MaskLayer();
             this.skinPanel15 = new CCWin.SkinControl.SkinPanel();
             this.skinLabel34 = new CCWin.SkinControl.SkinLabel();
@@ -98,9 +98,7 @@ namespace ADSB.MainUI
             this.skinPanel24 = new CCWin.SkinControl.SkinPanel();
             this.skinLine19 = new CCWin.SkinControl.SkinLine();
             this.skinPanel11 = new CCWin.SkinControl.SkinPanel();
-            this.button2 = new System.Windows.Forms.Button();
             this.skinLabel32 = new CCWin.SkinControl.SkinLabel();
-            this.button1 = new System.Windows.Forms.Button();
             this.skinLabel31 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel23 = new CCWin.SkinControl.SkinPanel();
             this.skinLabel30 = new CCWin.SkinControl.SkinLabel();
@@ -834,8 +832,10 @@ namespace ADSB.MainUI
             this.sTpMonitor.Controls.Add(this.dataGridView1);
             this.sTpMonitor.Controls.Add(this.skinProgressBar1);
             this.sTpMonitor.Controls.Add(this.maskPlaybackRun);
+            this.sTpMonitor.Controls.Add(this.button2);
             this.sTpMonitor.Controls.Add(this.maskPlaybackSetup);
             this.sTpMonitor.Controls.Add(this.panelEx1);
+            this.sTpMonitor.Controls.Add(this.button1);
             this.sTpMonitor.Controls.Add(this.mapmask);
             this.sTpMonitor.Controls.Add(this.skinPanel15);
             this.sTpMonitor.Controls.Add(this.skinPanel3);
@@ -884,18 +884,6 @@ namespace ADSB.MainUI
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightCyan;
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(223)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cb_check,
@@ -906,14 +894,14 @@ namespace ADSB.MainUI
             this.Column5});
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 29);
+            this.dataGridView1.Location = new System.Drawing.Point(35, 336);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(344, 219);
             this.dataGridView1.TabIndex = 28;
-            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseClick);
             // 
             // cb_check
@@ -985,6 +973,17 @@ namespace ADSB.MainUI
             this.maskPlaybackRun.Visible = false;
             this.maskPlaybackRun.Click += new System.EventHandler(this.maskPlaybackRun_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1183, 556);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(67, 26);
+            this.button2.TabIndex = 29;
+            this.button2.Text = "取消测距";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // maskPlaybackSetup
             // 
             this.maskPlaybackSetup.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -1004,6 +1003,17 @@ namespace ADSB.MainUI
             this.panelEx1.Size = new System.Drawing.Size(1280, 110);
             this.panelEx1.TabIndex = 21;
             this.panelEx1.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEx1_Paint);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1183, 508);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(67, 27);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "测距";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // mapmask
             // 
@@ -1026,9 +1036,7 @@ namespace ADSB.MainUI
             this.skinPanel15.Controls.Add(this.skinPanel24);
             this.skinPanel15.Controls.Add(this.skinLine19);
             this.skinPanel15.Controls.Add(this.skinPanel11);
-            this.skinPanel15.Controls.Add(this.button2);
             this.skinPanel15.Controls.Add(this.skinLabel32);
-            this.skinPanel15.Controls.Add(this.button1);
             this.skinPanel15.Controls.Add(this.skinLabel31);
             this.skinPanel15.Controls.Add(this.skinPanel23);
             this.skinPanel15.Controls.Add(this.skinLabel30);
@@ -1059,7 +1067,7 @@ namespace ADSB.MainUI
             this.skinPanel15.Palace = true;
             this.skinPanel15.Radius = 48;
             this.skinPanel15.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinPanel15.Size = new System.Drawing.Size(59, 541);
+            this.skinPanel15.Size = new System.Drawing.Size(59, 477);
             this.skinPanel15.TabIndex = 19;
             // 
             // skinLabel34
@@ -1069,7 +1077,7 @@ namespace ADSB.MainUI
             this.skinLabel34.BorderColor = System.Drawing.Color.White;
             this.skinLabel34.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel34.Location = new System.Drawing.Point(0, 510);
+            this.skinLabel34.Location = new System.Drawing.Point(0, 387);
             this.skinLabel34.Name = "skinLabel34";
             this.skinLabel34.Size = new System.Drawing.Size(63, 16);
             this.skinLabel34.TabIndex = 38;
@@ -1097,7 +1105,7 @@ namespace ADSB.MainUI
             this.skinPanel24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel24.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel24.DownBack = null;
-            this.skinPanel24.Location = new System.Drawing.Point(19, 487);
+            this.skinPanel24.Location = new System.Drawing.Point(19, 364);
             this.skinPanel24.MouseBack = null;
             this.skinPanel24.Name = "skinPanel24";
             this.skinPanel24.NormlBack = null;
@@ -1129,17 +1137,6 @@ namespace ADSB.MainUI
             this.skinPanel11.Size = new System.Drawing.Size(20, 20);
             this.skinPanel11.TabIndex = 35;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(-1, 406);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(59, 27);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "取消测距";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // skinLabel32
             // 
             this.skinLabel32.AutoSize = true;
@@ -1153,17 +1150,6 @@ namespace ADSB.MainUI
             this.skinLabel32.TabIndex = 33;
             this.skinLabel32.Text = "航段";
             this.skinLabel32.Click += new System.EventHandler(this.skinLabel32_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(-1, 367);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 27);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "测距";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // skinLabel31
             // 
@@ -1329,7 +1315,7 @@ namespace ADSB.MainUI
             this.skinLine15.BackColor = System.Drawing.Color.Transparent;
             this.skinLine15.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine15.LineHeight = 1;
-            this.skinLine15.Location = new System.Drawing.Point(7, 431);
+            this.skinLine15.Location = new System.Drawing.Point(7, 410);
             this.skinLine15.Name = "skinLine15";
             this.skinLine15.Size = new System.Drawing.Size(46, 2);
             this.skinLine15.TabIndex = 27;
@@ -1372,7 +1358,7 @@ namespace ADSB.MainUI
             this.skinLabel26.BorderColor = System.Drawing.Color.White;
             this.skinLabel26.Font = new System.Drawing.Font("微软雅黑", 8F);
             this.skinLabel26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.skinLabel26.Location = new System.Drawing.Point(19, 458);
+            this.skinLabel26.Location = new System.Drawing.Point(19, 437);
             this.skinLabel26.Name = "skinLabel26";
             this.skinLabel26.Size = new System.Drawing.Size(30, 16);
             this.skinLabel26.TabIndex = 24;
@@ -1386,7 +1372,7 @@ namespace ADSB.MainUI
             this.skinPanel18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.skinPanel18.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel18.DownBack = null;
-            this.skinPanel18.Location = new System.Drawing.Point(25, 439);
+            this.skinPanel18.Location = new System.Drawing.Point(25, 418);
             this.skinPanel18.MouseBack = null;
             this.skinPanel18.Name = "skinPanel18";
             this.skinPanel18.NormlBack = null;
@@ -1398,7 +1384,7 @@ namespace ADSB.MainUI
             this.skinLine14.BackColor = System.Drawing.Color.Transparent;
             this.skinLine14.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
             this.skinLine14.LineHeight = 1;
-            this.skinLine14.Location = new System.Drawing.Point(9, 367);
+            this.skinLine14.Location = new System.Drawing.Point(9, 356);
             this.skinLine14.Name = "skinLine14";
             this.skinLine14.Size = new System.Drawing.Size(46, 2);
             this.skinLine14.TabIndex = 18;
@@ -1591,6 +1577,7 @@ namespace ADSB.MainUI
             this.gMapControl1.TabIndex = 0;
             this.gMapControl1.Zoom = 0D;
             this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
+            this.gMapControl1.Load += new System.EventHandler(this.gMapControl1_Load);
             this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
             // 
             // MainForm
@@ -1728,6 +1715,7 @@ namespace ADSB.MainUI
         private CCWin.SkinControl.SkinPanel spMin;
         private CCWin.SkinControl.SkinPanel spClose;
         private DataGridViewCheckBoxColumn cb_check;
+        // private Sunisoft.IrisSkin.SkinEngine skinEngine1;
     }
 }
 

@@ -18,14 +18,6 @@ namespace ADSB.MainUI.SubForm
         public Form_setup()
         {
             InitializeComponent();
-
-            // 中心飞行器
-            String my_sAddress = ConfigHelper.Instance.GetConfig("my_sAddress");
-            if (!string.IsNullOrWhiteSpace(my_sAddress))
-            {
-                skinTextBox3.Text = my_sAddress;
-            }
-
             showAllCommonPlane();
         }
 
@@ -34,14 +26,6 @@ namespace ADSB.MainUI.SubForm
             this.Close();
         }
         
-
-        private void skinButton1_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(skinTextBox3.Text))
-            {
-                ConfigHelper.Instance.SetConfig("my_sAddress", skinTextBox3.Text);
-            }
-        }
 
         private void skinButton2_Click(object sender, EventArgs e)
         {
