@@ -377,7 +377,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(397, 292);
             this.dataGridView1.TabIndex = 23;
             this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
 
 
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();

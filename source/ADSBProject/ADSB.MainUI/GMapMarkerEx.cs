@@ -433,7 +433,7 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航线 由1个以上航段组成
+    /// 航线 由2个以上航站点组成
     /// </summary>
     public class GMapAirRoute
     {
@@ -442,16 +442,16 @@ namespace ADSB.MainUI
             get;
             set;
         }
-        public List<GMapAirSegment> airSegmentList
+        public List<GMapWayPoint> wayPointList
         {
             get;
             set;
         }
 
-        public GMapAirRoute(String name, List<GMapAirSegment> airSegmentList)
+        public GMapAirRoute(String name, List<GMapWayPoint> wayPointList)
         {
             this.name = name;
-            this.airSegmentList = airSegmentList;
+            this.wayPointList = wayPointList;
         }
     }
 

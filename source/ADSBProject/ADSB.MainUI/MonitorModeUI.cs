@@ -164,6 +164,13 @@ namespace ADSB.MainUI
                     test.myCheckBox11_Selected();
                 }
 
+                test.changebox12_event += new Form_mapTool.changebox12(frm_changebox12_event);
+                //初始化航迹圈checkbox
+                if (airRoute)
+                {
+                    test.myCheckBox12_Selected();
+                }
+
                 test.ShowDialog();
                 mapmask.Visible = false;
             }
@@ -242,7 +249,7 @@ namespace ADSB.MainUI
          * */
         void frm_changebox3_event(Boolean selected, int flag)
         {
-            if (selected || (2 == flag && airPort == true))
+            if (selected || (2 == flag && airSegment == true))
             {
                 airSegment = true;
                 airSegmentOverlay.Clear();
@@ -285,6 +292,79 @@ namespace ADSB.MainUI
                     gMapControl1.Refresh();
                 }
             }
+        }
+
+        /*
+         * 航线box
+         * */
+        void frm_changebox12_event(Boolean selected, int flag)
+        {
+            if (selected || (2 == flag && airRoute == true))
+            {
+                airRoute = true;
+                airRouteOverlay.Clear();
+                this.gMapControl1.Overlays.Add(airRouteOverlay);
+
+                //获取最新的航段、航站点
+                List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT DISTINCT Name FROM AirRoute WHERE Show = '是'");
+                foreach (Dictionary<string, object> dictionary in result)
+                {
+                    String name = Convert.ToString(dictionary["Name"]);
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        List<Dictionary<string, object>> resultSub =
+                                ProfileHelper.Instance.Select("SELECT * FROM AirRoute WHERE Name = '" + name + "'");
+                        List<PointLatLng> points = new List<PointLatLng>();
+                        if (null != resultSub && resultSub.Count > 0)
+                        {
+                            // 找出机场起点
+                            PointLatLng p = geAirPorttByName(Convert.ToString(resultSub[0]["PointBegin"]));
+                            points.Add(p);
+                        }
+                        // 找出中间点
+                        List<Dictionary<string, object>> resultRouteWayPoint =
+                                ProfileHelper.Instance.Select("SELECT * FROM RouteWayPoint WHERE PortId = '" + name + "'");
+                        foreach (Dictionary<string, object> dictionarySub in resultRouteWayPoint)
+                        {
+                            String beginWayPoint = Convert.ToString(dictionarySub["WayPoint"]);
+                            GMapWayPoint wayPoint = getGMapWayPointByName(beginWayPoint);
+                            points.Add(wayPoint.Position);
+                        }
+                        if (null != resultSub && resultSub.Count > 0)
+                        {
+                            // 找出机场终点
+                            PointLatLng p = geAirPorttByName(Convert.ToString(resultSub[0]["PointEnd"]));
+                            points.Add(p);
+                        }
+                        GMapRoute r = new GMapRoute(points, "");
+                        r.Stroke = new Pen(Color.Red, 1);
+                        airRouteOverlay.Routes.Add(r);
+                    }
+                }
+
+                gMapControl1.Refresh();
+            }
+            else
+            {
+                if (1 == flag)
+                {
+                    airRoute = false;
+                    airRouteOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(airRouteOverlay);
+                    gMapControl1.Refresh();
+                }
+            }
+        }
+
+        /**
+        * 根据航站点名称获得机场信息
+        * */
+        private PointLatLng geAirPorttByName(String name)
+        {
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort WHERE Name = '" + name + "'");
+            double lat = Convert.ToDouble(result[0]["Lat"]);
+            double lang = Convert.ToDouble(result[0]["Lng"]);
+            return new PointLatLng(lat, lang);
         }
 
         /**

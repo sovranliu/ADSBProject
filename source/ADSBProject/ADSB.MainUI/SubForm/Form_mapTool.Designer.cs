@@ -48,6 +48,7 @@
             this.skinPanel1 = new CCWin.SkinControl.SkinPanel();
             this.myCheckBox10 = new ADSB.MainUI.Controls.myCheckBox();
             this.myCheckBox11 = new ADSB.MainUI.Controls.myCheckBox();
+            this.myCheckBox12 = new ADSB.MainUI.Controls.myCheckBox();
             this.SuspendLayout();
             // 
             // skinLabel1
@@ -96,7 +97,7 @@
             this.skinButton1.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton1.IsDrawBorder = false;
             this.skinButton1.IsDrawGlass = false;
-            this.skinButton1.Location = new System.Drawing.Point(71, 367);
+            this.skinButton1.Location = new System.Drawing.Point(67, 380);
             this.skinButton1.MouseBack = null;
             this.skinButton1.Name = "skinButton1";
             this.skinButton1.NormlBack = null;
@@ -149,7 +150,7 @@
             "28",
             "29",
             "30"});
-            this.skinComboBox2.Location = new System.Drawing.Point(250, 293);
+            this.skinComboBox2.Location = new System.Drawing.Point(129, 332);
             this.skinComboBox2.Name = "skinComboBox2";
             this.skinComboBox2.Size = new System.Drawing.Size(73, 40);
             this.skinComboBox2.TabIndex = 23;
@@ -165,7 +166,7 @@
             this.skinLabel6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skinLabel6.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel6.Location = new System.Drawing.Point(170, 303);
+            this.skinLabel6.Location = new System.Drawing.Point(49, 342);
             this.skinLabel6.Name = "skinLabel6";
             this.skinLabel6.Size = new System.Drawing.Size(77, 19);
             this.skinLabel6.TabIndex = 43;
@@ -290,7 +291,7 @@
             this.myCheckBox2.CheckButtonWidth = 17;
             this.myCheckBox2.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myCheckBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.myCheckBox2.Location = new System.Drawing.Point(42, 259);
+            this.myCheckBox2.Location = new System.Drawing.Point(174, 299);
             this.myCheckBox2.Name = "myCheckBox2";
             this.myCheckBox2.Size = new System.Drawing.Size(54, 23);
             this.myCheckBox2.TabIndex = 35;
@@ -373,12 +374,29 @@
             this.myCheckBox11.UseVisualStyleBackColor = false;
             this.myCheckBox11.CheckedChanged += new System.EventHandler(this.myCheckBox11_CheckedChanged);
             // 
+            // myCheckBox12
+            // 
+            this.myCheckBox12.AutoSize = true;
+            this.myCheckBox12.BackColor = System.Drawing.Color.White;
+            this.myCheckBox12.BaseColor = System.Drawing.Color.White;
+            this.myCheckBox12.CheckButtonWidth = 17;
+            this.myCheckBox12.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.myCheckBox12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
+            this.myCheckBox12.Location = new System.Drawing.Point(42, 259);
+            this.myCheckBox12.Name = "myCheckBox12";
+            this.myCheckBox12.Size = new System.Drawing.Size(54, 23);
+            this.myCheckBox12.TabIndex = 48;
+            this.myCheckBox12.Text = "航线";
+            this.myCheckBox12.UseVisualStyleBackColor = false;
+            this.myCheckBox12.CheckedChanged += new System.EventHandler(this.myCheckBox12_CheckedChanged);
+            // 
             // Form_mapTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(345, 449);
+            this.Controls.Add(this.myCheckBox12);
             this.Controls.Add(this.myCheckBox11);
             this.Controls.Add(this.myCheckBox10);
             this.Controls.Add(this.skinPanel1);
@@ -427,5 +445,6 @@
         private CCWin.SkinControl.SkinPanel skinPanel1;
         private Controls.myCheckBox myCheckBox10;
         private Controls.myCheckBox myCheckBox11;
+        private Controls.myCheckBox myCheckBox12;
     }
 }

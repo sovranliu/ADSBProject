@@ -176,6 +176,7 @@
     <Compile Include="Logic\AMapProvider.cs" />
     <Compile Include="Logic\DataHelper.cs" />
     <Compile Include="Logic\ConfigHelper.cs" />
+    <Compile Include="Logic\CommonHelper.cs" />
     <Compile Include="Logic\ProfileHelper.cs" />
     <Compile Include="LogRecord.cs" />
     <Compile Include="MainForm.cs">

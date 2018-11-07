@@ -25,7 +25,8 @@ namespace ADSB.MainUI
         private GMapOverlay airSpaceOverlay = new GMapOverlay("airSpaceLayer"); //空域图层
         private GMapOverlay wayPointOverlay = new GMapOverlay("wayPointLayer"); //航站点图层
         private GMapOverlay pointLandOverlay = new GMapOverlay("pointLandLayer"); //航站点图层
-        private GMapOverlay airSegmentOverlay = new GMapOverlay("airSegmentLayer"); //航线图层
+        private GMapOverlay airSegmentOverlay = new GMapOverlay("airSegmentLayer"); //航段图层
+        private GMapOverlay airRouteOverlay = new GMapOverlay("airRouteLayer"); //航线图层
         private GMapOverlay landCircleOverlay = new GMapOverlay("landCircleLayer"); //地面站距离环图层
         private GMapOverlay flightCircleOverlay = new GMapOverlay("flightCircleLayer"); //机场距离环图层
 
@@ -85,6 +86,11 @@ namespace ADSB.MainUI
 
         // 当前是否要展示地面站距离环
         private Boolean airPortDistenceCircle;
+
+        // 要展示的航线
+        // private List<PointLatLng> listAirRoute;
+        // 当前是否要展示航线
+        private Boolean airRoute;
 
         List<PointLatLng> distincePairs = new List<PointLatLng>();
        // private GMapAirPort airPort;
@@ -296,7 +302,7 @@ namespace ADSB.MainUI
                 {
                     // 获取两个点的距离展示在后一个点上
                     pointLatLng = distincePairs.Last();
-                    double dis = Distance(pointLatLng.Lat, pointLatLng.Lng, point.Lat, point.Lng);
+                    double dis = CommonHelper.Distance(pointLatLng.Lat, pointLatLng.Lng, point.Lat, point.Lng);
                     GMapMarker m1 = new GMarkerGoogle(point, GMarkerGoogleType.green_big_go);
                     m1.ToolTipText = "距离:" + dis;
                     m1.ToolTipMode = MarkerTooltipMode.Always;
@@ -450,7 +456,7 @@ namespace ADSB.MainUI
                                 }
 
                                 // 只展示圈内的飞机
-                                double disPlane = Distance(point1.Lat, point1.Lng,
+                                double disPlane = CommonHelper.Distance(point1.Lat, point1.Lng,
                                     eachlistAirplane.AirPlaneMarkerInfo.latitude, eachlistAirplane.AirPlaneMarkerInfo.longtitude);
 
                                 if (disPlane <= length)
@@ -526,7 +532,7 @@ namespace ADSB.MainUI
                     foreach (KeyValuePair<int, PointLatLng> kvp in pointPlaneLand)
                     {
                         PointLatLng pointLatLngPlane = kvp.Value;
-                        double dis = Distance(pointLandStation.Lat, pointLandStation.Lng, pointLatLngPlane.Lat, pointLatLngPlane.Lng);
+                        double dis = CommonHelper.Distance(pointLandStation.Lat, pointLandStation.Lng, pointLatLngPlane.Lat, pointLatLngPlane.Lng);
                         GMapMarker m1 = new GMarkerGoogle(pointLatLngPlane, GMarkerGoogleType.blue_dot);
                         m1.ToolTipText = dis.ToString();
                         m1.ToolTipMode = MarkerTooltipMode.Always;
@@ -574,7 +580,7 @@ namespace ADSB.MainUI
                 double latitude = Convert.ToDouble(ConfigHelper.Instance.GetConfig("my_latitude"));
                 double longtitude = Convert.ToDouble(ConfigHelper.Instance.GetConfig("my_longtitude"));
 
-                double disPlane = Distance(latitude, longtitude,
+                double disPlane = CommonHelper.Distance(latitude, longtitude,
                             eachlistAirplane.AirPlaneMarkerInfo.latitude, eachlistAirplane.AirPlaneMarkerInfo.longtitude);
 
                 double alarm_distance = Convert.ToDouble(distance);
@@ -651,14 +657,15 @@ namespace ADSB.MainUI
         {
             this.gMapControl1.CacheLocation = System.Windows.Forms.Application.StartupPath;    //缓冲区路径
             // this.gMapControl1.MapProvider = GMapProviders.GoogleChinaMap;                      //谷歌中国区地图加载
-            this.gMapControl1.MapProvider = AMapProvider.Instance;                      //高德地图加载
+            // this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //服务+缓冲
+            this.gMapControl1.MapProvider = AMapProvider.Instance;                             //高德地图加载
             this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //地图模式
             this.gMapControl1.MinZoom = 1;                                                     //最小比例
             this.gMapControl1.MaxZoom = 23;                                                    //最大比例
             this.gMapControl1.Zoom = 10;                                                       //当前比例
             this.gMapControl1.ShowCenter = false;                                              //不显示中心十字点
             this.gMapControl1.DragButton = System.Windows.Forms.MouseButtons.Left;             //左键拖拽地图
-            this.gMapControl1.Position = new PointLatLng(23.16, 113.27);                     //初始化地址 广州(23.16, 113.27) 北京(39.3, 116.5)
+            this.gMapControl1.Position = new PointLatLng(23.16, 113.27);                       //初始化地址 广州(23.16, 113.27) 北京(39.3, 116.5)
             
             //添加到图层
             this.gMapControl1.Overlays.Add(planeOverlay);
@@ -690,52 +697,7 @@ namespace ADSB.MainUI
             skinProgressBar1.Value = progress;
         }
 
-        public static double HaverSin(double theta)
-        {
-            var v = Math.Sin(theta / 2);
-            return v * v;
-        }
-
-        static double EARTH_RADIUS = 6371.0;//km 地球半径 平均值，千米
-
-        /// <summary>
-        /// 给定的经度1，纬度1；经度2，纬度2. 计算2个经纬度之间的距离。
-        /// </summary>
-        /// <param name="lat1">经度1</param>
-        /// <param name="lon1">纬度1</param>
-        /// <param name="lat2">经度2</param>
-        /// <param name="lon2">纬度2</param>
-        /// <returns>距离（公里、千米）</returns>
-        public static double Distance(double lat1, double lon1, double lat2, double lon2)
-        {
-            //用haversine公式计算球面两点间的距离。
-            //经纬度转换成弧度
-            lat1 = ConvertDegreesToRadians(lat1);
-            lon1 = ConvertDegreesToRadians(lon1);
-            lat2 = ConvertDegreesToRadians(lat2);
-            lon2 = ConvertDegreesToRadians(lon2);
-
-            //差值
-            var vLon = Math.Abs(lon1 - lon2);
-            var vLat = Math.Abs(lat1 - lat2);
-
-            //h is the great circle distance in radians, great circle就是一个球体上的切面，它的圆心即是球心的一个周长最大的圆。
-            var h = HaverSin(vLat) + Math.Cos(lat1) * Math.Cos(lat2) * HaverSin(vLon);
-
-            var distance = 2 * EARTH_RADIUS * Math.Asin(Math.Sqrt(h));
-
-            return distance * 1000;
-        }
-
-        /// <summary>
-        /// 将角度换算为弧度。
-        /// </summary>
-        /// <param name="degrees">角度</param>
-        /// <returns>弧度</returns>
-        public static double ConvertDegreesToRadians(double degrees)
-        {
-            return degrees * Math.PI / 180;
-        }
+       
 
         public static double ConvertRadiansToDegrees(double radian)
         {
@@ -916,7 +878,7 @@ namespace ADSB.MainUI
 
                 // 如果航线列表有修改
                 Form_airRoute airRoute = new Form_airRoute();
-                airRoute.airRoute_event += new Form_airRoute.airRoute(frm_changebox5_event);
+                airRoute.airRoute_event += new Form_airRoute.airRoute(frm_changebox12_event);
 
                 airRoute.ShowDialog();
                 mapmask.Visible = false;
