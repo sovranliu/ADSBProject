@@ -36,8 +36,6 @@ namespace ADSB.MainUI
         // 当前的关注对象（飞行器or地面站）
         private int currentFellowId = 0;
 
-        // private GMapMarkerImage currentMarker;
-
         // private GMapAirPlane airPlane;
         // 所有飞机
         private Dictionary<int, GMapAirPlane> listAirplane;
@@ -207,7 +205,7 @@ namespace ADSB.MainUI
             if (dataSource.Count == 0)
                 return;
             Cat021Data tmpData = dataSource.GetData();
-            int isCheckedPlane = 0; // 0-普通飞行器，1-凸显飞行器，2-中心机
+            int isCheckedPlane = 0; // 0-普通飞行器，1-凸显飞行器，2-中心机,3-告警机器
 
             // 获取中心机
             String my_sAddress = ConfigHelper.Instance.GetConfig("my_sAddress");
@@ -231,6 +229,11 @@ namespace ADSB.MainUI
                         pointPlaneLand.Remove(tmpData.sModeAddress);
                     }
                     pointPlaneLand.Add(tmpData.sModeAddress, pointLatLng);
+                }
+
+                if (AirplaneManager.Instance.checkAlermPlane(tmpData.sModeAddress))
+                {
+                    isCheckedPlane = 3;
                 }
             }
 
@@ -659,7 +662,10 @@ namespace ADSB.MainUI
             // this.gMapControl1.MapProvider = GMapProviders.GoogleChinaMap;                      //谷歌中国区地图加载
             // this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //服务+缓冲
             this.gMapControl1.MapProvider = AMapProvider.Instance;                             //高德地图加载
-            this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //地图模式
+            this.gMapControl1.Manager.Mode = AccessMode.ServerAndCache;                        //地图缓冲
+            //Environment.CurrentDirectory
+            String mapPath = Environment.CurrentDirectory + "\\MapDownloader\\bin\\Release\\MapCache\\TileDBv5\\en\\Data.gmdb";
+            GMap.NET.GMaps.Instance.ImportFromGMDB(mapPath);
             this.gMapControl1.MinZoom = 1;                                                     //最小比例
             this.gMapControl1.MaxZoom = 23;                                                    //最大比例
             this.gMapControl1.Zoom = 10;                                                       //当前比例
@@ -937,10 +943,7 @@ namespace ADSB.MainUI
 
         void common_Plane_event(Boolean selected)
         {
-            if (selected)
-            {
-                initListAirplaneCheck(false);
-            }
+            initListAirplaneCheck(false);
         }
 
         private void sPnl_close_Paint(object sender, PaintEventArgs e)
@@ -1006,6 +1009,12 @@ namespace ADSB.MainUI
         private void gMapControl1_Load(object sender, EventArgs e)
         {
             //skinEngine1.SkinFile = Application.StartupPath + @"\DeepCyan.ssk";
+        }
+
+        private void skinLabel14_Click(object sender, EventArgs e)
+        {
+            string path1 = Environment.CurrentDirectory + "\\MapDownloader\\bin\\Release\\MapDownloader.exe";  //打开D盘下的log.txt文件
+            System.Diagnostics.Process.Start(path1);
         }
     }
 }

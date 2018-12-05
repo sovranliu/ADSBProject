@@ -158,14 +158,14 @@ namespace ADSB.MainUI
                 }
 
                 test.changebox11_event += new Form_mapTool.changebox11(frm_changebox11_event);
-                //初始化航迹圈checkbox
+                //初始化机场距离环checkbox
                 if (airPortDistenceCircle)
                 {
                     test.myCheckBox11_Selected();
                 }
 
                 test.changebox12_event += new Form_mapTool.changebox12(frm_changebox12_event);
-                //初始化航迹圈checkbox
+                //初始化航线checkbox
                 if (airRoute)
                 {
                     test.myCheckBox12_Selected();
@@ -501,6 +501,7 @@ namespace ADSB.MainUI
                     gMapControl1.Refresh();
                 }
             }
+            initListAirplaneCheck(false);
         }
 
         // 航迹圈

@@ -154,8 +154,17 @@ namespace ADSB.MainUI.SubForm
         private void skinButton2_Click(object sender, EventArgs e)
         {
             String id = this.dataGridView1.CurrentRow.Cells[7].Value.ToString();
+
+            //List<Dictionary<string, object>> stationList = ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
+            //if (stationList.Count() > 0)
+            //{
+            //    MessageBox.Show("请先在关注列表中删除！");
+            //    return;
+            //}
+
             ProfileHelper.Instance.Update("Delete FROM LandStation WHERE ID = \"" + id + "\"");
 
+  
             // 如果突显列表里面有数据要删除
             ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
 
