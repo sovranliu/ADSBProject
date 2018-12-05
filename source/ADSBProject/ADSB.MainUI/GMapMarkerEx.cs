@@ -211,15 +211,22 @@ namespace ADSB.MainUI
 
         public GMapAirPlane(PointLatLng p, Cat021Data data, int selected) : base(p)
         {
-            // 中心机
+            // 中心机 监控模式下作废了
             if (1 ==selected)
             {
                 Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4@3x.png") as Bitmap;
             }
+            // 关注机
             else if (2 == selected)
             {
                 Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4@2x.png") as Bitmap;
             }
+            // 告警机
+            else if (3 == selected) 
+            {
+                Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 告警@2x.png") as Bitmap;
+            }
+            // 正常机
             else
             {
                 Image = Bitmap.FromFile(Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\飞机 copy 4.png") as Bitmap;
@@ -433,7 +440,7 @@ namespace ADSB.MainUI
     }
 
     /// <summary>
-    /// 航线 由1个以上航段组成
+    /// 航线 由2个以上航站点组成
     /// </summary>
     public class GMapAirRoute
     {
@@ -442,16 +449,16 @@ namespace ADSB.MainUI
             get;
             set;
         }
-        public List<GMapAirSegment> airSegmentList
+        public List<GMapWayPoint> wayPointList
         {
             get;
             set;
         }
 
-        public GMapAirRoute(String name, List<GMapAirSegment> airSegmentList)
+        public GMapAirRoute(String name, List<GMapWayPoint> wayPointList)
         {
             this.name = name;
-            this.airSegmentList = airSegmentList;
+            this.wayPointList = wayPointList;
         }
     }
 

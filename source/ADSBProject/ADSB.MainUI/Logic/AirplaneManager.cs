@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,9 @@ namespace ADSB.MainUI
     public class AirplaneManager
     {
         private static AirplaneManager instance;
-        private List<Cat021Data> airplaneList; 
+        private List<Cat021Data> airplaneList;
+        // 告警飞机列表
+        private Dictionary<int, int> listAirplaneAlarm = new Dictionary<int, int>();
 
         public static AirplaneManager Instance
         {
@@ -56,11 +59,103 @@ namespace ADSB.MainUI
                 {
                     airplaneList.Remove(item);
                     airplaneList.Add(data);
+                    check(data);
                     return false;
                 }
             }
             airplaneList.Add(data);
+            check(data);
             return true;
+        }
+
+        private void check(Cat021Data data)
+        {
+            String distance = ConfigHelper.Instance.GetConfig("alarm_distance");
+            if (!string.IsNullOrWhiteSpace(distance))
+            {
+                double alarm_distance = Convert.ToDouble(distance);
+                List<Cat021Data> t2 = new List<Cat021Data>(airplaneList.ToArray()); // copy of airplaneList
+
+                SoundPlayer player = new SoundPlayer();
+                player.SoundLocation = @"C:\alarm.wav";
+                player.Load(); //同步加载声音
+
+
+                // 在这里做告警，最新的更新机器跟其他飞机是否低于阈值
+                foreach (Cat021Data item in t2)
+                {
+                    double myDistance = CommonHelper.Distance(item.latitude, item.longtitude, data.latitude, data.longtitude);
+                    if (myDistance > 0.01 && alarm_distance >= myDistance)
+                    {
+                        String info = "距离报警！" + item.sModeAddress.ToString() + "跟中心机距离：" + data.sModeAddress.ToString();
+                        ProfileHelper.Instance.Update("INSERT INTO Alarm (" +
+                            "FlightNo, SModeAddress, SModeAddressTo, Info, WriteTime, Status) VALUES ('" +
+                            data.flightNo.ToString().Trim() + "', '" +
+                            data.sModeAddress + "', '" +
+                            item.sModeAddress + "', '" +
+                            info + "', '" + DateTime.Now.ToString() + "', 0)");
+
+                        addAlermList(data.sModeAddress);
+                        addAlermList(item.sModeAddress);
+
+                        if ("YES".Equals(ConfigHelper.Instance.GetConfig("alarm_type1")))
+                        {
+                            System.Windows.Forms.MessageBox.Show(info);
+                        }
+                        if ("YES".Equals(ConfigHelper.Instance.GetConfig("alarm_type2")))
+                        {
+                            // System.Media.SystemSounds.Exclamation.Play();
+                            // player.Play(); //启用新线程播放
+                        }
+                    }
+                    else
+                    {
+                        ProfileHelper.Instance.Update("Update Alarm Set Status = 1 WHERE SModeAddress = '" +
+                           data.sModeAddress + "' AND SModeAddressTo = '" + item.sModeAddress + "'");
+
+                        subAlermList(data.sModeAddress);
+                        subAlermList(item.sModeAddress);
+                    }
+                }
+            }
+        }
+
+        private void addAlermList(int sModeAddress)
+        {
+            if (listAirplaneAlarm.ContainsKey(sModeAddress))
+            {
+                int num = listAirplaneAlarm[sModeAddress];
+                listAirplaneAlarm[sModeAddress] =  num + 1;
+            }
+            else
+            {
+                listAirplaneAlarm.Add(sModeAddress, 1);
+            }
+        }
+
+        private void subAlermList(int sModeAddress)
+        {
+            if (listAirplaneAlarm.ContainsKey(sModeAddress))
+            {
+                int num = listAirplaneAlarm[sModeAddress];
+                if (num > 1)
+                {
+                    listAirplaneAlarm[sModeAddress] = num - 1;
+                }
+                else
+                {
+                    listAirplaneAlarm.Remove(sModeAddress);
+                }
+            }
+        }
+
+        public Boolean checkAlermPlane(int sModeAddress)
+        {
+            if (listAirplaneAlarm.ContainsKey(sModeAddress))
+            {
+                return true;
+            }
+            return false;
         }
 
         public List<Cat021Data> Query(int sModeAddress, string flightNo, double airSpeedMin, double airSpeedMax, double geometricAltitudeMin, double geometricAltitudeMax)

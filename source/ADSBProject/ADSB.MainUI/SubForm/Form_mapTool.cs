@@ -37,12 +37,33 @@ namespace ADSB.MainUI.SubForm
         public event changebox7 changebox7_event;
 
         // 1-航迹圈checkbox选择显示，2-新增、删除了关注
-        // public delegate void changebox9(Boolean selected);
-        // public event changebox9 changebox9_event;
+        public delegate void changebox9(Boolean selected);
+        public event changebox9 changebox9_event;
+
+        // 1-地面站距离环checkbox选择显示，2-新增、删除了关注
+        public delegate void changebox10(Boolean selected);
+        public event changebox10 changebox10_event;
+        
+        // 1-机场距离环checkbox选择显示，2-新增、删除了关注
+        public delegate void changebox11(Boolean selected);
+        public event changebox11 changebox11_event;
+        
+        // 1-航线checkbox选择显示，2-新增、删除了关注
+        public delegate void changebox12(Boolean selected, int flag);
+        public event changebox12 changebox12_event;
+
 
         public Form_mapTool()
         {
             InitializeComponent();
+
+            // 初始化下拉框的值
+            String comboBox = ConfigHelper.Instance.GetConfig("show_num");
+            if (!string.IsNullOrEmpty(comboBox))
+            {
+                int sel = skinComboBox2.Items.IndexOf(comboBox);
+                skinComboBox2.SelectedIndex = sel;
+            }
         }
 
         private void sPnl_close_Click(object sender, EventArgs e)
@@ -100,7 +121,7 @@ namespace ADSB.MainUI.SubForm
                 changebox4_event(false, 1);
             }
 
-            //box9Set();
+            box10Set();
         }
 
         public void myCheckBox4_Selected()
@@ -123,9 +144,7 @@ namespace ADSB.MainUI.SubForm
         {
             myCheckBox5.Checked = true;
         }
-
-
-
+        
         // 地面站
         private void myCheckBox7_CheckedChanged(object sender, EventArgs e)
         {
@@ -137,7 +156,8 @@ namespace ADSB.MainUI.SubForm
             {
                 changebox7_event(false, 1);
             }
-            //box9Set();
+            box9Set();
+            box10Set();
         }
 
         public void myCheckBox7_Selected()
@@ -145,20 +165,26 @@ namespace ADSB.MainUI.SubForm
             myCheckBox7.Checked = true;
         }
 
-        //private void myCheckBox9_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (myCheckBox9.CheckState == CheckState.Checked)
-        //    {
-        //        changebox9_event(true);
-        //    }
-        //    else
-        //    {
-        //        changebox9_event(false);
-        //    }
+        // 航迹圈过滤
+        private void myCheckBox9_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox9.CheckState == CheckState.Checked)
+            {
+                changebox9_event(true);
+            }
+            else
+            {
+                changebox9_event(false);
+            }
 
-        //    box7Set();
-        //    box4Set();
-        //}
+            box7Set();
+            // box4Set();
+        }
+
+        public void myCheckBox9_Selected()
+        {
+            myCheckBox9.Checked = true;
+        }
 
         private void box4Set()
         {
@@ -190,29 +216,118 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
-        //private void box9Set()
-        //{
-        //    if (myCheckBox9.CheckState == CheckState.Checked)
-        //    {
-        //        changebox9_event(true);
-        //    }
-        //    else
-        //    {
-        //        if (changebox9_event != null)
-        //        {
-        //            changebox9_event(false);
-        //        }
-        //    }
-        //}
-
-        public void myCheckBox9_Selected()
+        private void box9Set()
         {
-            myCheckBox9.Checked = true;
+            if (myCheckBox9.CheckState == CheckState.Checked)
+            {
+                changebox9_event(true);
+            }
+            else
+            {
+                if (changebox9_event != null)
+                {
+                    changebox9_event(false);
+                }
+            }
         }
+
+        private void box10Set()
+        {
+            if (myCheckBox10.CheckState == CheckState.Checked)
+            {
+                changebox10_event(true);
+            }
+            else
+            {
+                if (changebox10_event != null)
+                {
+                    changebox10_event(false);
+                }
+            }
+        }
+
+        
 
         private void skinButton1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void myCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        // 地面站距离环
+        private void myCheckBox10_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox10.CheckState == CheckState.Checked)
+            {
+                changebox10_event(true);
+            }
+            else
+            {
+                if (changebox10_event != null)
+                {
+                    changebox10_event(false);
+                }
+            }
+        }
+
+        public void myCheckBox10_Selected()
+        {
+            myCheckBox10.Checked = true;
+        }
+
+        // 机场距离环
+        private void myCheckBox11_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox11.CheckState == CheckState.Checked)
+            {
+                changebox11_event(true);
+            }
+            else
+            {
+                if (changebox11_event != null)
+                {
+                    changebox11_event(false);
+                }
+            }
+        }
+
+        public void myCheckBox11_Selected()
+        {
+            myCheckBox11.Checked = true;
+        }
+
+        // 展示多少个轨迹点
+        private void skinComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(skinComboBox2.Text))
+            {
+                ConfigHelper.Instance.SetConfig("show_num", skinComboBox2.Text);
+            }
+        }
+
+        // 航线
+        private void myCheckBox12_CheckedChanged(object sender, EventArgs e)
+        {
+            if (myCheckBox12.CheckState == CheckState.Checked)
+            {
+                changebox12_event(true, 1);
+            }
+            else
+            {
+                if (changebox12_event != null)
+                {
+                    changebox12_event(false, 1);
+                }
+            }
+        }
+
+        public void myCheckBox12_Selected()
+        {
+            myCheckBox12.Checked = true;
         }
     }
 }

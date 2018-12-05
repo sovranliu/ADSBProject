@@ -52,7 +52,8 @@ namespace ADSB.MainUI.SubForm
             this.gMapControl1.Overlays.Add(portSelOverlay);
 
             showAllLandStation();
-            
+
+            skinLabel10.Text = ConfigHelper.Instance.GetConfig("land_station_main_name");
         }
 
         private void mapControl_MouseDown(object sender, MouseEventArgs e)
@@ -101,6 +102,7 @@ namespace ADSB.MainUI.SubForm
             }
 
             Land_Station land_Station = new Land_Station(
+                false,
                 0,
                 name,
                 Convert.ToString(skinTextBox1.Text),
@@ -130,10 +132,19 @@ namespace ADSB.MainUI.SubForm
                         " Num = " + land_Station.Num + ", " +
                         " Length = " + land_Station.Length +
                         " where ID = '" + skinLabel6.Text + "'");
+
+                // 更新后初始化组件
+                skinTextBox1.Text = "";
+                skinTextBox2.Text = "";
+                skinTextBox3.Text = "";
+                skinTextBox4.Text = "";
+                skinTextBox5.Text = "";
+                skinTextBox6.Text = "";
+                skinButton1.Text = "新增";
+
             }
             
             showAllLandStation();
-
             landStation_event(true, 2);
         }
 
@@ -142,27 +153,26 @@ namespace ADSB.MainUI.SubForm
          * */
         private void skinButton2_Click(object sender, EventArgs e)
         {
-            String id = this.dataGridView1.CurrentRow.Cells["Column7"].Value.ToString();
+            String id = this.dataGridView1.CurrentRow.Cells[7].Value.ToString();
+
+            //List<Dictionary<string, object>> stationList = ProfileHelper.Instance.Select("SELECT * FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
+            //if (stationList.Count() > 0)
+            //{
+            //    MessageBox.Show("请先在关注列表中删除！");
+            //    return;
+            //}
+
             ProfileHelper.Instance.Update("Delete FROM LandStation WHERE ID = \"" + id + "\"");
+
+  
+            // 如果突显列表里面有数据要删除
+            ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
+
+            landStation_event(true, 2);
+
             showAllLandStation();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int rowIndex = e.RowIndex;
-            String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
-            String ip = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();//获得本行IP
-            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行经度
-            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行纬度
-            int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环数
-            double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行环距
-            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());//获得本行ID
-
-            skinButton1.Text = "更新";
-            showLable(id, lat, lang, name, num, length, ip);
-            showLandStation(portOverlay, lat, lang, name, num, length);
-            
-        }
 
         private void showLable(int id, double lat, double lang, String name, int num, double length, String ip)
         {
@@ -202,6 +212,7 @@ namespace ADSB.MainUI.SubForm
             landStationList.Clear();
             foreach (Dictionary<string, object> dictionary in result)
             {
+                String mainLandStation = ConfigHelper.Instance.GetConfig("land_station_main_name");
                 int id = Convert.ToInt32(dictionary["ID"]);
                 String name = Convert.ToString(dictionary["Name"]);
                 String ip = Convert.ToString(dictionary["IP"]);
@@ -209,7 +220,12 @@ namespace ADSB.MainUI.SubForm
                 double lang = Convert.ToDouble(dictionary["Lng"]);
                 double length = Convert.ToDouble(dictionary["Length"]);
                 int num = Convert.ToInt16(dictionary["Num"]);
-                Land_Station land_Station = new Land_Station(id, name, ip, lat, lang, length, num);
+                Boolean cb_check = false;
+                if (!string.IsNullOrEmpty(mainLandStation) && mainLandStation.Equals(name))
+                {
+                    cb_check = true;
+                }
+                Land_Station land_Station = new Land_Station(cb_check, id, name, ip, lat, lang, length, num);
                 landStationList.Add(land_Station);
             }
 
@@ -219,6 +235,71 @@ namespace ADSB.MainUI.SubForm
                 this.dataGridView1.DataSource = this.landStationList;
             }
 
+            //showMainLandStaion();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            if (rowIndex < 0 || e.ColumnIndex == 0)
+            {
+                return;
+            }
+            String name = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();//获得本行name
+            String ip = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();//获得本行IP
+            double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());//获得本行经度
+            double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());//获得本行纬度
+            int num = Convert.ToInt16(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());//获得本行环数
+            double length = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());//获得本行环距
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString());//获得本行ID
+
+            skinButton1.Text = "更新";
+            showLable(id, lat, lang, name, num, length, ip);
+            showLandStation(portOverlay, lat, lang, name, num, length);
+
+        }
+
+        // 关注的目标单元格点击事件
+        private void dgv_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex != 0)
+            {
+                return;
+            }
+            int index = dataGridView1.CurrentRow.Index;
+            this.dataGridView1.Rows[e.RowIndex].Selected = true;
+
+            if (Convert.ToBoolean(dataGridView1.Rows[index].Cells[0].Value))
+            {
+                dataGridView1.Rows[index].Cells[0].Value = false;
+            }
+            else
+            {
+                dataGridView1.Rows[index].Cells[0].Value = true;
+                int id = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[7].Value);
+                String name = Convert.ToString(this.dataGridView1.Rows[e.RowIndex].Cells[1].Value);
+                double lat = Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells[3].Value);
+                double log = Convert.ToDouble(this.dataGridView1.Rows[e.RowIndex].Cells[4].Value);
+                ConfigHelper.Instance.SetConfig("land_station_main_id", id.ToString());
+                ConfigHelper.Instance.SetConfig("land_station_main_name", name);
+                ConfigHelper.Instance.SetConfig("land_station_main_lat", lat.ToString());
+                ConfigHelper.Instance.SetConfig("land_station_main_log", log.ToString());
+                skinLabel10.Text = name;
+                //其他的都是false
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (i != index)
+                    {
+                        dataGridView1.Rows[i].Cells[0].Value = false;
+                    }
+                }
+            }
+
+        }
+
+        private void sPnl_close_Paint(object sender, PaintEventArgs e)
+        {
+            landStation_event(true, 2);
         }
     }
 
@@ -275,8 +356,16 @@ namespace ADSB.MainUI.SubForm
             set { id = value; }
         }
 
-        public Land_Station(int id, String name, String ip, double lat, double lng, double length, int num)
+        private Boolean cb_check;
+        public Boolean Cb_check
         {
+            get { return cb_check; }
+            set { cb_check = value; }
+        }
+
+        public Land_Station(Boolean cb_check, int id, String name, String ip, double lat, double lng, double length, int num)
+        {
+            this.cb_check = cb_check;
             this.id = id;
             this.name = name;
             this.ip = ip;

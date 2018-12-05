@@ -111,6 +111,7 @@
             this.skinButton1.Text = "我知道了";
             this.skinButton1.UseMnemonic = false;
             this.skinButton1.UseVisualStyleBackColor = false;
+            this.skinButton1.Click += new System.EventHandler(this.skinButton1_Click);
             // 
             // skinLabel3
             // 
@@ -196,7 +197,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(280, 255);
             this.Controls.Add(this.horizonLine1);
             this.Controls.Add(this.skinLabel7);
@@ -208,15 +208,9 @@
             this.Controls.Add(this.skinLabel2);
             this.Controls.Add(this.sPnl_close);
             this.Controls.Add(this.skinLabel1);
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "Form_status";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form_liangcheng";
-            this.TopMost = true;
-            this.TransparencyKey = System.Drawing.SystemColors.AppWorkspace;
             this.ResumeLayout(false);
             this.PerformLayout();
 

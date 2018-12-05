@@ -77,7 +77,7 @@
             this.sPnl_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.sPnl_close.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.sPnl_close.DownBack = null;
-            this.sPnl_close.Location = new System.Drawing.Point(940, 12);
+            this.sPnl_close.Location = new System.Drawing.Point(941, 3);
             this.sPnl_close.MouseBack = null;
             this.sPnl_close.Name = "sPnl_close";
             this.sPnl_close.NormlBack = null;
@@ -182,7 +182,7 @@
             this.skinTextBox2.Multiline = false;
             this.skinTextBox2.Name = "skinTextBox2";
             this.skinTextBox2.NormlBack = null;
-            this.skinTextBox2.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.skinTextBox2.Padding = new System.Windows.Forms.Padding(5);
             this.skinTextBox2.ReadOnly = false;
             this.skinTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.skinTextBox2.Size = new System.Drawing.Size(142, 28);
@@ -223,7 +223,7 @@
             this.skinTextBox3.Multiline = true;
             this.skinTextBox3.Name = "skinTextBox3";
             this.skinTextBox3.NormlBack = null;
-            this.skinTextBox3.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.skinTextBox3.Padding = new System.Windows.Forms.Padding(5);
             this.skinTextBox3.ReadOnly = false;
             this.skinTextBox3.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.skinTextBox3.Size = new System.Drawing.Size(142, 30);
@@ -265,7 +265,7 @@
             this.skinTextBox4.Multiline = true;
             this.skinTextBox4.Name = "skinTextBox4";
             this.skinTextBox4.NormlBack = null;
-            this.skinTextBox4.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.skinTextBox4.Padding = new System.Windows.Forms.Padding(5);
             this.skinTextBox4.ReadOnly = false;
             this.skinTextBox4.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.skinTextBox4.Size = new System.Drawing.Size(142, 30);
@@ -297,7 +297,7 @@
             this.horizonLine1.LineLength = 217;
             this.horizonLine1.LineWidth = 1;
             this.horizonLine1.Location = new System.Drawing.Point(31, 62);
-            this.horizonLine1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.horizonLine1.Margin = new System.Windows.Forms.Padding(4);
             this.horizonLine1.Name = "horizonLine1";
             this.horizonLine1.Size = new System.Drawing.Size(219, 3);
             this.horizonLine1.TabIndex = 20;
@@ -359,6 +359,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -370,10 +371,11 @@
             this.Column3});
             this.dataGridView1.Location = new System.Drawing.Point(393, 62);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(554, 213);
             this.dataGridView1.TabIndex = 23;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -416,7 +418,7 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.radioButton1.Location = new System.Drawing.Point(147, 119);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(59, 16);
             this.radioButton1.TabIndex = 24;
@@ -430,7 +432,7 @@
             this.radioButton2.AutoSize = true;
             this.radioButton2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.radioButton2.Location = new System.Drawing.Point(53, 119);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(47, 16);
             this.radioButton2.TabIndex = 25;
@@ -458,7 +460,7 @@
             this.skinTextBox1.Multiline = false;
             this.skinTextBox1.Name = "skinTextBox1";
             this.skinTextBox1.NormlBack = null;
-            this.skinTextBox1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.skinTextBox1.Padding = new System.Windows.Forms.Padding(5);
             this.skinTextBox1.ReadOnly = false;
             this.skinTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.skinTextBox1.Size = new System.Drawing.Size(142, 28);
@@ -513,7 +515,7 @@
             this.skinButton3.InnerBorderColor = System.Drawing.Color.Transparent;
             this.skinButton3.IsDrawBorder = false;
             this.skinButton3.IsDrawGlass = false;
-            this.skinButton3.Location = new System.Drawing.Point(277, 150);
+            this.skinButton3.Location = new System.Drawing.Point(277, 161);
             this.skinButton3.MouseBack = null;
             this.skinButton3.Name = "skinButton3";
             this.skinButton3.NormlBack = null;
@@ -551,7 +553,7 @@
             this.Controls.Add(this.sPnl_close);
             this.Controls.Add(this.skinLabel1);
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_airSpace";
             this.Text = "Form_earthStation";
             this.TopMost = false;

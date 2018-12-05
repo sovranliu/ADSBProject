@@ -116,7 +116,7 @@ namespace ADSB.MainUI
                 }
 
                 test.changebox3_event += new Form_mapTool.changebox3(frm_changebox3_event);
-                // 初始化飞机场checkbox
+                // 初始化航段checkbox
                 if (airSegment)
                 {
                     test.myCheckBox3_Selected();
@@ -143,17 +143,37 @@ namespace ADSB.MainUI
                     test.myCheckBox7_Selected();
                 }
 
-                // test.changebox9_event += new Form_mapTool.changebox9(frm_changebox9_event);
-                // 初始化地面站checkbox
-                // if (flightCircle)
-                // {
-                // test.myCheckBox9_Selected();
-                // }
+                test.changebox9_event += new Form_mapTool.changebox9(frm_changebox9_event);
+                //初始化航迹圈checkbox
+                if (flightCircle)
+                {
+                    test.myCheckBox9_Selected();
+                }
+
+                test.changebox10_event += new Form_mapTool.changebox10(frm_changebox10_event);
+                //初始化航迹圈checkbox
+                if (landDistenceCircle)
+                {
+                    test.myCheckBox10_Selected();
+                }
+
+                test.changebox11_event += new Form_mapTool.changebox11(frm_changebox11_event);
+                //初始化机场距离环checkbox
+                if (airPortDistenceCircle)
+                {
+                    test.myCheckBox11_Selected();
+                }
+
+                test.changebox12_event += new Form_mapTool.changebox12(frm_changebox12_event);
+                //初始化航线checkbox
+                if (airRoute)
+                {
+                    test.myCheckBox12_Selected();
+                }
 
                 test.ShowDialog();
                 mapmask.Visible = false;
             }
-
         }
 
         /*
@@ -165,6 +185,7 @@ namespace ADSB.MainUI
             {
                 airSpace = true;
                 airSpaceOverlay.Clear();
+                this.gMapControl1.Overlays.Add(airSpaceOverlay);
 
                 listAirSpace = new List<String>();
                 List<Dictionary<string, object>> nameResult = ProfileHelper.Instance.Select("SELECT DISTINCT Name FROM AirSpace");
@@ -208,7 +229,7 @@ namespace ADSB.MainUI
                         }
                     }
                 }
-                this.gMapControl1.Overlays.Add(airSpaceOverlay);
+                
                 gMapControl1.Refresh();
             }
             else
@@ -228,10 +249,12 @@ namespace ADSB.MainUI
          * */
         void frm_changebox3_event(Boolean selected, int flag)
         {
-            if (selected || (2 == flag && airPort == true))
+            if (selected || (2 == flag && airSegment == true))
             {
                 airSegment = true;
                 airSegmentOverlay.Clear();
+                this.gMapControl1.Overlays.Add(airSegmentOverlay);
+
                 //获取最新的航段、航站点
                 listAirSegment = new List<GMapAirSegment>();
                 List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirSegment");
@@ -256,7 +279,7 @@ namespace ADSB.MainUI
                     polygon.Stroke = new Pen(Color.Red, 1);
                     airSegmentOverlay.Polygons.Add(polygon);
                 }
-                this.gMapControl1.Overlays.Add(airSegmentOverlay);
+                
                 gMapControl1.Refresh();
             }
             else
@@ -269,6 +292,79 @@ namespace ADSB.MainUI
                     gMapControl1.Refresh();
                 }
             }
+        }
+
+        /*
+         * 航线box
+         * */
+        void frm_changebox12_event(Boolean selected, int flag)
+        {
+            if (selected || (2 == flag && airRoute == true))
+            {
+                airRoute = true;
+                airRouteOverlay.Clear();
+                this.gMapControl1.Overlays.Add(airRouteOverlay);
+
+                //获取最新的航段、航站点
+                List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT DISTINCT Name FROM AirRoute WHERE Show = '是'");
+                foreach (Dictionary<string, object> dictionary in result)
+                {
+                    String name = Convert.ToString(dictionary["Name"]);
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        List<Dictionary<string, object>> resultSub =
+                                ProfileHelper.Instance.Select("SELECT * FROM AirRoute WHERE Name = '" + name + "'");
+                        List<PointLatLng> points = new List<PointLatLng>();
+                        if (null != resultSub && resultSub.Count > 0)
+                        {
+                            // 找出机场起点
+                            PointLatLng p = geAirPorttByName(Convert.ToString(resultSub[0]["PointBegin"]));
+                            points.Add(p);
+                        }
+                        // 找出中间点
+                        List<Dictionary<string, object>> resultRouteWayPoint =
+                                ProfileHelper.Instance.Select("SELECT * FROM RouteWayPoint WHERE PortId = '" + name + "'");
+                        foreach (Dictionary<string, object> dictionarySub in resultRouteWayPoint)
+                        {
+                            String beginWayPoint = Convert.ToString(dictionarySub["WayPoint"]);
+                            GMapWayPoint wayPoint = getGMapWayPointByName(beginWayPoint);
+                            points.Add(wayPoint.Position);
+                        }
+                        if (null != resultSub && resultSub.Count > 0)
+                        {
+                            // 找出机场终点
+                            PointLatLng p = geAirPorttByName(Convert.ToString(resultSub[0]["PointEnd"]));
+                            points.Add(p);
+                        }
+                        GMapRoute r = new GMapRoute(points, "");
+                        r.Stroke = new Pen(Color.Red, 1);
+                        airRouteOverlay.Routes.Add(r);
+                    }
+                }
+
+                gMapControl1.Refresh();
+            }
+            else
+            {
+                if (1 == flag)
+                {
+                    airRoute = false;
+                    airRouteOverlay.Clear();
+                    this.gMapControl1.Overlays.Remove(airRouteOverlay);
+                    gMapControl1.Refresh();
+                }
+            }
+        }
+
+        /**
+        * 根据航站点名称获得机场信息
+        * */
+        private PointLatLng geAirPorttByName(String name)
+        {
+            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort WHERE Name = '" + name + "'");
+            double lat = Convert.ToDouble(result[0]["Lat"]);
+            double lang = Convert.ToDouble(result[0]["Lng"]);
+            return new PointLatLng(lat, lang);
         }
 
         /**
@@ -292,6 +388,7 @@ namespace ADSB.MainUI
             {
                 airPort = true;
                 airPortOverlay.Clear();
+                this.gMapControl1.Overlays.Add(airPortOverlay);
 
                 List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
                 foreach (Dictionary<string, object> dictionary in result)
@@ -299,20 +396,15 @@ namespace ADSB.MainUI
                     String name = Convert.ToString(dictionary["Name"]);
                     double lat = Convert.ToDouble(dictionary["Lat"]);
                     double lang = Convert.ToDouble(dictionary["Lng"]);
-                    int num = Convert.ToInt16(dictionary["Num"]);
-                    double length = Convert.ToDouble(dictionary["Length"]);
                     PointLatLng point = new PointLatLng(lat, lang);
                     GMapAirPort gMapAirSegment = new GMapAirPort(point, name);
                     airPortOverlay.Markers.Add(gMapAirSegment);
-                    while (num > 0)
-                    {
-                        GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)length * num);
-                        airPortOverlay.Markers.Add(gMapMarkerCircle);
-                        num--;
-                    }
                 }
-                this.gMapControl1.Overlays.Add(airPortOverlay);
+                
                 gMapControl1.Refresh();
+
+                // 是否要显示距离环
+                frm_changebox11_event(airPortDistenceCircle);
             }
             else
             {
@@ -335,6 +427,7 @@ namespace ADSB.MainUI
             {
                 wayPoint = true;
                 wayPointOverlay.Clear();
+                this.gMapControl1.Overlays.Add(wayPointOverlay);
 
                 listWayPoint = new List<GMapWayPoint>();
                 List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM WayPoint");
@@ -352,7 +445,7 @@ namespace ADSB.MainUI
                 {
                     wayPointOverlay.Markers.Add(wayPoint);
                 }
-                this.gMapControl1.Overlays.Add(wayPointOverlay);
+                
                 gMapControl1.Refresh();
             }
             else
@@ -378,6 +471,7 @@ namespace ADSB.MainUI
                 {
                     landStation = true;
                     landStationOverlay.Clear();
+                    this.gMapControl1.Overlays.Add(landStationOverlay);
 
                     List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
                     
@@ -386,20 +480,15 @@ namespace ADSB.MainUI
                         String name = Convert.ToString(dictionary["Name"]);
                         double lat = Convert.ToDouble(dictionary["Lat"]);
                         double lang = Convert.ToDouble(dictionary["Lng"]);
-                        int num = Convert.ToInt16(dictionary["Num"]);
-                        double length = Convert.ToDouble(dictionary["Length"]);
                         PointLatLng point = new PointLatLng(lat, lang);
                         GMapLandStation gMapLandStation = new GMapLandStation(point, name);
                         landStationOverlay.Markers.Add(gMapLandStation);
-                        while (num > 0)
-                        {
-                            GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)length * num);
-                            landStationOverlay.Markers.Add(gMapMarkerCircle);
-                            num--;
-                        }
                     }
-                    this.gMapControl1.Overlays.Add(landStationOverlay);
+                    
                     gMapControl1.Refresh();
+
+                    // 是否要显示距离环
+                    frm_changebox10_event(landDistenceCircle);
                 }
             }
             else
@@ -412,75 +501,96 @@ namespace ADSB.MainUI
                     gMapControl1.Refresh();
                 }
             }
+            initListAirplaneCheck(false);
         }
 
-        // 航迹圈 作废 暂时不做
-        //void frm_changebox9_event(Boolean selected)
-        //{
-        //    if (selected)
-        //    {
-        //        flightCircle = true;
-        //        flightCircleOverlay.Clear();
-        //        if (landStation)
-        //        {
-        //            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
-        //            foreach (Dictionary<string, object> dictionary in result)
-        //            {
-        //                String name = Convert.ToString(dictionary["Name"]);
-        //                double lat = Convert.ToDouble(dictionary["Lat"]);
-        //                double lang = Convert.ToDouble(dictionary["Lng"]);
-        //                double length = Convert.ToDouble(dictionary["Length"]);
-        //                int num = Convert.ToInt16(dictionary["Num"]);
-        //                while (num > 0)
-        //                {
-        //                    PointLatLng point = new PointLatLng(lat, lang);
-        //                    GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)length * num);
-        //                    flightCircleOverlay.Markers.Add(gMapMarkerCircle);
-        //                    num--;
-        //                }
-        //                //PointLatLng point = new PointLatLng(lat, lang);
-        //                //GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 10000);
-        //                //GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 20000);
-        //                //flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
-        //                //flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
-        //            }
-        //        }
+        // 航迹圈
+        void frm_changebox9_event(Boolean selected)
+        {
+            if (selected)
+            {
+                flightCircle = true;
+            }
+            else
+            {
+                flightCircle = false;
+            }
+        }
 
-        //        if(airPort)
-        //        {
-        //            List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
-        //            foreach (Dictionary<string, object> dictionary in result)
-        //            {
-        //                String name = Convert.ToString(dictionary["Name"]);
-        //                double lat = Convert.ToDouble(dictionary["Lat"]);
-        //                double lang = Convert.ToDouble(dictionary["Lng"]);
-        //                PointLatLng point = new PointLatLng(lat, lang);
-        //                GMapMarkerCircle gMapMarkerCircle1 = new GMapMarkerCircle(point, 10000);
-        //                GMapMarkerCircle gMapMarkerCircle2 = new GMapMarkerCircle(point, 20000);
-        //                GMapMarkerCircle gMapMarkerCircle3 = new GMapMarkerCircle(point, 30000);
-        //                GMapMarkerCircle gMapMarkerCircle4 = new GMapMarkerCircle(point, 40000);
-        //                GMapMarkerCircle gMapMarkerCircle5 = new GMapMarkerCircle(point, 50000);
-        //                flightCircleOverlay.Markers.Add(gMapMarkerCircle1);
-        //                flightCircleOverlay.Markers.Add(gMapMarkerCircle2);
-        //                flightCircleOverlay.Markers.Add(gMapMarkerCircle3);
-        //                flightCircleOverlay.Markers.Add(gMapMarkerCircle4);
-        //                flightCircleOverlay.Markers.Add(gMapMarkerCircle5);
-        //            }
-        //        }
+        // 地面站距离环
+        void frm_changebox10_event(Boolean selected)
+        {
+            if (selected)
+            {
+                landDistenceCircle = true;
+                landCircleOverlay.Clear();
+                this.gMapControl1.Overlays.Add(landCircleOverlay);
+                if (landStation)
+                {
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM LandStation");
+                    foreach (Dictionary<string, object> dictionary in result)
+                    {
+                        String name = Convert.ToString(dictionary["Name"]);
+                        double lat = Convert.ToDouble(dictionary["Lat"]);
+                        double lang = Convert.ToDouble(dictionary["Lng"]);
+                        double length = Convert.ToDouble(dictionary["Length"]);
+                        int num = Convert.ToInt16(dictionary["Num"]);
+                        while (num > 0)
+                        {
+                            PointLatLng point = new PointLatLng(lat, lang);
+                            GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)length * num);
+                            landCircleOverlay.Markers.Add(gMapMarkerCircle);
+                            num--;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                landDistenceCircle = false;
+                landCircleOverlay.Clear();
+                this.gMapControl1.Overlays.Remove(landCircleOverlay);
+            }
+            gMapControl1.Refresh();
+        }
 
-        //        this.gMapControl1.Overlays.Add(flightCircleOverlay);
-        //    }
-        //    else
-        //    {
-        //        flightCircle = false;
-        //        flightCircleOverlay.Clear();
-        //        this.gMapControl1.Overlays.Remove(flightCircleOverlay);
-        //    }
-        //    gMapControl1.Refresh();
-        //}
+        // 机场距离环
+        void frm_changebox11_event(Boolean selected)
+        {
+            if (selected)
+            {
+                airPortDistenceCircle = true;
+                flightCircleOverlay.Clear();
+                this.gMapControl1.Overlays.Add(flightCircleOverlay);
 
-
-     
+                if (airPort)
+                {
+                    List<Dictionary<string, object>> result = ProfileHelper.Instance.Select("SELECT * FROM AirPort");
+                    foreach (Dictionary<string, object> dictionary in result)
+                    {
+                        String name = Convert.ToString(dictionary["Name"]);
+                        double lat = Convert.ToDouble(dictionary["Lat"]);
+                        double lang = Convert.ToDouble(dictionary["Lng"]);
+                        double length = Convert.ToDouble(dictionary["Length"]);
+                        int num = Convert.ToInt16(dictionary["Num"]);
+                        while (num > 0)
+                        {
+                            PointLatLng point = new PointLatLng(lat, lang);
+                            GMapMarkerCircle gMapMarkerCircle = new GMapMarkerCircle(point, (int)length * num);
+                            flightCircleOverlay.Markers.Add(gMapMarkerCircle);
+                            num--;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                airPortDistenceCircle = false;
+                flightCircleOverlay.Clear();
+                this.gMapControl1.Overlays.Remove(flightCircleOverlay);
+            }
+            gMapControl1.Refresh();
+        }
 
         //地面站
         private void sPnl_dimianzhan_Click(object sender, EventArgs e)

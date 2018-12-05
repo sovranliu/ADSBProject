@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_landStation));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_wayPoint));
             this.skinLabel1 = new CCWin.SkinControl.SkinLabel();
             this.sPnl_close = new CCWin.SkinControl.SkinPanel();
             this.skinButton1 = new CCWin.SkinControl.SkinButton();
@@ -58,9 +58,9 @@
             this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(93)))), ((int)(((byte)(201)))));
             this.skinLabel1.Location = new System.Drawing.Point(175, 22);
             this.skinLabel1.Name = "skinLabel1";
-            this.skinLabel1.Size = new System.Drawing.Size(96, 28);
+            this.skinLabel1.Size = new System.Drawing.Size(117, 28);
             this.skinLabel1.TabIndex = 2;
-            this.skinLabel1.Text = "机场管理";
+            this.skinLabel1.Text = "航路点管理";
             // 
             // sPnl_close
             // 
@@ -351,6 +351,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -359,10 +360,11 @@
             this.Column3});
             this.dataGridView1.Location = new System.Drawing.Point(66, 404);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(345, 292);
             this.dataGridView1.TabIndex = 23;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -382,7 +384,7 @@
             this.Column3.HeaderText = "纬度";
             this.Column3.Name = "Column3";
             // 
-            // Form_landStation
+            // Form_wayPoint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -402,11 +404,11 @@
             this.Controls.Add(this.sPnl_close);
             this.Controls.Add(this.skinLabel1);
             this.Location = new System.Drawing.Point(0, 0);
-            this.Name = "Form_landStation";
+            this.Name = "Form_wayPoint";
             this.Text = "Form_landStation";
+            this.TopMost = false;
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.TopMost = false;
             this.PerformLayout();
 
         }
