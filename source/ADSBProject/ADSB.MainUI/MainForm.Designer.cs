@@ -76,6 +76,18 @@ namespace ADSB.MainUI
             this.sLabel2 = new CCWin.SkinControl.SkinLabel();
             this.slabel1 = new CCWin.SkinControl.SkinLabel();
             this.sTpMonitor = new CCWin.SkinControl.SkinTabPage();
+            this.spMax = new CCWin.SkinControl.SkinPanel();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.spMin = new CCWin.SkinControl.SkinPanel();
             this.spClose = new CCWin.SkinControl.SkinPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -120,6 +132,7 @@ namespace ADSB.MainUI
             this.skinLine9 = new CCWin.SkinControl.SkinLine();
             this.skinLine8 = new CCWin.SkinControl.SkinLine();
             this.skinPanel3 = new CCWin.SkinControl.SkinPanel();
+            this.skinLine12 = new CCWin.SkinControl.SkinLine();
             this.skinLabel14 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel14 = new CCWin.SkinControl.SkinPanel();
             this.skinPanel13 = new CCWin.SkinControl.SkinPanel();
@@ -131,7 +144,6 @@ namespace ADSB.MainUI
             this.skinLabel22 = new CCWin.SkinControl.SkinLabel();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
-            this.skinLine12 = new CCWin.SkinControl.SkinLine();
             this.sTabControl.SuspendLayout();
             this.sTpFly.SuspendLayout();
             this.skinPanel7.SuspendLayout();
@@ -140,6 +152,7 @@ namespace ADSB.MainUI
             this.skinPanel4.SuspendLayout();
             this.sPanelMonitor.SuspendLayout();
             this.sTpMonitor.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.skinPanel15.SuspendLayout();
             this.skinPanel3.SuspendLayout();
@@ -829,6 +842,13 @@ namespace ADSB.MainUI
             // sTpMonitor
             // 
             this.sTpMonitor.BackColor = System.Drawing.Color.Transparent;
+            this.sTpMonitor.Controls.Add(this.spMax);
+            this.sTpMonitor.Controls.Add(this.textBox5);
+            this.sTpMonitor.Controls.Add(this.textBox4);
+            this.sTpMonitor.Controls.Add(this.textBox3);
+            this.sTpMonitor.Controls.Add(this.textBox2);
+            this.sTpMonitor.Controls.Add(this.textBox1);
+            this.sTpMonitor.Controls.Add(this.panel1);
             this.sTpMonitor.Controls.Add(this.spMin);
             this.sTpMonitor.Controls.Add(this.spClose);
             this.sTpMonitor.Controls.Add(this.dataGridView1);
@@ -850,14 +870,141 @@ namespace ADSB.MainUI
             this.sTpMonitor.TabItemImage = null;
             this.sTpMonitor.Text = "skinTabPage2";
             // 
+            // spMax
+            // 
+            this.spMax.BackColor = System.Drawing.Color.White;
+            this.spMax.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spMax.BackgroundImage")));
+            this.spMax.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.spMax.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.spMax.DownBack = null;
+            this.spMax.Location = new System.Drawing.Point(1221, 0);
+            this.spMax.Margin = new System.Windows.Forms.Padding(0);
+            this.spMax.MouseBack = null;
+            this.spMax.Name = "spMax";
+            this.spMax.NormlBack = null;
+            this.spMax.Size = new System.Drawing.Size(30, 30);
+            this.spMax.TabIndex = 30;
+            this.spMax.Click += new System.EventHandler(this.spMax_Click);
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(150, 184);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(100, 21);
+            this.textBox5.TabIndex = 35;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(150, 150);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 21);
+            this.textBox4.TabIndex = 34;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(150, 116);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 21);
+            this.textBox3.TabIndex = 33;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(150, 82);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 32;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(150, 48);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 31;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackColor = System.Drawing.Color.OldLace;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(31, 35);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(235, 182);
+            this.panel1.TabIndex = 36;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.White;
+            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label5.Location = new System.Drawing.Point(27, 153);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 16);
+            this.label5.TabIndex = 41;
+            this.label5.Text = "高度：";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.White;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label4.Location = new System.Drawing.Point(27, 119);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 16);
+            this.label4.TabIndex = 40;
+            this.label4.Text = "纬度：";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label3.Location = new System.Drawing.Point(27, 85);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 16);
+            this.label3.TabIndex = 39;
+            this.label3.Text = "经度：";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label2.Location = new System.Drawing.Point(35, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 16);
+            this.label2.TabIndex = 38;
+            this.label2.Text = "FID：";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.label1.Location = new System.Drawing.Point(16, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 16);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "S模式地址：";
+            // 
             // spMin
             // 
-            this.spMin.BackColor = System.Drawing.Color.Transparent;
+            this.spMin.BackColor = System.Drawing.Color.White;
             this.spMin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spMin.BackgroundImage")));
             this.spMin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.spMin.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.spMin.DownBack = null;
-            this.spMin.Location = new System.Drawing.Point(1220, 0);
+            this.spMin.Location = new System.Drawing.Point(1191, 0);
             this.spMin.Margin = new System.Windows.Forms.Padding(0);
             this.spMin.MouseBack = null;
             this.spMin.Name = "spMin";
@@ -868,7 +1015,7 @@ namespace ADSB.MainUI
             // 
             // spClose
             // 
-            this.spClose.BackColor = System.Drawing.Color.Transparent;
+            this.spClose.BackColor = System.Drawing.Color.White;
             this.spClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spClose.BackgroundImage")));
             this.spClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.spClose.ControlState = CCWin.SkinClass.ControlState.Normal;
@@ -1439,6 +1586,18 @@ namespace ADSB.MainUI
             this.skinPanel3.Size = new System.Drawing.Size(353, 63);
             this.skinPanel3.TabIndex = 14;
             // 
+            // skinLine12
+            // 
+            this.skinLine12.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine12.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine12.LineHeight = 100;
+            this.skinLine12.Location = new System.Drawing.Point(280, 19);
+            this.skinLine12.Margin = new System.Windows.Forms.Padding(0);
+            this.skinLine12.Name = "skinLine12";
+            this.skinLine12.Size = new System.Drawing.Size(7, 26);
+            this.skinLine12.TabIndex = 23;
+            this.skinLine12.Text = "skinLine12";
+            // 
             // skinLabel14
             // 
             this.skinLabel14.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
@@ -1573,12 +1732,16 @@ namespace ADSB.MainUI
             // 
             // gMapControl1
             // 
+            this.gMapControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gMapControl1.BackColor = System.Drawing.Color.MistyRose;
             this.gMapControl1.Bearing = 0F;
+            this.gMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gMapControl1.CanDragMap = true;
             this.gMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
             this.gMapControl1.GrayScaleMode = false;
             this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gMapControl1.ImeMode = System.Windows.Forms.ImeMode.On;
             this.gMapControl1.LevelsKeepInMemmory = 5;
             this.gMapControl1.Location = new System.Drawing.Point(0, 0);
             this.gMapControl1.MarkersEnabled = true;
@@ -1597,20 +1760,9 @@ namespace ADSB.MainUI
             this.gMapControl1.TabIndex = 0;
             this.gMapControl1.Zoom = 0D;
             this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
+            this.gMapControl1.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.sMonitorDis_MouseOn);
             this.gMapControl1.Load += new System.EventHandler(this.gMapControl1_Load);
             this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
-            // 
-            // skinLine12
-            // 
-            this.skinLine12.BackColor = System.Drawing.Color.Transparent;
-            this.skinLine12.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
-            this.skinLine12.LineHeight = 100;
-            this.skinLine12.Location = new System.Drawing.Point(280, 19);
-            this.skinLine12.Margin = new System.Windows.Forms.Padding(0);
-            this.skinLine12.Name = "skinLine12";
-            this.skinLine12.Size = new System.Drawing.Size(7, 26);
-            this.skinLine12.TabIndex = 23;
-            this.skinLine12.Text = "skinLine12";
             // 
             // MainForm
             // 
@@ -1638,6 +1790,9 @@ namespace ADSB.MainUI
             this.sPanelMonitor.ResumeLayout(false);
             this.sPanelMonitor.PerformLayout();
             this.sTpMonitor.ResumeLayout(false);
+            this.sTpMonitor.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.skinPanel15.ResumeLayout(false);
             this.skinPanel15.PerformLayout();
@@ -1749,6 +1904,18 @@ namespace ADSB.MainUI
         private DataGridViewCheckBoxColumn cb_check;
         private CCWin.SkinControl.SkinLabel skinLabel14;
         private CCWin.SkinControl.SkinLine skinLine12;
+        private TextBox textBox1;
+        private TextBox textBox5;
+        private TextBox textBox4;
+        private TextBox textBox3;
+        private TextBox textBox2;
+        private Panel panel1;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private CCWin.SkinControl.SkinPanel spMax;
         // private Sunisoft.IrisSkin.SkinEngine skinEngine1;
     }
 }

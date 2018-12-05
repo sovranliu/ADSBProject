@@ -293,6 +293,8 @@ namespace ADSB.MainUI
             ConfigHelper.Instance.SetConfig("my_emitterCategory", tmpData.emitterCategory.ToString());
         }
 
+       
+
         private void sMonitorDis_MouseDown(object sender, MouseEventArgs e)
         {
             // 测距模式
@@ -326,6 +328,35 @@ namespace ADSB.MainUI
                 
                 distinceOverlay.Routes.Add(r);
                 gMapControl1.Refresh();
+            }
+            
+        }
+
+        private void sMonitorDis_MouseOn(GMapMarker item)
+        {
+
+            if (item is GMapAirPlane)
+            {
+                //ToolTipText = "S模式地址：" + data.sModeAddress.ToString() + "\r\n"
+                //            // + "SSR: " + "0" + "\r\n"
+                //            + "FID: " + data.flightNo.ToString() + "\r\n"
+                //            + "经度: " + p.Lat.ToString() + "\r\n"
+                //            + "纬度: " + p.Lng.ToString() + "\r\n"
+                //            + "高度：" + data.geometricAltitude.ToString() + "\r\n";
+
+                GMapAirPlane gMapAirPlane = item as GMapAirPlane;
+                textBox1.Text = gMapAirPlane.AirPlaneMarkerInfo.sModeAddress.ToString();
+                textBox2.Text = gMapAirPlane.AirPlaneMarkerInfo.flightNo.ToString();
+                textBox3.Text = gMapAirPlane.AirPlaneMarkerInfo.latitude.ToString();
+                textBox4.Text = gMapAirPlane.AirPlaneMarkerInfo.longtitude.ToString();
+                textBox5.Text = gMapAirPlane.AirPlaneMarkerInfo.geometricAltitude.ToString();
+
+                panel1.Visible = true;
+                textBox1.Visible = true;
+                textBox2.Visible = true;
+                textBox3.Visible = true;
+                textBox4.Visible = true;
+                textBox5.Visible = true;
             }
             
         }
@@ -391,6 +422,15 @@ namespace ADSB.MainUI
                         ProfileHelper.Instance.Update("Delete FROM PlaneFollow WHERE Type = 2 AND IDNum = \"" + id + "\"");
                     }
                 }
+            }
+            else
+            {
+                panel1.Visible = false;
+                textBox1.Visible = false;
+                textBox2.Visible = false;
+                textBox3.Visible = false;
+                textBox4.Visible = false;
+                textBox5.Visible = false;
             }
             initListAirplaneCheck(false);
         }
@@ -994,6 +1034,10 @@ namespace ADSB.MainUI
             }
         }
 
+        private void spMax_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
 
         private void spMin_Click(object sender, EventArgs e)
         {
@@ -1016,6 +1060,7 @@ namespace ADSB.MainUI
             string path1 = Environment.CurrentDirectory + "\\MapDownloader\\bin\\Release\\MapDownloader.exe";  //打开D盘下的log.txt文件
             System.Diagnostics.Process.Start(path1);
         }
+
     }
 }
 

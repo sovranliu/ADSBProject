@@ -237,15 +237,15 @@ namespace ADSB.MainUI
 
             airplaneInfo = data;
 
-            ToolTipMode = MarkerTooltipMode.OnMouseOver;
-            ToolTipText = "S模式地址：" + data.sModeAddress.ToString() + "\r\n"
-                       // + "SSR: " + "0" + "\r\n"
-                        + "FID: " + data.flightNo.ToString() + "\r\n"
-                        + "经度: " + p.Lat.ToString() + "\r\n"
-                        + "纬度: " + p.Lng.ToString() + "\r\n"
-                        + "高度：" + data.geometricAltitude.ToString() + "\r\n";
+            //ToolTipMode = MarkerTooltipMode.OnMouseOver;
+            //ToolTipText = "S模式地址：" + data.sModeAddress.ToString() + "\r\n"
+            //           // + "SSR: " + "0" + "\r\n"
+            //            + "FID: " + data.flightNo.ToString() + "\r\n"
+            //            + "经度: " + p.Lat.ToString() + "\r\n"
+            //            + "纬度: " + p.Lng.ToString() + "\r\n"
+            //            + "高度：" + data.geometricAltitude.ToString() + "\r\n";
 
-            ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
+            //ToolTip.Fill = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
             
 
         }
