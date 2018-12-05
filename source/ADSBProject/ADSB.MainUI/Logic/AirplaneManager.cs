@@ -77,7 +77,7 @@ namespace ADSB.MainUI
                 List<Cat021Data> t2 = new List<Cat021Data>(airplaneList.ToArray()); // copy of airplaneList
 
                 SoundPlayer player = new SoundPlayer();
-                player.SoundLocation = @"C:\alarm.wav";
+                player.SoundLocation = Environment.CurrentDirectory + "\\UIDesign\\监控模式pc\\assets\\alarm.wav";
                 player.Load(); //同步加载声音
 
 
@@ -104,8 +104,8 @@ namespace ADSB.MainUI
                         }
                         if ("YES".Equals(ConfigHelper.Instance.GetConfig("alarm_type2")))
                         {
-                            // System.Media.SystemSounds.Exclamation.Play();
-                            // player.Play(); //启用新线程播放
+                            System.Media.SystemSounds.Exclamation.Play();
+                            player.Play(); //启用新线程播放
                         }
                     }
                     else
