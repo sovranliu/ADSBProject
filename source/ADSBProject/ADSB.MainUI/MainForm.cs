@@ -118,10 +118,10 @@ namespace ADSB.MainUI
 
             this.Region = new Region(
                          new RectangleF(
-                         this.sTpFly.Left,
-                         this.sTpFly.Top,
-                         this.sTpFly.Width,
-                         this.sTpFly.Height));
+                         this.gMapControl1.Left,
+                         this.gMapControl1.Top,
+                         this.gMapControl1.Width,
+                         this.gMapControl1.Height));
 
             InitializeUI();
             initListAirplaneCheck(true);
@@ -655,8 +655,8 @@ namespace ADSB.MainUI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.sTabControl.SelectedIndex = 1;
-            this.sTpFly.BackColor = Color.FromArgb(240, 80, 80, 80);
+            //this.sTabControl.SelectedIndex = 1;
+            //this.sTpFly.BackColor = Color.FromArgb(240, 80, 80, 80);
             SetClassLong(this.Handle, GCL_STYLE, GetClassLong(this.Handle, GCL_STYLE) | CS_DropSHADOW);
             InitializeGMap();
 
@@ -681,14 +681,14 @@ namespace ADSB.MainUI
             //显示飞行模式界面
             //flyTimer.Stop();
             //CommSocketManager.Stop();
-            this.sTabControl.SelectedIndex = 0;
+            //this.sTabControl.SelectedIndex = 0;
         }
 
         //飞行监控按钮
         private void sPanelMonitor_Click(object sender, EventArgs e)
         {
             //显示飞行监控界面
-            this.sTabControl.SelectedIndex = 1;
+           // this.sTabControl.SelectedIndex = 1;
             //CommSocketManager.Start();
             //flyTimer.Interval = 1000;
             //flyTimer.Start();
@@ -1036,7 +1036,9 @@ namespace ADSB.MainUI
 
         private void spMax_Click(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+
         }
 
         private void spMin_Click(object sender, EventArgs e)

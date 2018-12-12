@@ -21,12 +21,12 @@ namespace ADSB.MainUI
         //模式按钮
 
         //扩展罗盘按钮
-        private void sLabel_expandCompass_Click(object sender, EventArgs e)
-        {
-            sPnl_Compass.Visible = false;
-            Form test = new Form_status();
-            test.ShowDialog();
-        }
+        //private void sLabel_expandCompass_Click(object sender, EventArgs e)
+        //{
+        //    sPnl_Compass.Visible = false;
+        //    Form test = new Form_status();
+        //    test.ShowDialog();
+        //}
 
         //航迹按钮
 
@@ -35,13 +35,13 @@ namespace ADSB.MainUI
 
 
         //高度过滤按钮
-        private void sLabelAltitude_Click(object sender, EventArgs e)
-        {
-            sPnl_Compass.Visible = false;
-            Form test = new Form_gaodu();
-            test.ShowDialog();
+        //private void sLabelAltitude_Click(object sender, EventArgs e)
+        //{
+        //    sPnl_Compass.Visible = false;
+        //    Form test = new Form_gaodu();
+        //    test.ShowDialog();
 
-        }
+        //}
 
         //距离过滤按钮
         private void sLabel_distanceFilter_Click(object sender, EventArgs e)
@@ -51,23 +51,23 @@ namespace ADSB.MainUI
         }
 
         //本机信息按钮
-        private void sLabel_info_Click(object sender, EventArgs e)
-        {
-            sPnl_Compass.Visible = false;
-            Form test = new Form_info();
-            test.ShowDialog();
-        }
+        //private void sLabel_info_Click(object sender, EventArgs e)
+        //{
+        //    sPnl_Compass.Visible = false;
+        //    Form test = new Form_info();
+        //    test.ShowDialog();
+        //}
 
         //功能按钮
 
 
         //量程过滤按钮
-        private void sPnl_liangcheng_Click(object sender, EventArgs e)
-        {
-            sPnl_Compass.Visible = false;
-            Form test = new Form_liangcheng();
-            test.ShowDialog();
-        }
+        //private void sPnl_liangcheng_Click(object sender, EventArgs e)
+        //{
+        //    sPnl_Compass.Visible = false;
+        //    Form test = new Form_liangcheng();
+        //    test.ShowDialog();
+        //}
         #endregion
 
         private void sPnl_Func_Paint(object sender, PaintEventArgs e)
