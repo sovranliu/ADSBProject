@@ -108,6 +108,12 @@ namespace ADSB.MainUI
 
                 Form_mapTool test = new Form_mapTool();
 
+                test.changebox1_event += new Form_mapTool.changebox1(frm_changebox1_event);
+                // 初始化飞机checkbox
+                if (airPlaneShow)
+                {
+                    test.myCheckBox1_Selected();
+                }
                 test.changebox2_event += new Form_mapTool.changebox2(frm_changebox2_event);
                 // 初始化飞机场checkbox
                 if (airSpace)
@@ -173,6 +179,21 @@ namespace ADSB.MainUI
 
                 test.ShowDialog();
                 mapmask.Visible = false;
+            }
+        }
+
+        // 地面站距离环
+        void frm_changebox1_event(Boolean selected)
+        {
+            if (selected)
+            {
+                airPlaneShow = true;
+                //ConfigHelper.Instance.SetConfig("airPlaneShowNeedShow", "1");
+            }
+            else
+            {
+                airPlaneShow = false;
+                //ConfigHelper.Instance.SetConfig("airPlaneShowNeedShow", "0");
             }
         }
 

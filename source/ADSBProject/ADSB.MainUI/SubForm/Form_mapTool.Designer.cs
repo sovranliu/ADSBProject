@@ -341,6 +341,7 @@
             this.skinPanel1.NormlBack = null;
             this.skinPanel1.Size = new System.Drawing.Size(18, 22);
             this.skinPanel1.TabIndex = 45;
+            this.skinPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.skinPanel1_Paint);
             // 
             // myCheckBox10
             // 
