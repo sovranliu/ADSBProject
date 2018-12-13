@@ -33,6 +33,9 @@ namespace ADSB.MainUI
         // 是否是测距模式
         private bool isDistince = false;
 
+        // 当前是否要展示飞机
+        private Boolean airPlaneShow;
+
         // 当前的关注对象（飞行器or地面站）
         private int currentFellowId = 0;
 
@@ -118,10 +121,10 @@ namespace ADSB.MainUI
 
             this.Region = new Region(
                          new RectangleF(
-                         this.sTpFly.Left,
-                         this.sTpFly.Top,
-                         this.sTpFly.Width,
-                         this.sTpFly.Height));
+                         this.gMapControl1.Left,
+                         this.gMapControl1.Top,
+                         this.gMapControl1.Width,
+                         this.gMapControl1.Height));
 
             InitializeUI();
             initListAirplaneCheck(true);
@@ -168,6 +171,10 @@ namespace ADSB.MainUI
                         listAirplaneCheck.Add(idNum, idNum);
                     this.dataGridView1.Rows[index].Cells[3].Value = length;
                     this.dataGridView1.Rows[index].Cells[5].Value = id.ToString();
+                    if (currentFellowId == id)
+                    {
+                        this.dataGridView1.Rows[index].Cells[0].Value = true;
+                    }
                 }
             }
 
@@ -194,6 +201,10 @@ namespace ADSB.MainUI
                     this.dataGridView1.Rows[index].Cells[4].Value = idNum;
                     this.dataGridView1.Rows[index].Cells[3].Value = length;
                     this.dataGridView1.Rows[index].Cells[5].Value = id.ToString();
+                    if (currentFellowId == id)
+                    {
+                        this.dataGridView1.Rows[index].Cells[0].Value = true;
+                    }
                 }
             }
 
@@ -440,8 +451,11 @@ namespace ADSB.MainUI
             planeOverlay.Markers.Clear();
 
             // 全部飞机展示
-            showAllPalne();
-
+            if (airPlaneShow)
+            {
+                showAllPalne();
+            }
+            
             // 展示关注飞机与指定地面站的虚线距离
             showLandStation();
 
@@ -655,8 +669,8 @@ namespace ADSB.MainUI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.sTabControl.SelectedIndex = 1;
-            this.sTpFly.BackColor = Color.FromArgb(240, 80, 80, 80);
+            //this.sTabControl.SelectedIndex = 1;
+            //this.sTpFly.BackColor = Color.FromArgb(240, 80, 80, 80);
             SetClassLong(this.Handle, GCL_STYLE, GetClassLong(this.Handle, GCL_STYLE) | CS_DropSHADOW);
             InitializeGMap();
 
@@ -673,6 +687,28 @@ namespace ADSB.MainUI
             panelEx1.BackColor = Color.FromArgb(45, 0, 0, 0);
             panelEx1.Parent = gMapControl1;
             panelEx1.Visible = false;
+
+            currentFellowId = Convert.ToInt32(ConfigHelper.Instance.GetConfig("currentFellowId"));
+            String airPlaneShowNeedShow = ConfigHelper.Instance.GetConfig("airPlaneShowNeedShow");
+            airPlaneShow = airPlaneShowNeedShow == null ? false : airPlaneShowNeedShow.Equals("1") ? true : false;
+            String landStationNeedShow = ConfigHelper.Instance.GetConfig("landStationNeedShow");
+            landStation = landStationNeedShow == null ? false : landStationNeedShow.Equals("1") ? true : false;
+            String airPortNeedShow = ConfigHelper.Instance.GetConfig("airPortNeedShow");
+            airPort = airPortNeedShow == null ? false : airPortNeedShow.Equals("1") ? true : false;
+            String wayPointNeedShow = ConfigHelper.Instance.GetConfig("wayPointNeedShow");
+            wayPoint = wayPointNeedShow == null ? false : wayPointNeedShow.Equals("1") ? true : false;
+            String airSegmentNeedShow = ConfigHelper.Instance.GetConfig("airSegmentNeedShow");
+            airSegment = airSegmentNeedShow == null ? false : airSegmentNeedShow.Equals("1") ? true : false;
+            String airSpaceNeedShow = ConfigHelper.Instance.GetConfig("airSpaceNeedShow");
+            airSpace = airSpaceNeedShow == null ? false : airSpaceNeedShow.Equals("1") ? true : false;
+            String flightCircleNeedShow = ConfigHelper.Instance.GetConfig("flightCircleNeedShow");
+            flightCircle = flightCircleNeedShow == null ? false : flightCircleNeedShow.Equals("1") ? true : false;
+            String landDistenceCircleNeedShow = ConfigHelper.Instance.GetConfig("landDistenceCircleNeedShow");
+            landDistenceCircle = landDistenceCircleNeedShow == null ? false : landDistenceCircleNeedShow.Equals("1") ? true : false;
+            String airPortDistenceCircleNeedShow = ConfigHelper.Instance.GetConfig("airPortDistenceCircleNeedShow");
+            airPortDistenceCircle = airPortDistenceCircleNeedShow == null ? false : airPortDistenceCircleNeedShow.Equals("1") ? true : false;
+            String airRouteNeedShow = ConfigHelper.Instance.GetConfig("airRouteNeedShow");
+            airRoute = airRouteNeedShow == null ? false : airRouteNeedShow.Equals("1") ? true : false;
         }
 
         //飞行模式按钮
@@ -681,14 +717,14 @@ namespace ADSB.MainUI
             //显示飞行模式界面
             //flyTimer.Stop();
             //CommSocketManager.Stop();
-            this.sTabControl.SelectedIndex = 0;
+            //this.sTabControl.SelectedIndex = 0;
         }
 
         //飞行监控按钮
         private void sPanelMonitor_Click(object sender, EventArgs e)
         {
             //显示飞行监控界面
-            this.sTabControl.SelectedIndex = 1;
+           // this.sTabControl.SelectedIndex = 1;
             //CommSocketManager.Start();
             //flyTimer.Interval = 1000;
             //flyTimer.Start();
@@ -1015,14 +1051,11 @@ namespace ADSB.MainUI
             int index = dataGridView1.CurrentRow.Index;
             this.dataGridView1.Rows[e.RowIndex].Selected = true;
 
-            if (Convert.ToBoolean(dataGridView1.Rows[index].Cells[0].Value))
-            {
-                dataGridView1.Rows[index].Cells[0].Value = false;
-                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
-            }
-            else
+            if (!Convert.ToBoolean(dataGridView1.Rows[index].Cells[0].Value))
             {
                 dataGridView1.Rows[index].Cells[0].Value = true;
+                currentFellowId = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[5].Value);
+                ConfigHelper.Instance.SetConfig("currentFellowId", currentFellowId.ToString());
                 //其他的都是false
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
@@ -1032,11 +1065,17 @@ namespace ADSB.MainUI
                     }
                 }
             }
+            else
+            {
+                dataGridView1.Rows[index].Cells[0].Value = false;
+            }
         }
 
         private void spMax_Click(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+
         }
 
         private void spMin_Click(object sender, EventArgs e)

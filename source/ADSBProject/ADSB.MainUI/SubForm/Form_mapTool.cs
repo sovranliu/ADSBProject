@@ -13,6 +13,10 @@ namespace ADSB.MainUI.SubForm
 {
     public partial class Form_mapTool : Form_aTemplate
     {
+        // 1-飞行器是否展示
+        public delegate void changebox1(Boolean selected);
+        public event changebox1 changebox1_event;
+
         // 1-空域checkbox选择显示，2-新增、删除了关注
         public delegate void changebox2(Boolean selected, int flag);
         public event changebox2 changebox2_event;
@@ -76,14 +80,22 @@ namespace ADSB.MainUI.SubForm
 
         }
 
+        // 飞行器
+        public void myCheckBox1_Selected()
+        {
+            myCheckBox1.Checked = true;
+        }
+
         // 空域
         private void myCheckBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (myCheckBox2.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("airSpaceNeedShow", "1");
                 changebox2_event(true, 1);
                 return;
             }
+            ConfigHelper.Instance.SetConfig("airSpaceNeedShow", "0");
             changebox2_event(false, 1);
         }
 
@@ -97,9 +109,11 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox3.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("airSegmentNeedShow", "1");
                 changebox3_event(true, 1);
                 return;
             }
+            ConfigHelper.Instance.SetConfig("airSegmentNeedShow", "0");
             changebox3_event(false, 1);
         }
 
@@ -114,10 +128,12 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox4.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("airPortNeedShow", "1");
                 changebox4_event(true, 1);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("airPortNeedShow", "0");
                 changebox4_event(false, 1);
             }
 
@@ -134,9 +150,11 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox5.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("wayPointNeedShow", "1");
                 changebox5_event(true, 1);
                 return;
             }
+            ConfigHelper.Instance.SetConfig("wayPointNeedShow", "0");
             changebox5_event(false, 1);
         }
 
@@ -150,10 +168,12 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox7.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("landStationNeedShow", "1");
                 changebox7_event(true, 1);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("landStationNeedShow", "0");
                 changebox7_event(false, 1);
             }
             box9Set();
@@ -170,10 +190,12 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox9.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("flightCircleNeedShow", "1");
                 changebox9_event(true);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("flightCircleNeedShow", "0");
                 changebox9_event(false);
             }
 
@@ -186,14 +208,17 @@ namespace ADSB.MainUI.SubForm
             myCheckBox9.Checked = true;
         }
 
+        // 机场
         private void box4Set()
         {
             if (myCheckBox4.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("airPortNeedShow", "1");
                 changebox4_event(true, 1);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("airPortNeedShow", "0");
                 if (changebox4_event != null)
                 {
                     changebox4_event(false, 1);
@@ -201,14 +226,17 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
+        // 地面站
         private void box7Set()
         {
             if (myCheckBox7.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("landStationNeedShow", "1");
                 changebox7_event(true, 1);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("landStationNeedShow", "0");
                 if (changebox7_event != null)
                 {
                     changebox7_event(false, 1);
@@ -216,14 +244,17 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
+        // 航迹圈
         private void box9Set()
         {
             if (myCheckBox9.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("flightCircleNeedShow", "1");
                 changebox9_event(true);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("flightCircleNeedShow", "0");
                 if (changebox9_event != null)
                 {
                     changebox9_event(false);
@@ -231,14 +262,17 @@ namespace ADSB.MainUI.SubForm
             }
         }
 
+        // 地面站距離環
         private void box10Set()
         {
             if (myCheckBox10.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("landDistenceCircleNeedShow", "1");
                 changebox10_event(true);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("landDistenceCircleNeedShow", "0");
                 if (changebox10_event != null)
                 {
                     changebox10_event(false);
@@ -253,9 +287,22 @@ namespace ADSB.MainUI.SubForm
             this.Close();
         }
 
+        // 飞行器是否展示
         private void myCheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (myCheckBox1.CheckState == CheckState.Checked)
+            {
+                ConfigHelper.Instance.SetConfig("airPlaneShowNeedShow", "1");
+                changebox1_event(true);
+            }
+            else
+            {
+                ConfigHelper.Instance.SetConfig("airPlaneShowNeedShow", "0");
+                if (changebox1_event != null)
+                {
+                    changebox1_event(false);
+                }
+            }
         }
 
         // 地面站距离环
@@ -263,10 +310,12 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox10.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("landDistenceCircleNeedShow", "1");
                 changebox10_event(true);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("landDistenceCircleNeedShow", "0");
                 if (changebox10_event != null)
                 {
                     changebox10_event(false);
@@ -284,10 +333,12 @@ namespace ADSB.MainUI.SubForm
         {
             if (myCheckBox11.CheckState == CheckState.Checked)
             {
+                ConfigHelper.Instance.SetConfig("airPortDistenceCircleNeedShow", "1");
                 changebox11_event(true);
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("airPortDistenceCircleNeedShow", "0");
                 if (changebox11_event != null)
                 {
                     changebox11_event(false);
@@ -315,9 +366,11 @@ namespace ADSB.MainUI.SubForm
             if (myCheckBox12.CheckState == CheckState.Checked)
             {
                 changebox12_event(true, 1);
+                ConfigHelper.Instance.SetConfig("airRouteNeedShow", "1");
             }
             else
             {
+                ConfigHelper.Instance.SetConfig("airRouteNeedShow", "0");
                 if (changebox12_event != null)
                 {
                     changebox12_event(false, 1);
@@ -328,6 +381,11 @@ namespace ADSB.MainUI.SubForm
         public void myCheckBox12_Selected()
         {
             myCheckBox12.Checked = true;
+        }
+
+        private void skinPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
