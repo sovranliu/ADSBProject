@@ -119,12 +119,12 @@ namespace ADSB.MainUI
         {
             InitializeComponent();
 
-            this.Region = new Region(
-                         new RectangleF(
-                         this.gMapControl1.Left,
-                         this.gMapControl1.Top,
-                         this.gMapControl1.Width,
-                         this.gMapControl1.Height));
+            //this.Region = new Region(
+            //             new RectangleF(
+            //             this.gMapControl1.Left,
+            //             this.gMapControl1.Top,
+            //             this.gMapControl1.Width,
+            //             this.gMapControl1.Height));
 
             InitializeUI();
             initListAirplaneCheck(true);
@@ -1100,6 +1100,19 @@ namespace ADSB.MainUI
             System.Diagnostics.Process.Start(path1);
         }
 
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            skinPanel15.Left = this.Width - 50 - skinPanel15.Width;
+            skinPanel3.Left = skinPanel15.Left - skinPanel3.Width + skinPanel15.Width;
+            button1.Left = skinPanel15.Left;
+            button2.Left = skinPanel15.Left;
+
+        }
+        
     }
 }
 
