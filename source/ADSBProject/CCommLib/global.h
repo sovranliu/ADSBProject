@@ -12,7 +12,7 @@
 #include <stdbool.h>
 #define PI 3.1415926535
 #define  e	(1/298.257223563)
-#define  alpha	6378137
+#define  ALPHA	6378137
 
 //DFmessage 最大接收范围，数值待定
 #define restrict_distance 90000
@@ -29,7 +29,7 @@ typedef enum {
 
 typedef struct {
     int sModeAddress;
-    char flightNo[8];
+    char flightNo[9];
     double latitude;
     double longtitude;
     double elapsedTime; //从当日零时起，所消耗的时间，单位秒
@@ -67,8 +67,16 @@ typedef enum {
     MACH //马赫
 } AirSpeedMode;
 
-//本地参考经纬度
-static LatLong ref_latLon;
+#ifdef __cplusplus
+extern "C" {
+#endif
+	//本地参考经纬度
+	extern LatLong ref_latLon;
+#ifdef __cplusplus
+};
+#endif
+
+
 //
 //本地gps经纬度
 static LatLong gps_latLon;

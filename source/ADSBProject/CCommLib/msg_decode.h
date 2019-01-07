@@ -12,4 +12,10 @@
 
 #endif /* msg_decode_h */
 
+extern "C" _declspec(dllexport) void init();
+
 extern "C" _declspec(dllexport) bool decodeMessage(BYTE message[]);
+
+extern "C" _declspec(dllexport) void setGPSLatLong(double latitude, double longtitude);
+
+extern "C" _declspec(dllexport) void setCat021Version(BYTE version);

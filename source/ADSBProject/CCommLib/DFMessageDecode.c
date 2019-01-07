@@ -47,10 +47,8 @@ void decodeAircraftId(BYTE meField[], Cat021Data* result) {
     result -> emitterCategory = decodeEmitterCategoryDF(bit0);
     BYTE code[6];
     memcpy(code, meField + 1, 6);
-    char* aircraftId = decodeTargetId(code, 6, 8);
-    memcpy(result -> flightNo, aircraftId, 8);
-    printf("aircraft id is %s\n", aircraftId);
-    free(aircraftId);
+    decodeTargetId(code, result -> flightNo, 6, 8);
+    result -> flightNo[8] = 0;
 }
 
 void decodeVelocity(BYTE meField[], Cat021Data* result) {
@@ -95,13 +93,16 @@ void decodeVelocity(BYTE meField[], Cat021Data* result) {
         } else if (ewDirection == 0 && nsDirection == 1) {
             angle = 90 + atan(nsV / ewV) * 180 / PI;
         } else if (ewDirection == 1 && nsDirection == 0) {
-            angle = 270 - atan(nsV / ewV) * 180 / PI;
-        } else if(ewDirection == 1 && nsDirection == 1) {
             angle = 270 + atan(nsV / ewV) * 180 / PI;
+        } else if(ewDirection == 1 && nsDirection == 1) {
+            angle = 270 - atan(nsV / ewV) * 180 / PI;
+        }
+        if (isnan(angle)) {
+            angle = 0;
         }
         result -> airSpeed = velocity;
         result -> aircraftAngle = angle;
-        printf("total velocity is %lf, angle is %lf", velocity, angle);
+        printf("total velocity is %lf, angle is %lf\n", velocity, angle);
     } else {
         BYTE headingStatus = (meBits << 21) >> 63;
         short heading = (meBits << 22) >> 54;
@@ -124,9 +125,9 @@ void decodeVelocity(BYTE meField[], Cat021Data* result) {
 }
 
 void decodePosition(BYTE positionType, bool lastUpdateEven, BYTE meEven[], BYTE meOdd[], Cat021Data* result) {
-    LONGX evenBits = byteArrayToLong(meEven, 7);
-    LONGX oddBits = byteArrayToLong(meOdd, 7);
-    LONGX newBits;
+    unsigned LONGX evenBits = byteArrayToLong(meEven, 7);
+    unsigned LONGX oddBits = byteArrayToLong(meOdd, 7);
+    unsigned LONGX newBits;
     if (lastUpdateEven) {
         newBits = evenBits;
     } else {
@@ -134,8 +135,8 @@ void decodePosition(BYTE positionType, bool lastUpdateEven, BYTE meEven[], BYTE 
     }
     if (positionType == AIRBORNE_POSITION) {
         short altitudeBits = (newBits << 16) >> 52;
-        BYTE hei1 = (altitudeBits >> 8) & 0xFF;
-        BYTE hei2 = altitudeBits & 0xFF;
+        BYTE hei1 = (altitudeBits >> 4) & 0xFF;
+        BYTE hei2 = (altitudeBits & 0x0F) << 4;
         int altitude = altitude_decode(hei1, hei2);
         result -> barometricAltitude = altitude;
     } else {
@@ -148,34 +149,50 @@ void decodePosition(BYTE positionType, bool lastUpdateEven, BYTE meEven[], BYTE 
     int lonEven = (evenBits << 47) >> 47;
     int latOdd = (oddBits << 30) >> 47;
     int lonOdd = (oddBits << 47) >> 47;
-    LatLong latlon = cpr_decode_global(latEven, lonEven, latOdd, lonOdd, positionType);
-    if (latlon.valid != 0) {
-//        if (gps_latLon.valid != 0) {
-            double range = range_validation(gps_latLon.lat, gps_latLon.lon, latlon.lat, latlon.lon);
-            if (range < restrict_distance) {
-                //在最大接收范围内，进行本地解码
-                ref_latLon = latlon;
-                if (ref_latLon.valid == 1) {
-                    LatLong localLatLon = cpr_decode_local(latEven, lonEven, ref_latLon.lat, ref_latLon.lon, positionType, 0);
-                    if (localLatLon.valid == 1) {
-                        if (abs(localLatLon.lat - latlon.lat) < 0.001
-                            && abs(localLatLon.lon - latlon.lon) < 0.001) {
-                            result -> latitude = latlon.lat;
-                            result -> longtitude = latlon.lon;
-                        }
-                    }
-                }
-            }
-//        }
+//    LatLong latlon = cpr_decode_global(latEven, lonEven, latOdd, lonOdd, positionType);
+    LatLong latlon;
+    if (lastUpdateEven) {
+        latlon = cpr_decode_local(latEven, lonEven, ref_latLon.lat, ref_latLon.lon, positionType, 0);
+    } else {
+        latlon = cpr_decode_local(latOdd, lonOdd, ref_latLon.lat, ref_latLon.lon, positionType, 1);
     }
+    if (latlon.valid != 0) {
+        result -> latitude = latlon.lat;
+        result -> longtitude = latlon.lon;
+    } else {
+        result -> sModeAddress = -1;
+    }
+        
+//    if (latlon.valid != 0) {
+////        result -> latitude = latlon.lat;
+////        result -> longtitude = latlon.lon;
+////        if (gps_latLon.valid != 0) {
+////            double range = range_validation(gps_latLon.lat, gps_latLon.lon, latlon.lat, latlon.lon);
+////            if (range < restrict_distance) {
+//                //在最大接收范围内，进行本地解码
+//                ref_latLon = latlon;
+//                if (ref_latLon.valid == 1) {
+//                    LatLong localLatLon = cpr_decode_local(latEven, lonEven, ref_latLon.lat, ref_latLon.lon, positionType, 0);
+//                    LatLong locatLatLon2 = cpr_decode_local(latOdd, lonOdd, ref_latLon.lat, ref_latLon.lon, positionType, 1);
+//                    if (localLatLon.valid == 1) {
+//                        if (abs(localLatLon.lat - latlon.lat) < 0.001
+//                            && abs(localLatLon.lon - latlon.lon) < 0.001) {
+//                            result -> latitude = latlon.lat;
+//                            result -> longtitude = latlon.lon;
+//                        }
+//                    }
+//                }
+////            }
+////        }
+//    }
 }
 
 EmitterCategory decodeEmitterCategoryDF(BYTE bit0) {
     BYTE type = bit0 >> 3 & 0xFF;
     BYTE emitCatBit = bit0 & 0x07;
-    EmitterCategory result = 0;
+	EmitterCategory result = EC_UNKNOWN;
     if (type == 1) { //D
-        result = 0;
+        result = EC_UNKNOWN;
     } else if (type == 2) { //C
         
     } else if(type == 3) {//B

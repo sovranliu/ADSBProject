@@ -133,7 +133,7 @@ namespace ADSB.MainUI.SubForm
                 skinButton1.Text = "新增";
             }
             showAllAirPort();
-            airPort_event(true, 2);
+            airPort_event(true, 1);
         }
 
         /*
@@ -221,7 +221,7 @@ namespace ADSB.MainUI.SubForm
 
         private void sPnl_close_Paint(object sender, PaintEventArgs e)
         {
-            airPort_event(true, 2);
+            airPort_event(true, 1);
         }
     }
 

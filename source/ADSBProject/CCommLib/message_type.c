@@ -35,7 +35,7 @@ int getDFMessageICAO(BYTE message[]) {
         return 0;
     }
     BYTE icaoBits[3];
-    memcpy(icaoBits, message, 3);
+    memcpy(icaoBits, message + 1, 3);
     int icao = byteArrayToInt(icaoBits, 3);
     return icao;
 }
@@ -63,6 +63,7 @@ void resetCat021Message(Cat021Data* cat021) {
     }
     cat021 -> sModeAddress = 0;
     cat021 -> flightNo[0] = '\0';
+    cat021 -> flightNo[8] = '\0';
     cat021 -> latitude = 0;
     cat021 -> longtitude = 0;
     cat021 -> elapsedTime = 0;

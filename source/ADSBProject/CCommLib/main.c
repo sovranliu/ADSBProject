@@ -1,4 +1,4 @@
-﻿//
+//
 //  main.c
 //  adsbDecoder
 //
@@ -7,13 +7,15 @@
 //
 
 //#include <stdio.h>
-//#include "cpr_decode.h"
-//#include "DFMessageDecode.h"
 //#include "utils.h"
-//#include "cat021Decode.h"
+//#include "msg_decode.h"
 //
 ////测试函数入口
 //int main(int argc, const char * argv[]) {
+//    char* mstr = "8D7812FF99405212400809912F63";
+//    BYTE message[14];
+//    int n = stringArrayToByteArray(mstr, message);
+//    decodeMessage(message);
 //    printf("Hello, World!\n");
 //    BYTE message[] = {0x15, 0x00, 0x31, 0xFF, 0xA3, 0xDB, 0x80, 0x42, 0x58, 0x00,
 //        0x28, 0x22, 0xEE, 0xE2, 0x00, 0x3F, 0x54, 0x2A, 0x01, 0x47,

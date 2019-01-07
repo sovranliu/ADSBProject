@@ -130,7 +130,7 @@ namespace ADSB.MainUI
             initListAirplaneCheck(true);
 
             flyTimer.Tick += new EventHandler(flyTimer_Tick);
-            displayTimer.Tick += new EventHandler(displayTimer_Tick);
+            // displayTimer.Tick += new EventHandler(displayTimer_Tick);
             playBackTimer.Tick += new EventHandler(playBackTimer_Tick);
 
             log = new LogRecord();
@@ -279,6 +279,20 @@ namespace ADSB.MainUI
             listAirplane.Add(sModeAddress, tmpAirplane);
             
             AirplaneManager.Instance.Add(tmpData);
+
+            // ------
+            planeOverlay.Markers.Clear();
+
+            // 全部飞机展示
+            if (airPlaneShow)
+            {
+                showAllPalne();
+            }
+
+            // 展示关注飞机与指定地面站的虚线距离
+            showLandStation();
+
+            gMapControl1.Refresh();
         }
 
         private void pointMax(List<PointLatLng> points)
@@ -1022,11 +1036,6 @@ namespace ADSB.MainUI
             initListAirplaneCheck(false);
         }
 
-        private void sPnl_close_Paint(object sender, PaintEventArgs e)
-        {
-            this.Close();
-        }
-
         // 关注的目标单元格点击事件
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1100,6 +1109,19 @@ namespace ADSB.MainUI
             System.Diagnostics.Process.Start(path1);
         }
 
+        private void skinLabel1_Click(object sender, EventArgs e)
+        {
+            
+            if (!IsPlayback)
+            {
+                ShowMaskLayerWindow();
+
+                Form_status statusForm = new Form_status();
+                statusForm.ShowDialog();
+                mapmask.Visible = false;
+            }
+        }
+
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
         }
@@ -1112,7 +1134,11 @@ namespace ADSB.MainUI
             button2.Left = skinPanel15.Left;
 
         }
-        
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Environment.Exit(0);
+        }
     }
 }
 

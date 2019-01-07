@@ -25,10 +25,6 @@
 #include <stdio.h>
 #include "global.h"
 
-#endif /* cat021Decode_h */
-
-
-
 typedef enum {
     DATA_SOURCE_IDENTIFICATION,
     TARGET_REPORT_DESCRIPTION,
@@ -73,8 +69,9 @@ void test();
 #ifdef __cplusplus
 extern "C" {
 #endif
-	_declspec(dllexport) Cat021Data* decodeCAT021V026(BYTE message[]);
+	_declspec(dllexport) Cat021Data decodeCAT021V026(BYTE message[]);
 #ifdef __cplusplus
 };
 #endif
 
+#endif /* cat021Decode_h */
