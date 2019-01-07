@@ -25,7 +25,19 @@ void stringToBytrArray(char* dest, char* src);
 //六位编码解码成字符
 char decodeCharacter(BYTE byte);
 
-char* decodeTargetId(BYTE byte[], int size, int toSize);
+void decodeTargetId(BYTE src[], char* dest, int srcSize, int destSize);
 
 int getFspecByteCount(BYTE message[]);
 
+//十六进制数转换为字符串，比如0x3A，转换成“3A"
+void hexToChar(const BYTE byte, char* dest);
+
+//十六进制字符串转换为byte[]
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+    int stringArrayToByteArray(char* stringArray, BYTE* byteArray);
+#ifdef __cplusplus
+};
+#endif

@@ -33,7 +33,8 @@ namespace ADSB.MainUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.spMax = new CCWin.SkinControl.SkinPanel();
+            this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
+            this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -45,8 +46,6 @@ namespace ADSB.MainUI
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.spMin = new CCWin.SkinControl.SkinPanel();
-            this.spClose = new CCWin.SkinControl.SkinPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cb_check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,6 +88,8 @@ namespace ADSB.MainUI
             this.skinLine9 = new CCWin.SkinControl.SkinLine();
             this.skinLine8 = new CCWin.SkinControl.SkinLine();
             this.skinPanel3 = new CCWin.SkinControl.SkinPanel();
+            this.skinLabel1 = new CCWin.SkinControl.SkinLabel();
+            this.skinLine1 = new CCWin.SkinControl.SkinLine();
             this.skinLine12 = new CCWin.SkinControl.SkinLine();
             this.skinLabel14 = new CCWin.SkinControl.SkinLabel();
             this.skinPanel14 = new CCWin.SkinControl.SkinPanel();
@@ -99,30 +100,64 @@ namespace ADSB.MainUI
             this.skinLabel19 = new CCWin.SkinControl.SkinLabel();
             this.skinLabel21 = new CCWin.SkinControl.SkinLabel();
             this.skinLabel22 = new CCWin.SkinControl.SkinLabel();
-            this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
-            this.timerSPBarPlayback = new System.Windows.Forms.Timer(this.components);
+            this.gMapControl1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.skinPanel15.SuspendLayout();
             this.skinPanel3.SuspendLayout();
-            this.gMapControl1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // spMax
+            // gMapControl1
             // 
-            this.spMax.BackColor = System.Drawing.Color.White;
-            this.spMax.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spMax.BackgroundImage")));
-            this.spMax.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.spMax.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.spMax.DownBack = null;
-            this.spMax.Location = new System.Drawing.Point(1221, 0);
-            this.spMax.Margin = new System.Windows.Forms.Padding(0);
-            this.spMax.MouseBack = null;
-            this.spMax.Name = "spMax";
-            this.spMax.NormlBack = null;
-            this.spMax.Size = new System.Drawing.Size(30, 30);
-            this.spMax.TabIndex = 30;
-            this.spMax.Click += new System.EventHandler(this.spMax_Click);
+            this.gMapControl1.AutoSize = true;
+            this.gMapControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gMapControl1.BackColor = System.Drawing.Color.MistyRose;
+            this.gMapControl1.Bearing = 0F;
+            this.gMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.gMapControl1.CanDragMap = true;
+            this.gMapControl1.Controls.Add(this.textBox5);
+            this.gMapControl1.Controls.Add(this.textBox4);
+            this.gMapControl1.Controls.Add(this.textBox3);
+            this.gMapControl1.Controls.Add(this.textBox2);
+            this.gMapControl1.Controls.Add(this.textBox1);
+            this.gMapControl1.Controls.Add(this.panel1);
+            this.gMapControl1.Controls.Add(this.dataGridView1);
+            this.gMapControl1.Controls.Add(this.skinProgressBar1);
+            this.gMapControl1.Controls.Add(this.maskPlaybackRun);
+            this.gMapControl1.Controls.Add(this.button2);
+            this.gMapControl1.Controls.Add(this.maskPlaybackSetup);
+            this.gMapControl1.Controls.Add(this.panelEx1);
+            this.gMapControl1.Controls.Add(this.button1);
+            this.gMapControl1.Controls.Add(this.mapmask);
+            this.gMapControl1.Controls.Add(this.skinPanel15);
+            this.gMapControl1.Controls.Add(this.skinPanel3);
+            this.gMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gMapControl1.GrayScaleMode = false;
+            this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gMapControl1.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.gMapControl1.LevelsKeepInMemmory = 5;
+            this.gMapControl1.Location = new System.Drawing.Point(0, 0);
+            this.gMapControl1.Margin = new System.Windows.Forms.Padding(200);
+            this.gMapControl1.MarkersEnabled = true;
+            this.gMapControl1.MaxZoom = 2;
+            this.gMapControl1.MinZoom = 2;
+            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gMapControl1.Name = "gMapControl1";
+            this.gMapControl1.NegativeMode = false;
+            this.gMapControl1.PolygonsEnabled = true;
+            this.gMapControl1.RetryLoadTile = 0;
+            this.gMapControl1.RoutesEnabled = true;
+            this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gMapControl1.ShowTileGridLines = false;
+            this.gMapControl1.Size = new System.Drawing.Size(1366, 749);
+            this.gMapControl1.TabIndex = 0;
+            this.gMapControl1.Zoom = 0D;
+            this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
+            this.gMapControl1.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.sMonitorDis_MouseOn);
+            this.gMapControl1.Load += new System.EventHandler(this.gMapControl1_Load);
+            this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
             // 
             // textBox5
             // 
@@ -235,38 +270,6 @@ namespace ADSB.MainUI
             this.label1.TabIndex = 37;
             this.label1.Text = "S模式地址：";
             // 
-            // spMin
-            // 
-            this.spMin.BackColor = System.Drawing.Color.White;
-            this.spMin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spMin.BackgroundImage")));
-            this.spMin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.spMin.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.spMin.DownBack = null;
-            this.spMin.Location = new System.Drawing.Point(1191, -4);
-            this.spMin.Margin = new System.Windows.Forms.Padding(0);
-            this.spMin.MouseBack = null;
-            this.spMin.Name = "spMin";
-            this.spMin.NormlBack = null;
-            this.spMin.Size = new System.Drawing.Size(30, 30);
-            this.spMin.TabIndex = 29;
-            this.spMin.Click += new System.EventHandler(this.spMin_Click);
-            // 
-            // spClose
-            // 
-            this.spClose.BackColor = System.Drawing.Color.White;
-            this.spClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spClose.BackgroundImage")));
-            this.spClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.spClose.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.spClose.DownBack = null;
-            this.spClose.Location = new System.Drawing.Point(1250, 0);
-            this.spClose.Margin = new System.Windows.Forms.Padding(0);
-            this.spClose.MouseBack = null;
-            this.spClose.Name = "spClose";
-            this.spClose.NormlBack = null;
-            this.spClose.Size = new System.Drawing.Size(30, 30);
-            this.spClose.TabIndex = 30;
-            this.spClose.Click += new System.EventHandler(this.spClose_Click);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -362,7 +365,7 @@ namespace ADSB.MainUI
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1193, 556);
+            this.button2.Location = new System.Drawing.Point(1245, 590);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(67, 26);
@@ -385,15 +388,15 @@ namespace ADSB.MainUI
             // 
             this.panelEx1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelEx1.Location = new System.Drawing.Point(0, 601);
+            this.panelEx1.Location = new System.Drawing.Point(0, 635);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(1280, 110);
+            this.panelEx1.Size = new System.Drawing.Size(1362, 110);
             this.panelEx1.TabIndex = 21;
             this.panelEx1.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEx1_Paint);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1194, 516);
+            this.button1.Location = new System.Drawing.Point(1245, 560);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(67, 27);
@@ -446,7 +449,7 @@ namespace ADSB.MainUI
             this.skinPanel15.Controls.Add(this.skinLine8);
             this.skinPanel15.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel15.DownBack = null;
-            this.skinPanel15.Location = new System.Drawing.Point(1202, 35);
+            this.skinPanel15.Location = new System.Drawing.Point(1252, 75);
             this.skinPanel15.Margin = new System.Windows.Forms.Padding(0);
             this.skinPanel15.MouseBack = null;
             this.skinPanel15.Name = "skinPanel15";
@@ -803,6 +806,8 @@ namespace ADSB.MainUI
             // 
             this.skinPanel3.BackColor = System.Drawing.Color.White;
             this.skinPanel3.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.skinPanel3.Controls.Add(this.skinLabel1);
+            this.skinPanel3.Controls.Add(this.skinLine1);
             this.skinPanel3.Controls.Add(this.skinLine12);
             this.skinPanel3.Controls.Add(this.skinLabel14);
             this.skinPanel3.Controls.Add(this.skinPanel14);
@@ -815,14 +820,42 @@ namespace ADSB.MainUI
             this.skinPanel3.Controls.Add(this.skinLabel22);
             this.skinPanel3.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel3.DownBack = null;
-            this.skinPanel3.Location = new System.Drawing.Point(830, 29);
+            this.skinPanel3.Location = new System.Drawing.Point(875, 10);
             this.skinPanel3.MouseBack = null;
             this.skinPanel3.Name = "skinPanel3";
             this.skinPanel3.NormlBack = null;
             this.skinPanel3.Radius = 5;
             this.skinPanel3.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinPanel3.Size = new System.Drawing.Size(353, 63);
+            this.skinPanel3.Size = new System.Drawing.Size(438, 63);
             this.skinPanel3.TabIndex = 14;
+            // 
+            // skinLabel1
+            // 
+            this.skinLabel1.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.skinLabel1.AutoSize = true;
+            this.skinLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.skinLabel1.BorderColor = System.Drawing.Color.White;
+            this.skinLabel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.skinLabel1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.skinLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.skinLabel1.Location = new System.Drawing.Point(367, 24);
+            this.skinLabel1.Name = "skinLabel1";
+            this.skinLabel1.Size = new System.Drawing.Size(56, 17);
+            this.skinLabel1.TabIndex = 25;
+            this.skinLabel1.Text = "系统设置";
+            this.skinLabel1.Click += new System.EventHandler(this.skinLabel1_Click);
+            // 
+            // skinLine1
+            // 
+            this.skinLine1.BackColor = System.Drawing.Color.Transparent;
+            this.skinLine1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(222)))), ((int)(((byte)(226)))));
+            this.skinLine1.LineHeight = 100;
+            this.skinLine1.Location = new System.Drawing.Point(351, 19);
+            this.skinLine1.Margin = new System.Windows.Forms.Padding(0);
+            this.skinLine1.Name = "skinLine1";
+            this.skinLine1.Size = new System.Drawing.Size(7, 26);
+            this.skinLine1.TabIndex = 24;
+            this.skinLine1.Text = "skinLine1";
             // 
             // skinLine12
             // 
@@ -968,80 +1001,23 @@ namespace ADSB.MainUI
             this.skinLabel22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.skinLabel22.Click += new System.EventHandler(this.sLabel_flyFilter_Click);
             // 
-            // gMapControl1
-            // 
-            this.gMapControl1.AutoSize = true;
-            this.gMapControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.gMapControl1.BackColor = System.Drawing.Color.MistyRose;
-            this.gMapControl1.Bearing = 0F;
-            this.gMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.gMapControl1.CanDragMap = true;
-            this.gMapControl1.Controls.Add(this.spMax);
-            this.gMapControl1.Controls.Add(this.textBox5);
-            this.gMapControl1.Controls.Add(this.textBox4);
-            this.gMapControl1.Controls.Add(this.textBox3);
-            this.gMapControl1.Controls.Add(this.textBox2);
-            this.gMapControl1.Controls.Add(this.textBox1);
-            this.gMapControl1.Controls.Add(this.panel1);
-            this.gMapControl1.Controls.Add(this.spMin);
-            this.gMapControl1.Controls.Add(this.spClose);
-            this.gMapControl1.Controls.Add(this.dataGridView1);
-            this.gMapControl1.Controls.Add(this.skinProgressBar1);
-            this.gMapControl1.Controls.Add(this.maskPlaybackRun);
-            this.gMapControl1.Controls.Add(this.button2);
-            this.gMapControl1.Controls.Add(this.maskPlaybackSetup);
-            this.gMapControl1.Controls.Add(this.panelEx1);
-            this.gMapControl1.Controls.Add(this.button1);
-            this.gMapControl1.Controls.Add(this.mapmask);
-            this.gMapControl1.Controls.Add(this.skinPanel15);
-            this.gMapControl1.Controls.Add(this.skinPanel3);
-            this.gMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
-            this.gMapControl1.GrayScaleMode = false;
-            this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.gMapControl1.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.gMapControl1.LevelsKeepInMemmory = 5;
-            this.gMapControl1.Location = new System.Drawing.Point(0, 0);
-            this.gMapControl1.MarkersEnabled = true;
-            this.gMapControl1.MaxZoom = 2;
-            this.gMapControl1.MinZoom = 2;
-            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            this.gMapControl1.Name = "gMapControl1";
-            this.gMapControl1.NegativeMode = false;
-            this.gMapControl1.PolygonsEnabled = true;
-            this.gMapControl1.RetryLoadTile = 0;
-            this.gMapControl1.RoutesEnabled = true;
-            this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Size = new System.Drawing.Size(1280, 711);
-            this.gMapControl1.TabIndex = 0;
-            this.gMapControl1.Zoom = 0D;
-            this.gMapControl1.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.mapControl_OnMarkerClick);
-            this.gMapControl1.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.sMonitorDis_MouseOn);
-            this.gMapControl1.Load += new System.EventHandler(this.gMapControl1_Load);
-            this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sMonitorDis_MouseDown);
-            
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            int SH = Screen.PrimaryScreen.Bounds.Height;
-            int SW = Screen.PrimaryScreen.Bounds.Width;
-            //System.Drawing.Rectangle rec = Screen.GetWorkingArea(this);
-            //int SH = rec.Height;
-            //int SW = rec.Width;
-            this.ClientSize = new System.Drawing.Size(SW, SH);
-            //this.ClientSize = new System.Drawing.Size(1280, 733);
+            this.ClientSize = new System.Drawing.Size(1366, 749);
             this.Controls.Add(this.gMapControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " 飞行监控系统";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.gMapControl1.ResumeLayout(false);
+            this.gMapControl1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -1049,9 +1025,8 @@ namespace ADSB.MainUI
             this.skinPanel15.PerformLayout();
             this.skinPanel3.ResumeLayout(false);
             this.skinPanel3.PerformLayout();
-            this.gMapControl1.ResumeLayout(false);
-            this.gMapControl1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1110,9 +1085,6 @@ namespace ADSB.MainUI
         private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
-
-        private CCWin.SkinControl.SkinPanel spMin;
-        private CCWin.SkinControl.SkinPanel spClose;
         private DataGridViewCheckBoxColumn cb_check;
         private CCWin.SkinControl.SkinLabel skinLabel14;
         private CCWin.SkinControl.SkinLine skinLine12;
@@ -1127,7 +1099,8 @@ namespace ADSB.MainUI
         private Label label3;
         private Label label2;
         private Label label1;
-        private CCWin.SkinControl.SkinPanel spMax;
+        private CCWin.SkinControl.SkinLabel skinLabel1;
+        private CCWin.SkinControl.SkinLine skinLine1;
         // private Sunisoft.IrisSkin.SkinEngine skinEngine1;
     }
 }

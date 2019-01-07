@@ -14,8 +14,6 @@
 #include "utils.h"
 #include "message_type.h"
 
-#define AIR_SPEED_UNIT_MACH (0.001)
-
 void decodeDataItem21(CAT021_21_ITEM item, BYTE message[], int* index, Cat021Data* result);
 
 Cat021Data decodeCAT021V21(BYTE message[]) {
@@ -93,8 +91,11 @@ void decodeDataItem21(CAT021_21_ITEM item, BYTE message[], int* index, Cat021Dat
             memcpy(latbits, message + *index, 3);
             *index += 3;
             memcpy(lonbits, message + *index, 3);
+            *index += 3;
             double latitude = byteArrayToInt(latbits, 3) * LATLON_UNIT;
             double longtitude = byteArrayToInt(lonbits, 3) * LATLON_UNIT;
+            result -> latitude = latitude;
+            result -> longtitude = longtitude;
             printf("latitude is %lf, longtitude is %lf\n", latitude, longtitude);
             break;
         }
@@ -119,16 +120,13 @@ void decodeDataItem21(CAT021_21_ITEM item, BYTE message[], int* index, Cat021Dat
             printf("I021/150 data is %x, %x\n", code[0], code[1]);
             BYTE byte0 = code[0];
             AirSpeedMode speedMode = byte0 >> 7;
-			code[0] = code[0] & 0x7F;
+            code[0] = code[0] & 0x7F; //去掉最高位
             double airSpeed;
-			if (speedMode == MACH)
-			{
-				airSpeed = byteArrayToShort(code, 2) * AIR_SPEED_UNIT_MACH;
-			}
-			else
-			{
+            if (speedMode == MACH) {
+                airSpeed = byteArrayToShort(code, 2) * AIR_SPEED_UNIT_MACH;
+            } else {
                 airSpeed = byteArrayToShort(code, 2) * AIR_SPEED_UNIT_IAS;
-			}
+            }
             result -> airSpeed = airSpeed;
             result -> airSpeedUnit = speedMode;
             printf("airspeed mode = %d, airspeed is %lf\n", speedMode, airSpeed);
@@ -243,6 +241,7 @@ void decodeDataItem21(CAT021_21_ITEM item, BYTE message[], int* index, Cat021Dat
             result -> groundSpeed = speed;
             double angle = byteArrayToInt(angleBits, 2) * MAGNETIC_HEADING_UNIT;
             result -> aircraftAngle = angle;
+            break;
         }
         case _TRACK_ANGLE_RATE: { //转弯角度
             *index += 2;
@@ -263,11 +262,7 @@ void decodeDataItem21(CAT021_21_ITEM item, BYTE message[], int* index, Cat021Dat
             memcpy(code, message + *index, 6);
             *index += 6;
             printf("I021/170 data is %x, %x, %x, %x, %x, %x\n", code[0], code[1], code[2], code[3], code[4], code[5]);
-            char* targetIds = decodeTargetId(code, 6, 8);
-            memcpy(result -> flightNo, targetIds, 8);
-            printf("target id is %s\n", targetIds);
-            free(targetIds);
-            targetIds = NULL;
+            decodeTargetId(code, result -> flightNo, 6, 8);
             break;
         }
         case _EMITTOR_CATEGORY: {

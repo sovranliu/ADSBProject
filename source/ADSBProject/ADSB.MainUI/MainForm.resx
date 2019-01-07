@@ -117,31 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="spMax.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACEAAAAhCAYAAABX5MJvAAAABGdBTUEAALGPC/xhBQAAAEdJREFUWEft
-        zrENACAMxED2X+DHDaJwByWQwpGuSvEeSeo3I2AEekeMC7fbWYyAETACRsAIGAEjYASMgBE4Pl4yAkag
-        QURqApzRAIrwK9ZnAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="spMin.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAsAAAACCAYAAACOoybuAAAABGdBTUEAALGPC/xhBQAAABRJREFUGFdj
-        mD59+n9iMQmKp/8HAKWAPNmbk2LZAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="spClose.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAATlJREFUSEut
-        1s1Nw0AQBeCxfYhECZyhmBSQBuiAiJJyz41raAFbilA40wO3MOPsAztskvl70pMTez3fwWvJNE1P3bKn
-        ZvtJD4tyKpw9LR555u6D7u7LqXkK+v1OzZGPrxm4oDzvS2ZyD//wKYpG8TMU/cNrKOrFL6DoCefh28rF
-        31rxG+jYgbonkqEyvLYA1eIatKf2uSynFNyMIhHcjSIePIwiFjwNRTT4QM0bH/NQRINfqwtFvHgIRax4
-        CooIXp5pFUMHal/KLTnR7F4pdnu5LRYtiqbgVhQN4V4UdeEaVDbSrd1uwjUoXhkZmoJbUCSMe1DEjUdQ
-        xIxnoIgJ5x+72gJUiyI6vF2TfGryn8P5RakVRa7hPHNzpFU3LqzhXhSp4TMUmeJRFJniVRQRfPzYTswJ
-        b9dzlOgHILIsZTyYRtIAAAAASUVORK5CYII=
-</value>
-  </data>
+  <metadata name="timerSPBarPlayback.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -157,6 +135,7 @@
   <metadata name="Column5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="maskPlaybackRun.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAABGdBTUEAALGPC/xhBQAABBBJREFUaEPd
@@ -376,12 +355,6 @@
         SUVORK5CYII=
 </value>
   </data>
-  <metadata name="timerSPBarPlayback.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="performanceCounter1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>186, 17</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
   </metadata>

@@ -50,6 +50,10 @@ int altitude_decode(BYTE hei1,BYTE hei2)    /*hei1对应ME域9~16位，hei2对�
             g3=gray_change2(a3);
         }
         height_ads=height_ads+g3*100;
+    } else {
+        int result = 0;
+        result += ((hei1 >> 1) <<  4) + (hei2 >> 4);
+        height_ads = result * 25 -1000;
     }
     return height_ads;
 }

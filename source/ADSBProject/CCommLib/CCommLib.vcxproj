@@ -144,6 +144,7 @@
     <ClInclude Include="altitude_decode.h" />
     <ClInclude Include="cat021Decode.h" />
     <ClInclude Include="cat021Decode_v21.h" />
+    <ClInclude Include="cat021Encode_v026.h" />
     <ClInclude Include="cpr_decode.h" />
     <ClInclude Include="DFMessage.h" />
     <ClInclude Include="DFMessageDecode.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="altitude_decode.c" />
     <ClCompile Include="cat021Decode.c" />
     <ClCompile Include="cat021Decode_v21.c" />
+    <ClCompile Include="cat021Encode_v026.c" />
     <ClCompile Include="cpr_decode.c" />
     <ClCompile Include="DFMessageDecode.c" />
     <ClCompile Include="DFMessagePreDecode.c" />

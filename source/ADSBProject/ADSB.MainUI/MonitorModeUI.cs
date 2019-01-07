@@ -407,7 +407,7 @@ namespace ADSB.MainUI
         {
             if (selected || (2 == flag && airPort == true))
             {
-                airPort = true;
+                // airPort = true;
                 airPortOverlay.Clear();
                 this.gMapControl1.Overlays.Add(airPortOverlay);
 
@@ -705,13 +705,13 @@ namespace ADSB.MainUI
         //飞行监控模式下显示弹窗蒙版
         private void ShowMaskLayerWindow()
         {
-            if (!IsPlayback)
-            {
-                mapmask.Location = new Point(0, 0);
-                mapmask.Size = new Size(1280, 752);
-                mapmask.BackColor = Color.FromArgb(115, 0, 0, 0);
-                mapmask.Visible = true;
-            }
+            //if (!IsPlayback)
+            //{
+            //    mapmask.Location = new Point(0, 0);
+            //    mapmask.Size = new Size(1280, 752);
+            //    mapmask.BackColor = Color.FromArgb(115, 0, 0, 0);
+            //    mapmask.Visible = true;
+            //}
         }
 
         /*

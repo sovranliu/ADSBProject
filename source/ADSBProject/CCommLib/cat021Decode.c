@@ -36,10 +36,10 @@ void test() {
     decodeCAT021V026(message2);
 }
 
- _declspec(dllexport) Cat021Data* decodeCAT021V026(BYTE message[])
+ _declspec(dllexport) Cat021Data decodeCAT021V026(BYTE message[])
 {
-	 Cat021Data* result = (Cat021Data*)malloc(sizeof(Cat021Data));
-    resetCat021Message(result);
+	 Cat021Data result;
+    resetCat021Message(&result);
     int start = 0;
     int* dataIndex = &start; //数据指针，指到读取的位置
     BYTE byte0 = message[*dataIndex];
@@ -65,7 +65,7 @@ void test() {
                 fspecI = fspecI >> 7;
                 if (fspecI != 0) {
                     CAT021_0_26_ITEM type = i * 8 + bitIndex;
-                    decodeDataItem(type, message, dataIndex, result);
+                    decodeDataItem(type, message, dataIndex, &result);
                 }
             }
             
@@ -231,18 +231,18 @@ void decodeDataItem(CAT021_0_26_ITEM item, BYTE message[], int* index, Cat021Dat
             memcpy(angleBits, message + *index, 2);
             *index += 2;
             printf("ground vector data is %x, %x, %x, %x\n", speedBits[0], speedBits[1], angleBits[0], angleBits[1]);
-            AirSpeedMode speedMode = speedBits[0] >> 7;
-            speedBits[0] = speedBits[0] & 0x7F;
+//            AirSpeedMode speedMode = speedBits[0] >> 7;
+//            speedBits[0] = speedBits[0] & 0x7F;
             double speed;
-            if (speedMode == MACH) {
+//            if (speedMode == MACH) {
                 speed = byteArrayToShort(speedBits, 2) * AIR_SPEED_UNIT_MACH;
-            } else {
-                speed = byteArrayToShort(speedBits, 2) * AIR_SPEED_UNIT_IAS;
-            }
+//            } else {
+//                speed = byteArrayToShort(speedBits, 2) * AIR_SPEED_UNIT_IAS;
+//            }
             double angle = byteArrayToInt(angleBits, 2) * MAGNETIC_HEADING_UNIT;
             result -> groundSpeed = speed;
             result -> aircraftAngle = angle;
-            printf("ground vector: speed mode is %d, speed is %lf, and angle is %lf\n", speedMode, speed, angle);
+            printf("ground vector: speed is %lf, and angle is %lf\n", speed, angle);
             break;
         }
         case RATE_OF_TURN: {
@@ -262,11 +262,7 @@ void decodeDataItem(CAT021_0_26_ITEM item, BYTE message[], int* index, Cat021Dat
             memcpy(code, message + *index, 6);
             *index += 6;
             printf("I021/170 data is %x, %x, %x, %x, %x, %x\n", code[0], code[1], code[2], code[3], code[4], code[5]);
-            char* targetIds = decodeTargetId(code, 6, 8);
-            memcpy(result -> flightNo, targetIds, 8);
-            printf("target id is %s\n", targetIds);
-            free(targetIds);
-            targetIds = NULL;
+            decodeTargetId(code, result-> flightNo, 6, 8);
             break;
         }
         case VELOCITY_ACCURACY: {

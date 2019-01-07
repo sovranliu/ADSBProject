@@ -16,6 +16,7 @@ namespace ADSB.MainUI.SubForm
         public Form_status()
         {
             InitializeComponent();
+            InittextBox();
         }
 
         private void sPnl_close_Click(object sender, EventArgs e)
@@ -25,7 +26,41 @@ namespace ADSB.MainUI.SubForm
 
         private void skinButton1_Click(object sender, EventArgs e)
         {
-
+            if (null != textBox1.Text && textBox1.Text.Length > 0)
+            {
+                ConfigHelper.Instance.SetConfig("ip_intit", textBox1.Text);
+            }
+            if (null != textBox2.Text && textBox2.Text.Length > 0)
+            {
+                ConfigHelper.Instance.SetConfig("port_init", textBox2.Text);
+            }
+            this.Close();
         }
+
+        private void InittextBox()
+        {
+            String ip_intit = ConfigHelper.Instance.GetConfig("ip_intit");
+            String port_init = ConfigHelper.Instance.GetConfig("port_init");
+
+            if (null == ip_intit || ip_intit.Length == 0)
+            {
+                textBox1.Text = "127.0.0.1";
+            }
+            else
+            {
+                textBox1.Text = ip_intit;
+            }
+
+            if (null == port_init || port_init.Length == 0)
+            {
+                textBox2.Text = "2333";
+            }
+            else
+            {
+                textBox2.Text = port_init;
+            }
+        }
+
+
     }
 }

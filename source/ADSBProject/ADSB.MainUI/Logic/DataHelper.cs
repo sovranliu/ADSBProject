@@ -78,7 +78,22 @@ namespace ADSB.MainUI
             string dbPath = "Data Source =" + Environment.CurrentDirectory + "\\data.db";
             connection = new SQLiteConnection(dbPath);
             connection.Open();
-            EndPoint point = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2333);
+
+            // 从配置文件中获取ip+端口，获取不到再用默认的
+            String ip_intit = ConfigHelper.Instance.GetConfig("ip_intit");
+            String port_init = ConfigHelper.Instance.GetConfig("port_init");
+
+            if (null == ip_intit || ip_intit.Length == 0)
+            {
+                ip_intit = "127.0.0.1";
+            }
+
+            if (null == port_init || port_init.Length == 0)
+            {
+                port_init = "2333";
+            }
+
+            EndPoint point = new IPEndPoint(IPAddress.Parse(ip_intit), Convert.ToInt32(2333));
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Bind(point);
             isOn = true;

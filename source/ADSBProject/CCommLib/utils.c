@@ -9,7 +9,6 @@
 #include "utils.h"
 #include "global.h"
 #include <string.h>
-#include <malloc.h>
 
 int byteArrayToInt(BYTE bytes[], int count) {
     if (bytes == NULL) {
@@ -109,15 +108,41 @@ int getFspecByteCount(BYTE message[]) {
     return count;
 }
 
-char* decodeTargetId(BYTE bytes[], int size, int toSize) {
-    unsigned LONGX bitslong = byteArrayToLong(bytes, size);
-    char* pchar = (char*) malloc(toSize * sizeof(char));
-    for (int i = toSize - 1; i >= 0; i--) {
-        BYTE b = (bitslong >> ((toSize - i - 1) * 6)) & 0x000000000000003F;
-        pchar[i] = decodeCharacter(b);
+void decodeTargetId(BYTE src[], char* dest, int srcSize, int destSize) {
+    unsigned LONGX bitslong = byteArrayToLong(src, srcSize);
+    for (int i = destSize - 1; i >= 0; i--) {
+        BYTE b = (bitslong >> ((destSize - i - 1) * 6)) & 0x000000000000003F;
+        dest[i] = decodeCharacter(b);
     }
-    return pchar;
 }
 
+int stringArrayToByteArray(char* stringArray, BYTE* byteArray) {
+    int n = 0;
+    for (int i = 0; stringArray[i]; i += 2) {
+        if (stringArray[i] >= 'A' && stringArray[i] <= 'F') {
+            byteArray[n] = stringArray[i] - 'A' + 10;
+        } else if (stringArray[i] >= '0' && stringArray[i] <= '9') {
+            byteArray[n] = stringArray[i] - '0';
+        } else {
+            return n;
+        }
+        if (stringArray[i + 1] >= 'A' && stringArray[i + 1] <= 'F') {
+            byteArray[n] = (byteArray[n] << 4) | (stringArray[i + 1] - 'A' + 10);
+        } else if (stringArray[i + 1] >= '0' && stringArray[i + 1] <= '9') {
+            byteArray[n] = (byteArray[n] << 4) | (stringArray[i + 1] - '0');
+        } else {
+            return n;
+        }
+        ++n;
+    }
+    return n;
+}
+
+void hexToChar(const BYTE byte, char* dest) {
+    char high = byte >> 4;
+    char low = byte & 0x0f;
+    sprintf(&dest[0], "%X/n", high);
+    sprintf(&dest[1], "%X/n", low);
+}
 
 

@@ -29,13 +29,13 @@ double range_validation(double ref_lat, double ref_lon, double lat, double lon) 
     m_Lat0 = ref_lat;
     
     W = sqrt(1-e*e*sin(m_Lat0/57.29578)*sin(m_Lat0/57.29578));
-    N = alpha/W;
+    N = ALPHA/W;
     X0 = (N)*cos(m_Lat0/57.29578)*cos(m_Lon0/57.29578);
     Y0 = (N)*cos(m_Lat0/57.29578)*sin(m_Lon0/57.29578);
     Z0 = (N*(1-e*e))*sin(m_Lat0/57.29578);
     
     W = sqrt(1-e*e*sin(m_Lat1/57.29578)*sin(m_Lat1/57.29578));
-    N = alpha/W;
+    N = ALPHA/W;
     X1 = (N)*cos(m_Lat1/57.29578)*cos(m_Lon1/57.29578);
     Y1 = (N)*cos(m_Lat1/57.29578)*sin(m_Lon1/57.29578);
     Z1 = (N*(1-e*e))*sin(m_Lat1/57.29578);

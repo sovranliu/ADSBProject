@@ -35,8 +35,8 @@ typedef struct {
     bool paired; //是否配对标识，如果positionOdd和positionEven都有数据，置为true
     bool lastUpdateEven; //最近更新的消息是偶消息
     BYTE positionType; //空中消息还是地面消息
-    BYTE positionOdd[7];
-    BYTE positionEven[7];
+    BYTE positionOdd[8];
+    BYTE positionEven[8];
     BYTE aircraftId[7];
     BYTE aircraftVelocity[7];
 } DFMessage;
