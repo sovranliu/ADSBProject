@@ -60,6 +60,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
+            portOverlay.Clear();
             showWayPoint(portSelOverlay, point.Lat, point.Lng, "选中的点");
         }
 
@@ -106,6 +107,7 @@ namespace ADSB.MainUI.SubForm
             String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
             double lat = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());//获得本行经度
             double lang = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());//获得本行纬度
+            portSelOverlay.Clear();
             showWayPoint(portOverlay, lat, lang, name);
         }
 

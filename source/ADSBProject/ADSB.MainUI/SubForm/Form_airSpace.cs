@@ -60,6 +60,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
+            portOverlay.Clear();
             showAirSpave(portSelOverlay, point.Lat, point.Lng, "选中的点");
         }
 
@@ -177,6 +178,7 @@ namespace ADSB.MainUI.SubForm
         {
             int rowIndex = e.RowIndex;
             String name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();//获得本行name
+            portSelOverlay.Clear();
             showAirSpave(portOverlay, 0, 0, name);
         }
 

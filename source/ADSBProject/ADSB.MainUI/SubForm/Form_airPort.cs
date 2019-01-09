@@ -63,6 +63,7 @@ namespace ADSB.MainUI.SubForm
             PointLatLng point = gMapControl1.FromLocalToLatLng(e.X, e.Y);
             skinTextBox3.Text = point.Lat.ToString();
             skinTextBox4.Text = point.Lng.ToString();
+            portOverlay.Clear();
             showAirPort(portSelOverlay, point.Lat, point.Lng, "选中的点", 0, 0);
         }
 
@@ -161,6 +162,7 @@ namespace ADSB.MainUI.SubForm
 
             skinButton1.Text = "更新";
             showLable(id, lat, lang, name, num, length);
+            portSelOverlay.Clear();
             showAirPort(portOverlay, lat, lang, name, num, length);
         }
 

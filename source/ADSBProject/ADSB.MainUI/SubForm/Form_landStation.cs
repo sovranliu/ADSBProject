@@ -58,6 +58,7 @@ namespace ADSB.MainUI.SubForm
 
         private void mapControl_MouseDown(object sender, MouseEventArgs e)
         {
+            portOverlay.Clear();
             skinButton1.Text = "新增";
             skinLabel6.Text = "ID";
             skinTextBox2.Text = "";
@@ -255,6 +256,7 @@ namespace ADSB.MainUI.SubForm
 
             skinButton1.Text = "更新";
             showLable(id, lat, lang, name, num, length, ip);
+            portSelOverlay.Clear();
             showLandStation(portOverlay, lat, lang, name, num, length);
 
         }

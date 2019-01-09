@@ -407,7 +407,10 @@ namespace ADSB.MainUI
         {
             if (selected || (2 == flag && airPort == true))
             {
-                // airPort = true;
+                if(2 == flag)
+                {
+                    airPort = true;
+                }
                 airPortOverlay.Clear();
                 this.gMapControl1.Overlays.Add(airPortOverlay);
 

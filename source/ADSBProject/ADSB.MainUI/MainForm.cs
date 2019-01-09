@@ -130,7 +130,7 @@ namespace ADSB.MainUI
             initListAirplaneCheck(true);
 
             flyTimer.Tick += new EventHandler(flyTimer_Tick);
-            // displayTimer.Tick += new EventHandler(displayTimer_Tick);
+            displayTimer.Tick += new EventHandler(displayTimer_Tick);
             playBackTimer.Tick += new EventHandler(playBackTimer_Tick);
 
             log = new LogRecord();
@@ -280,7 +280,7 @@ namespace ADSB.MainUI
             
             AirplaneManager.Instance.Add(tmpData);
 
-            // ------
+            /*
             planeOverlay.Markers.Clear();
 
             // 全部飞机展示
@@ -293,6 +293,7 @@ namespace ADSB.MainUI
             showLandStation();
 
             gMapControl1.Refresh();
+            */
         }
 
         private void pointMax(List<PointLatLng> points)

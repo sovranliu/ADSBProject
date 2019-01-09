@@ -129,12 +129,12 @@ namespace ADSB.MainUI.SubForm
             if (myCheckBox4.CheckState == CheckState.Checked)
             {
                 ConfigHelper.Instance.SetConfig("airPortNeedShow", "1");
-                changebox4_event(true, 1);
+                changebox4_event(true, 2);
             }
             else
             {
                 ConfigHelper.Instance.SetConfig("airPortNeedShow", "0");
-                changebox4_event(false, 1);
+                changebox4_event(false, 2);
             }
 
             box10Set();

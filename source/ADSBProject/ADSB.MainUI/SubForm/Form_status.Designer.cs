@@ -39,6 +39,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.skinLabel4 = new CCWin.SkinControl.SkinLabel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // skinLabel1
@@ -165,6 +166,14 @@
             this.skinLabel4.TabIndex = 18;
             this.skinLabel4.Text = "端口：";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(137, 174);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(100, 20);
+            this.comboBox1.TabIndex = 19;
+            // 
             // Form_status
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -172,6 +181,7 @@
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(280, 282);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.skinLabel4);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
@@ -200,5 +210,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private CCWin.SkinControl.SkinLabel skinLabel4;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
