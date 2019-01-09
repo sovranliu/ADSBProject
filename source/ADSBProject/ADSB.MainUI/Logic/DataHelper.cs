@@ -54,6 +54,7 @@ namespace ADSB.MainUI
                 var p = Marshal.AllocHGlobal(1024);
                 Marshal.Copy(msg, 0, p, 1024);
                 IntPtr ptr = CommWrapper.decodeMessage4(p);
+                Marshal.FreeHGlobal(p);
                 msg[1023] = 0;
                 // Console.WriteLine("msg2 = " + msg[0] + ", " + msg[1] + ", " + msg[2]);
                 Cat021Data outData = (Cat021Data)Marshal.PtrToStructure(ptr, typeof(Cat021Data));
