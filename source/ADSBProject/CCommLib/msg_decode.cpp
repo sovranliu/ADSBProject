@@ -167,10 +167,13 @@ extern "C" _declspec(dllexport) bool decodeMessage(BYTE message[]) {
 * @return true表示可以解析这条信息，false为不能解析
 * (cat021, DF17, DF18消息类型返回true, 其他false)
 */
-extern "C" _declspec(dllexport) Cat021Data decodeMessage2(BYTE message[], BYTE type) {
+extern "C" _declspec(dllexport) Cat021Data decodeMessage3(BYTE message[]) {
+	BYTE type = message[1023];
+	message[1023] = 0;
 	BYTE messageType = getMessageType(message);
 	if (messageType != type && 0 != type) {
 		Cat021Data ret;
+		memset(&ret, 0, sizeof(ret));
 		ret.sModeAddress = -1;
 		return ret;
 	}
@@ -238,6 +241,7 @@ extern "C" _declspec(dllexport) Cat021Data decodeMessage2(BYTE message[], BYTE t
 		}
 	}
 	Cat021Data ret;
+	memset(&ret, 0, sizeof(ret));
 	ret.sModeAddress = -1;
 	return ret;
 }

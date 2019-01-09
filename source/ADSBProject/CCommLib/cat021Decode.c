@@ -36,8 +36,17 @@ void test() {
     decodeCAT021V026(message2);
 }
 
+Cat021Data decodeMessage3(BYTE message[]);
+
+_declspec(dllexport) Cat021Data decodeMessage4(BYTE message[])
+{
+	printf("decodeMessage4 is %u, %u, %u\n", message[0], message[1], message[2]);
+	return decodeMessage3(message);
+}
+
  _declspec(dllexport) Cat021Data decodeCAT021V026(BYTE message[])
 {
+	 printf("decodeCAT021V026 is %d, %d, %d\n", message[0], message[1], message[2]);
 	 Cat021Data result;
     resetCat021Message(&result);
     int start = 0;

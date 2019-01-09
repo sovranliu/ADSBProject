@@ -33,20 +33,36 @@ namespace ADSB.MainUI
     {
         [DllImport(@"CCommLib.dll", EntryPoint = "decodeMessage", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool decodeMessage(Byte[] msg);
-        [DllImport(@"CCommLib.dll", EntryPoint = "decodeMessage2", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr decodeMessage2(Byte[] msg, Byte type);
+        [DllImport(@"CCommLib.dll", EntryPoint = "decodeMessage4", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr decodeMessage4(IntPtr msg);
         [DllImport(@"CCommLib.dll", EntryPoint = "decodeCAT021V026", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr decodeCAT021V026(Byte[] msg);
 
         public static Cat021Data decode(Byte[] msg, Byte type)
         {
+            if(null == msg || 0 == msg.Length)
+            {
+                Cat021Data exceptionData = new Cat021Data();
+                exceptionData.sModeAddress = -1;
+                exceptionData.flightNo = "CA0000";
+                return (exceptionData);
+            }
             try
             {
-                IntPtr ptr = CommWrapper.decodeMessage2(msg, type);
+                msg[1023] = type;
+                // Console.WriteLine("msg1 = " + msg[0] + ", " + msg[1] + ", " + msg[2]);
+                var p = Marshal.AllocHGlobal(1024);
+                Marshal.Copy(msg, 0, p, 1024);
+                IntPtr ptr = CommWrapper.decodeMessage4(p);
+                msg[1023] = 0;
+                // Console.WriteLine("msg2 = " + msg[0] + ", " + msg[1] + ", " + msg[2]);
                 Cat021Data outData = (Cat021Data)Marshal.PtrToStructure(ptr, typeof(Cat021Data));
                 if(-1 == outData.sModeAddress)
                 {
-                    outData.flightNo = "CA0000";
+                    Cat021Data exceptionData = new Cat021Data();
+                    exceptionData.sModeAddress = -1;
+                    exceptionData.flightNo = "CA0000";
+                    return (exceptionData);
                 }
                 // Marshal.FreeHGlobal(ptr);
                 return outData;
@@ -54,6 +70,7 @@ namespace ADSB.MainUI
             catch
             {
                 Cat021Data exceptionData = new Cat021Data();
+                exceptionData.sModeAddress = -1;
                 exceptionData.flightNo = "CA0000";
                 return (exceptionData);
             }
