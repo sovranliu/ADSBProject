@@ -33,15 +33,21 @@ namespace ADSB.MainUI
     {
         [DllImport(@"CCommLib.dll", EntryPoint = "decodeMessage", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool decodeMessage(Byte[] msg);
+        [DllImport(@"CCommLib.dll", EntryPoint = "decodeMessage2", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr decodeMessage2(Byte[] msg, Byte type);
         [DllImport(@"CCommLib.dll", EntryPoint = "decodeCAT021V026", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr decodeCAT021V026(Byte[] msg);
 
-        public static Cat021Data decode(Byte[] msg)
+        public static Cat021Data decode(Byte[] msg, Byte type)
         {
             try
             {
-                IntPtr ptr = CommWrapper.decodeCAT021V026(msg);
+                IntPtr ptr = CommWrapper.decodeMessage2(msg, type);
                 Cat021Data outData = (Cat021Data)Marshal.PtrToStructure(ptr, typeof(Cat021Data));
+                if(-1 == outData.sModeAddress)
+                {
+                    outData.flightNo = "CA0000";
+                }
                 // Marshal.FreeHGlobal(ptr);
                 return outData;
             }
@@ -63,6 +69,8 @@ namespace ADSB.MainUI
         Cat021Data GetData();
 
         int Count { get; }
+
+        void setType(Byte type);
     }
 
     public class UDPDataSource : DataSource
@@ -72,6 +80,7 @@ namespace ADSB.MainUI
         private static Queue<Cat021Data> qData;
         private static bool isOn;
         private Thread thRec;
+        private static Byte type = 0;
 
         public bool Initialize()
         {
@@ -142,6 +151,11 @@ namespace ADSB.MainUI
             }
         }
 
+        public void setType(Byte type)
+        {
+            UDPDataSource.type = type;
+        }
+
         private static void ReceiveMsg()
         {
             while (isOn)
@@ -153,7 +167,7 @@ namespace ADSB.MainUI
                 try
                 {
                     int length = socket.ReceiveFrom(buffer, ref point);
-                    Cat021Data outData = CommWrapper.decode(buffer);
+                    Cat021Data outData = CommWrapper.decode(buffer, UDPDataSource.type);
                     qData.Enqueue(outData);
                 }
                 catch(Exception)
@@ -318,6 +332,11 @@ namespace ADSB.MainUI
                 MinId = (int)(long) dataSet.Tables[0].Rows[0]["MinID"];
                 MaxId = (int)(long) dataSet.Tables[0].Rows[0]["MaxID"];
             }
+        }
+
+        public void setType(Byte type)
+        {
+
         }
 
         public Cat021Data GetData()

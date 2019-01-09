@@ -161,6 +161,87 @@ extern "C" _declspec(dllexport) bool decodeMessage(BYTE message[]) {
     return false;
 }
 
+/**
+* 解码主入口
+* @param message 原始二进制数据
+* @return true表示可以解析这条信息，false为不能解析
+* (cat021, DF17, DF18消息类型返回true, 其他false)
+*/
+extern "C" _declspec(dllexport) Cat021Data decodeMessage2(BYTE message[], BYTE type) {
+	BYTE messageType = getMessageType(message);
+	if (messageType != type && 0 != type) {
+		Cat021Data ret;
+		ret.sModeAddress = -1;
+		return ret;
+	}
+	if (messageType == CAT021)
+	{
+		Cat021Data cat021Data;
+		if (cat021Version == 1)
+		{
+			cat021Data = decodeCAT021V21(message);
+		}
+		else {
+			//cat021Data = *(decodeCAT021V026(message));
+			cat021Data = decodeCAT021V026(message);
+		}
+		//给上层回调结果
+		notifyMessageDecode(cat021Data);
+		return cat021Data;
+	}
+	else if (messageType == DF17 || messageType == DF18)
+	{
+		int icao = getDFMessageICAO(message);
+		DFMessage df;
+		resetDFMessage(&df);
+		//内存中维护一个map， 用来存放df消息，以icao为键
+		std::map<int, DFMessage>::iterator it = dfMessageMap.find(icao);
+		if (it != dfMessageMap.end()) {
+			df = it->second;
+		}
+		time_t now = time(NULL);
+		if (df.df == 0)
+		{ //新的消息
+			df.time = now;
+		}
+		else
+		{
+			long messageValidPeriod;
+			if (df.positionType == AIRBORNE_POSITION)
+			{
+				messageValidPeriod = AIRBONE_POSITION_VALID_PERIOD;
+			}
+			else
+			{
+				messageValidPeriod = SURFACE_POSITION_VALID_PERIOD;
+			}
+			//消息接收延迟大于阈值，丢弃
+			if (now - df.time > messageValidPeriod)
+			{
+				dfMessageMap.erase(icao);
+				resetDFMessage(&df);
+			}
+		}
+		preDecodeDFMessage(message, &df);
+		if (df.paired) {
+			dfMessageMap[icao] = df;
+			Cat021Data cat021 = decodeDFMessage(df);
+			printf("result : lat: %lf, lon: %lf\n", cat021.latitude, cat021.longtitude);
+			//            LONG result = dfMessageMap.erase(icao);
+			//给上层回调结果
+			notifyMessageDecode(cat021);
+			return cat021;
+		}
+		else {
+			//添加到列表中
+			dfMessageMap[icao] = df;
+		}
+	}
+	Cat021Data ret;
+	ret.sModeAddress = -1;
+	return ret;
+}
+
 //把解析后的数组组装成cat021
 //这里需要各个平台自己实现传到应用层的方法
 //记得encodeCat021V026String的返回值需要释放内存， 否则会造成内存泄漏
