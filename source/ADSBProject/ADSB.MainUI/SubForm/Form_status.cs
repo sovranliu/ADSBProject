@@ -36,8 +36,8 @@ namespace ADSB.MainUI.SubForm
             }
             if (null != comboBox1.Text)
             {
-                DataSource dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_UDP);
-                byte b = System.Text.Encoding.Default.GetBytes(comboBox1.Text)[0];
+                DataSource dataSource = MainForm.dataSource;
+                byte b = (byte) Int32.Parse(comboBox1.Text);
                 dataSource.setType(b);
             }
             this.Close();

@@ -101,7 +101,7 @@ namespace ADSB.MainUI
         private Timer displayTimer = new Timer();
         private Timer playBackTimer = new Timer();
 
-        private DataSource dataSource;
+        public static DataSource dataSource;
 
         bool IsPlayback=false;  //回放标志
         LogRecord log;
