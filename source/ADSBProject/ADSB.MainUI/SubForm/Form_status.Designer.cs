@@ -120,7 +120,7 @@
             this.skinLabel3.BorderColor = System.Drawing.Color.White;
             this.skinLabel3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.skinLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
-            this.skinLabel3.Location = new System.Drawing.Point(53, 138);
+            this.skinLabel3.Location = new System.Drawing.Point(53, 135);
             this.skinLabel3.Name = "skinLabel3";
             this.skinLabel3.Size = new System.Drawing.Size(44, 17);
             this.skinLabel3.TabIndex = 10;
@@ -148,7 +148,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(137, 138);
+            this.textBox2.Location = new System.Drawing.Point(136, 135);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 17;
@@ -162,13 +162,16 @@
             this.skinLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(103)))));
             this.skinLabel4.Location = new System.Drawing.Point(53, 174);
             this.skinLabel4.Name = "skinLabel4";
-            this.skinLabel4.Size = new System.Drawing.Size(44, 17);
+            this.skinLabel4.Size = new System.Drawing.Size(68, 17);
             this.skinLabel4.TabIndex = 18;
-            this.skinLabel4.Text = "端口：";
+            this.skinLabel4.Text = "解码格式：";
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "0",
+            "1"});
             this.comboBox1.Location = new System.Drawing.Point(137, 174);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(100, 20);

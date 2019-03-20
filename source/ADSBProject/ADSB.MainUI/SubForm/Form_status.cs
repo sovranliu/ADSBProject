@@ -34,6 +34,12 @@ namespace ADSB.MainUI.SubForm
             {
                 ConfigHelper.Instance.SetConfig("port_init", textBox2.Text);
             }
+            if (null != comboBox1.Text)
+            {
+                DataSource dataSource = DataHelper.Build(DataSourceType.DATASOURCE_NAME_UDP);
+                byte b = System.Text.Encoding.Default.GetBytes(comboBox1.Text)[0];
+                dataSource.setType(b);
+            }
             this.Close();
         }
 

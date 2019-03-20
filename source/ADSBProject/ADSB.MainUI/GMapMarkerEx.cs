@@ -492,6 +492,68 @@ namespace ADSB.MainUI
 
     }
 
+
+    public class GMapMarkerPoint : GMapMarker
+    {
+
+
+        /// <summary>
+        /// specifies how the outline is painted
+        /// </summary>
+        public Pen Stroke = new Pen(Color.FromArgb(155, Color.Gray));
+
+
+        /// <summary>
+        /// background color
+        /// </summary>
+        //public Brush Fill = new SolidBrush(Color.FromArgb(155, Color.Red));
+        public Brush Fill;
+        /// <summary>
+        /// is filled
+        /// </summary>
+        public bool IsFilled = true;
+
+
+        public GMapMarkerPoint(PointLatLng p, Brush f)
+            : base(p)
+        {
+            Fill = f;
+            IsHitTestVisible = false;
+        }
+
+
+        public override void OnRender(Graphics g)
+        {
+            int R = 4;
+            if (IsFilled)
+            {
+                g.FillEllipse(Fill, new System.Drawing.Rectangle(LocalPosition.X - R / 2, LocalPosition.Y - R / 2, R, R));
+            }
+            g.DrawEllipse(Stroke, new System.Drawing.Rectangle(LocalPosition.X - R / 2, LocalPosition.Y - R / 2, R, R));
+        }
+
+
+        public override void Dispose()
+        {
+            if (Stroke != null)
+            {
+                Stroke.Dispose();
+                Stroke = null;
+            }
+
+
+            if (Fill != null)
+            {
+                Fill.Dispose();
+                Fill = null;
+            }
+
+
+            base.Dispose();
+        }
+    }
+
+
     /// <summary>
     /// 航路点图标
     /// </summary>
